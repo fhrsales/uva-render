@@ -21,7 +21,7 @@
         {#if nasVista}
                 <img 
                     width= {node.clientWidth}
-                    height={Math.round(node.clientWidth * 0.7)}
+                    height= {Math.round(node.clientWidth * 0.7)}
                     class="uva-imagem {classe}"
                     src="https://www.estadao.com.br{fonte}"
                     alt={legenda}
