@@ -41,15 +41,14 @@
                 });
             });
         }, options);
-        observer.observe(node.querySelector('div > figure'));
+        observer.observe(node);
     });
 </script>
-<div id={id} bind:this={node}>
-    <figure class="uva-repositorio-media {tamanho}">
+    <figure id={id} class="uva-repositorio-media {tamanho}" bind:this={node}>
         <video 
             width= "180"
             height= "120"
-            class="uva-video" 
+            class={classe} 
             playsinline={playsinline} 
             autoplay={autoplay}
             muted={muted}
@@ -69,4 +68,3 @@
             </figcaption>
         {/if}
     </figure>
-</div>

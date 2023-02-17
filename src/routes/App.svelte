@@ -11,8 +11,9 @@
   import Customization from "./components/customization/Customization.svelte";
   import Code from "./components/html/Code.svelte";
   import EstanteDeLivros from "./components/blocks/EstanteDeLivros.svelte";
-  import H3 from "./components/headings/H3.svelte";
-  import Image from "./components/image/Image.svelte";
+  import DefaultHeading from "./components/headings/DefaultHeading.svelte";
+  import Image from "./components/images/ImageContainer.svelte";
+  import Map from "./components/maps/Map.svelte";
   import Navigation from "./components/navigation/Navigation.svelte";
   import Rule from "./components/rules/Rule.svelte";
   import Scrolly from "./components/scrollytelling/Scrolly.svelte";
@@ -20,21 +21,21 @@
   import Testeira from "./components/navigation/Testeira.svelte";
   import Text from "./components/text/Text.svelte";
   import Uva from "./components/charts/Uva.svelte";
-  import Video from "./components/video/Video.svelte";
-  import Youtube from "./components/video/Youtube.svelte";
+  import Video from "./components/videos/Video.svelte";
+  import Youtube from "./components/videos/Youtube.svelte";
   import { onMount } from "svelte";
   const json = `https://arte.estadao.com.br/public/pages/${UvaPages}/page.json?v=${version()}`;
-  let conteudo = [];
+  let conteúdo = [];
 
   onMount(async function () {
     const response = await fetch(json);
     const data = await response.json();
-    conteudo = Object.values(data.conteúdo);
-    console.log(conteudo);
+    conteúdo = Object.values(data.conteúdo);
+    console.log(conteúdo);
   });
 </script>
 <Styles />
-{#each conteudo as block}
+{#each conteúdo as block}
 {#if block.type === "animação"}
     <Animation value={block.value} />
   {/if}
@@ -56,6 +57,9 @@
   {#if block.type === "imagem"}
     <Image value={block.value} />
   {/if}
+  {#if block.type === "mapa"}
+    <Map value={block.value} />
+  {/if}
   {#if block.type === "mudaFundo"}
     <ChangeBackground value={block.value} />
   {/if}
@@ -75,7 +79,7 @@
     <Text value={block.value} />
   {/if}
   {#if block.type === "título"}
-    <H3 value={block.value} />
+    <DefaultHeading value={block.value} />
   {/if}
   {#if block.type === "vídeo"}
     <Video value={block.value} />
@@ -84,7 +88,3 @@
     <Youtube value={block.value} />
   {/if}
 {/each}
-
-<!-- <style>
-  @import 'https://arte.estadao.com.br/arc/styles/uva-font.min.css';
-</style> -->

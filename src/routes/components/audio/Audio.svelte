@@ -1,26 +1,18 @@
 <script>
-    import IntersectionObserver from "svelte-intersection-observer"; 
-    let node;
-    let nasVista;
-    let rootMargin = "0px 0px 0px 0px";
-    let threshold = 0;
+    import UvaRepositorioMediaOnce from "../observer/Uva-repositorio-media-once.svelte";
     export let value;
     const { id, fonte } = value;
+    const tamanho = "P";
 </script>
-<IntersectionObserver once element={node} rootMargin={rootMargin} threshold={threshold} bind:intersecting={nasVista}>
-    <div class="uva-repositorio-media {nasVista ? ' carregada ' : ''}P" bind:this={node}>
-        {#if nasVista}
-            <audio id={id} class='uva-audio' controls preload='none'>
-                <source
-                    src={fonte}
-                    type='audio/mp3'
-                >
-            </audio>
-        {/if}
-    </div>
-</IntersectionObserver>
+<UvaRepositorioMediaOnce {id} {tamanho}>
+    <audio controls preload="none"><source src={fonte} type="audio/mp3"></audio>
+    <placeholder slot="placeholder">
+        <p>Carregando o áudio...</p>
+    </placeholder>
+</UvaRepositorioMediaOnce>
 <style>
-.uva-audio {
+audio {
+    margin: calc(var(--margem-vertical) * 1) auto calc(var(--margem-vertical) * 1) auto;
     width: 100%;
 }
 </style>

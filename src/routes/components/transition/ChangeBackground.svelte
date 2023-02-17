@@ -1,4 +1,5 @@
 <script>
+    let node;
     export let value;
     const { corNova, corOriginal } = value;
     let options = {
@@ -16,7 +17,7 @@
                 }
             });
         }, options);
-        observer.observe(document.querySelector('.mudaFundo'));
+        observer.observe(node);
     });
 </script>
-<div class="mudaFundo"></div>
+<div class="mudaFundo" bind:this={node}></div>

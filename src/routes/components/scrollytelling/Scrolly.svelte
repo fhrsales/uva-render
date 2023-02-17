@@ -1,7 +1,7 @@
 <script>
     let dimensões = window.innerWidth;
     export let value;
-    const { conteúdo, classe, id, tamanho, transformações } = value;
+    const { conteúdo, classe, id, tamanho } = value;
     const passos = conteúdo.filter(item => item.type === "passo");
     let options = {
         rootMargin: '0px 0px 6% 0px',
@@ -55,6 +55,10 @@
                 entries.forEach(entry => {                    
                     if (entry.isIntersecting) {
                         entry.target.classList.add('carregado');
+                        let fundos = document.querySelector('#' + id + ' > div.fundos');
+                        if (fundos !== null) {
+                            fundos.style.setProperty('-webkit-transform', entry.target.dataset.transform);
+                        }
                         let fundo = document.querySelector('#' + id + ' > div > div.fundo[data-index="' + entry.target.dataset.index + '"]');
                         if (fundo !== null) {
                             fundo.classList.add('carregado');
@@ -87,7 +91,7 @@
     <div class="fundos">
         {#each passos as item, i}
             {#if item.value.uva !== undefined}
-                <div data-index={i + 1} class="fundo" style="{item.value.transformações !== undefined ? item.value.transformações : ''}">
+                <div data-index={i + 1} class="fundo">
                     <script 
                         type="text/javascript" 
                         class="uva-imagem" 
@@ -133,7 +137,7 @@
     </div>
     <div class="passos">
         {#each passos as item, i}
-            <div data-index={i + 1} class="passo{item.value.classe !== undefined ? ' ' + item.value.classe : ''}">
+            <div data-index={i + 1} class="passo{item.value.classe !== undefined ? ' ' + item.value.classe : ''}" data-transform={item.value.transformações}>
                 <p class="uva-corpo">{@html item.value.texto}</p>
             </div>
         {/each}

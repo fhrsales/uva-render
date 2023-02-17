@@ -12,7 +12,7 @@
     text-align: left;
     width: var(--largura-celular);
     max-width: var(--P);
-    margin: 0 auto 1.78125rem auto;
+    margin: 0 auto calc(var(--margem-vertical) * 0.5) auto;
     color: var(--texto)
 }
 
@@ -28,7 +28,7 @@
     :global(.uva-corpo) {
         font-size: var(--corpo-desktop);
         line-height: var(--entrelinha-desktop);
-        margin-bottom: 1.9375rem;
+        margin-bottom: calc(var(--margem-vertical) * 0.5);
     }
 }
 </style>
