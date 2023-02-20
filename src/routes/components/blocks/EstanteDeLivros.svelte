@@ -8,7 +8,7 @@
     <div>
     <div class="uva-repositorio-media uva-estante-de-livros-imagem carregada">
         <figure style="height: 295px; --lombada:283px; --contraCapa:295px;">
-            <img itemprop="image" src="https://www.estadao.com.br{fonte}" alt="{titulo + ', por ' + autor}" height="295" width="200">
+            <img loading="lazy" itemprop="image" src="https://www.estadao.com.br{fonte}" alt="{titulo + ', por ' + autor}" height="295" width="200">
         </figure>
     </div>
         <div class="uva-estante-de-livros-ficha">

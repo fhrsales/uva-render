@@ -1,7 +1,7 @@
 <script>
   export let value;
   export let src = { property: "value" };
-  const { descrição, larguraDesk, larguraMobile } = value;
+  let { descrição, larguraDesk, larguraMobile } = value;
   let imageElement;
   let clientHeight;
   $: contentHeight = clientHeight;
@@ -27,6 +27,7 @@
 
 <figure bind:clientHeight>
   <img
+    loading="lazy"
     height={contentHeight}
     src={src}
     alt={descrição}

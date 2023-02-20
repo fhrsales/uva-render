@@ -21,7 +21,7 @@
   import Testeira from "./components/navigation/Testeira.svelte";
   import Text from "./components/text/Text.svelte";
   import Uva from "./components/charts/Uva.svelte";
-  import Video from "./components/videos/Video.svelte";
+  import Video from "./components/videos/VideoContainer.svelte";
   import Youtube from "./components/videos/Youtube.svelte";
   import { onMount } from "svelte";
   const json = `https://arte.estadao.com.br/public/pages/${UvaPages}/page.json?v=${version()}`;

@@ -1,49 +1,36 @@
 <script>
-    import { boolean } from "../../../scripts/boolean.js";
-    import VideoContainer from "../videos/VideoContainer.svelte";
-    export let value;
-    const { id, classe, crédito, fonteMobile, fonteDesk, legenda, mostrarLegenda, posterDesk, posterMobile, preload, tamanho } = value;
-    const playsinline = boolean(value.playsinline);
-    const autoplay = boolean(value.autoplay);
-    const muted = boolean(value.muted);
-    const loop = boolean(value.loop);
-    let dimensões = window.innerWidth;
-    let rootMargin = "0px 0px 35% 0px";
-    let descrição = legenda;
+    export let dimensões = window.innerWidth;
+    export let fonteDesk;
+    export let fonteMobile;
+    export let playsinline;
+    export let autoplay;
+    export let muted;
+    export let preload;
+    export let loop;
+    export let contentWidth;
+    export let contentHeight;
+    export let classe;
+    export let src = dimensões > 580 ? fonteDesk : fonteMobile;
 </script>
 
 <style>
-    video::after {
-    padding-top: 0;
-    display: block;
-    content: '';
-}
+    video {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        background-color: #f0f0f0;
+    }
 </style>
 
-<VideoContainer {descrição} {id} {rootMargin} {tamanho}>
-    <video 
-        width= "180"
-        height= "120"
+<video 
+        width={contentWidth} 
+        height={contentHeight} 
         class={classe} 
         playsinline={playsinline} 
         autoplay={autoplay}
         muted={muted}
         preload={preload} 
         loop={loop}
-        src={ dimensões > 580 ? fonteDesk : fonteMobile }
-        >
-    </video>
-</VideoContainer>
-
-
-{#if mostrarLegenda === "sim"}
-<!-- svelte-ignore a11y-structure -->
-<figcaption style="{tamanho === "GG" ? "width: var(--largura-celular)" : ""} {mostrarLegenda === "não" ? "text-align: right; margin-top: 0" : ""}">
-    {#if mostrarLegenda === "sim"}
-        <span>{legenda}</span>
-        <span class="uva-credits"> • {crédito}</span>
-    {:else}
-            <span class="uva-credits">{crédito}</span>
-    {/if}
-</figcaption>
-{/if}
+        src={src}
+>
+</video>

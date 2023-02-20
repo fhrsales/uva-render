@@ -64,7 +64,7 @@
         <!-- {#if nasVista} -->
             <div style="height: {height}px;">
                 <figure class="fundo">
-                    <img            
+                    <img loading="lazy"            
                         src={ dimensões > 580 ? 
                             "https://arte.estadao.com.br/public/pages/" + UvaPages + "0001.jpg" : 
                             "https://arte.estadao.com.br/public/pages/" + UvaPages + "0001-mobile.jpg"
