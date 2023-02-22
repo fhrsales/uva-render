@@ -16,7 +16,6 @@ img {
 </style>
 
 <img 
-    loading="lazy"
     width={contentWidth}
     height={contentHeight}
     class="uva-imagem{classe ? " " + classe : ""}"

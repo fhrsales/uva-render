@@ -126,7 +126,7 @@
                             width=""
                             height=""
                             class="uva-video"
-                            src={ dimensões > 580 ? `https://www.estadao.com.br` + item.value.videoDesk : `https://www.estadao.com.br` + item.value.videoMobile }
+                            src={ dimensões > 580 ? `` + item.value.videoDesk : `` + item.value.videoMobile }
                             alt="{item.value.legenda}"
                             controls
                         />

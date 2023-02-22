@@ -16,7 +16,7 @@
         font: 400 calc(var(--corpo-mobile) * 0.45) var(--semicondensed);
         letter-spacing: 0.04rem;
         text-transform: uppercase;
-        opacity: 0.9;
+        opacity: 0.8;
     }
 
     @media (min-width:748px) { /* Desktop */

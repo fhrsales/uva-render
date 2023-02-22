@@ -1,7 +1,17 @@
 import { writable } from 'svelte/store';
-const id = 'rmjox230v234';
-function IDReportagem(id) {
-    return id.replace(/.{2}/g, `$&/`)
+
+export const UvaPath = writable("");
+
+if (typeof document !== "undefined") {
+    const uvaScript = document.querySelectorAll(`[data-uva-id]`);
+    if (uvaScript.length > 0) {
+        const id = uvaScript[0].getAttribute(`data-uva-id`);
+        const path = IDReportagem(id);
+
+        UvaPath.set(path);
+    }
 }
-const path = IDReportagem(id);
-export const UvaPath = writable(path);
+
+function IDReportagem(id) {
+    return id.replace(/.{2}/g, `$&/`);
+}

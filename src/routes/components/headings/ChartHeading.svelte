@@ -1,6 +1,6 @@
 <script>
     export let value;
-    export let editoria;
+    export const editoria = { property: "value" };
 </script>
 
 <style>
