@@ -1,5 +1,5 @@
 <script>
-    import Image from '../images/larguraDesk_larguraMobile.svelte';
+    import ImageContainer from '../images/ImageContainer_fixed.svelte';
     export let value;
     const { anterior, editoria, fonte, próximo } = value;
 </script>
@@ -37,7 +37,7 @@
             editoria === "cultura" ? "border-color: var(--cor-c2-secundaria" : ""}"
 >
     <div class="previous"><a href={anterior}>‹ Anterior</a></div>
-    <Image value={value} src="https://arte.estadao.com.br/arc/images/{fonte}" />
+    <ImageContainer value={value} src="https://arte.estadao.com.br/arc/images/{fonte}" />
     {#if typeof próximo === undefined}
         <div class="next" style="text-align: right; opacity: 0.4">Próxima<br>(em breve)</div>
     {/if}

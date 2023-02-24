@@ -12,7 +12,7 @@
   import Code from "./components/codes/Code.svelte";
   import EstanteDeLivros from "./components/blocks/EstanteDeLivros.svelte";
   import DefaultHeading from "./components/headings/DefaultHeading.svelte";
-  import ImageContainer from "./components/images/ImageContainer.svelte";
+  import ImageContainer from "./components/images/ImageContainer_responsive.svelte";
   import Map from "./components/maps/Map.svelte";
   import Navigation from "./components/navigation/Navigation.svelte";
   import Quiz from "./components/blocks/Quiz.svelte";

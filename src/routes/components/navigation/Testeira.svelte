@@ -1,5 +1,5 @@
 <script>
-    import Image from '../images/larguraDesk_larguraMobile.svelte';
+    import ImageContainer from '../images/ImageContainer_fixed.svelte';
     import { UvaPath } from "../../../scripts/store.js"
     let UvaPages = "";
     UvaPath.subscribe(value => {
@@ -17,6 +17,6 @@
 
 <div class="P">
     <a href={link}>
-        <Image value={value} src="https://arte.estadao.com.br/public/pages/{UvaPages}/{fonte}" />
+        <ImageContainer value={value} src="https://arte.estadao.com.br/public/pages/{UvaPages}/{fonte}" />
     </a>
 </div>

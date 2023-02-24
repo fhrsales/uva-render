@@ -8,14 +8,21 @@
     --condensed: 'Flama Condensed', sans-serif;
     --ultracondensed: 'Flama Condensed', sans-serif;
     --texto: 'Freight Text', serif;
+
+    --borda-fina: 1px solid #C7C7C7;
+    --sombra-leve: 2px 2px 2px hsla(0, 0%, 7%, 0.119);
+    --sombra-forte: 3px 3px 3px hsla(0, 0%, 7%, 0.429);
+
     --corpo-mobile: 1.275rem;
     --corpo-desktop: 1.475rem;
     --corpo-h3-mobile: 1.525rem;
     --corpo-h3-desktop: 1.75rem;
+
     --entrelinha-mobile: 1.6625rem;
     --entrelinha-desktop: 1.975rem;
     --entrelinha-h3-mobile: 1.725rem;
     --entrelinha-h3-desktop: 2.1rem;
+
     --cor-fundo: #fff;
     --cor-texto: #333;
     --cor-primaria: #005d92;
@@ -25,12 +32,15 @@
     --cor-EeN-secundaria: #86ae1c;
     --cor-c2-primaria: #c20736;;
     --cor-c2-secundaria: #e677a8;
-    --margem-horizontal: 1rem;
-    --margem-vertical: 2rem;
+
     --filete: 2.5rem;
     --fio-solido-grosso: 3px solid var(--cor-texto);
     --fio-solido-fino: 1px solid rgba(0, 0, 0, 0.5);
     --fio-pontilhado: 1.5px dotted var(--cor-texto);
+
+    --margem-horizontal: 1rem;
+    --margem-vertical: 2rem;
+
     --P: 580px;
     --M: 768px;
     --G: 1024px;

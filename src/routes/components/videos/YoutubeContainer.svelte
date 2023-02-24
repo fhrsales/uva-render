@@ -26,18 +26,21 @@
         margin: calc(var(--margem-vertical) * 1.5) auto;
     }
 
-    div::after {
-        padding-top: 56.25%;
-        display: block;
-        content: '';
-
+    div {
+        position:relative;
+        padding-bottom:56.25%;
+        height:0;
+        overflow:hidden;
+        margin: calc(var(--margem-vertical) * 1) auto;
+        border-radius: 6px;
+        box-shadow: var(--sombra-forte);
     }
     iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
     }
 </style>
 

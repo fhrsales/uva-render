@@ -1,8 +1,8 @@
 <script>
     import UvaRepositorioMediaOnce from "../observer/Uva-repositorio-media-once.svelte";
-    import Image from "../images/Image.svelte";
-    import Caption from "../images/Caption.svelte";
-    import ImagePlaceholder from "../images/ImagePlaceholder.svelte";
+    import Image from "./Image.svelte";
+    import Caption from "./Caption.svelte";
+    import ImagePlaceholder from "./ImagePlaceholder.svelte";
     export let value;
     export const { classe, crédito, fonte, id, legenda, mostrarLegenda, tamanho } = value;
     const rootMargin = "0px 0px 35% 0px";
@@ -35,7 +35,7 @@
                 contentWidth={contentWidth} 
                 contentHeight={contentHeight} 
                 classe={classe} 
-                src={fonte} 
+                src="https://www.estadao.com.br{fonte}" 
                 alt={legenda} 
             />
         <figcaption style="{tamanho === "GG" ? "width: var(--largura-celular); margin-left: auto; margin-right: auto" : ""}{mostrarLegenda === "não" ? "text-align: right; margin-top: 0" : ""}">

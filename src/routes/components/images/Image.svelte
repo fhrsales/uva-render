@@ -19,6 +19,6 @@
     width={contentWidth}
     height={contentHeight}
     class="uva-image{classe ? " " + classe : ""}"
-    src="https://www.estadao.com.br{src}"
+    src={src}
     alt={alt}
 />
