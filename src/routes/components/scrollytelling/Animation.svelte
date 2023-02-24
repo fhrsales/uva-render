@@ -80,7 +80,7 @@
                             data-index={i + 1} class="passo{passo.value.classe !== undefined ? ' ' + passo.value.classe : ''}"
                             style="height: auto; position: absolute; top: {passo.value.percentual * height}px; left: 50%; transform: translate(-50%, 0%);"
                         >
-                            <p class="uva-corpo">{passo.value.texto}</p>
+                            <p class="uva-body">{passo.value.texto}</p>
                         </div>
                     {/if}
                 {/each}

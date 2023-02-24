@@ -4,7 +4,7 @@
     import Caption from "../images/Caption.svelte";
     import ImagePlaceholder from "../images/ImagePlaceholder.svelte";
     export let value;
-    const { classe, crédito, fonte, id, legenda, mostrarLegenda, tamanho } = value;
+    export const { classe, crédito, fonte, id, legenda, mostrarLegenda, tamanho } = value;
     const rootMargin = "0px 0px 35% 0px";
     const descrição = legenda;
     let clientWidth;

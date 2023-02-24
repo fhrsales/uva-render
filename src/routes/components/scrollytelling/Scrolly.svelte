@@ -138,7 +138,7 @@
     <div class="passos">
         {#each passos as item, i}
             <div data-index={i + 1} class="passo{item.value.classe !== undefined ? ' ' + item.value.classe : ''}" data-transform={item.value.transformações}>
-                <p class="uva-corpo">{@html item.value.texto}</p>
+                <p class="uva-body">{@html item.value.texto}</p>
             </div>
         {/each}
     </div>

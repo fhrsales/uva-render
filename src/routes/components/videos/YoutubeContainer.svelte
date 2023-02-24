@@ -1,16 +1,14 @@
 <script>
     import UvaRepositorioMediaOnce from "../observer/Uva-repositorio-media-once.svelte";
-    import Image from "../images/Image.svelte";
-    import Caption from "../images/Caption.svelte";
     import ImagePlaceholder from "../images/ImagePlaceholder.svelte";
     export let value;
-    const { classe, crédito, fonte, id, legenda, mostrarLegenda, tamanho } = value;
+    const { fonte, id, tamanho } = value;
     const rootMargin = "0px 0px 35% 0px";
     const descrição = "Vídeo do Youtube";
     let clientWidth;
     let clientHeight;
-    $: contentWidth = clientWidth;
-    $: contentHeight = clientHeight;
+    // $: contentWidth = clientWidth;
+    // $: contentHeight = clientHeight;
     import { onMount } from "svelte";
     onMount(() => {    
         window.addEventListener("resize", () => {

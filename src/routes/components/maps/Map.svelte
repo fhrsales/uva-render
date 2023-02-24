@@ -90,7 +90,7 @@
     margin: calc(var(--margem-vertical) * 2) auto;
 }
 
-.uva-corpo {
+.uva-body {
    font-size: calc(var(--corpo-desktop) * 0.8);
    line-height: calc(var(--entrelinha-desktop) * 0.8);
 }

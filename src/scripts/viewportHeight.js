@@ -1,4 +1,4 @@
-export function alturaDaTela () {
+export function viewportHeight () {
     if (typeof window === "undefined") {
         return null
     } else {

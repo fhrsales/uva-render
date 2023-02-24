@@ -1,8 +1,11 @@
 <script>
     import { boolean } from "../../../scripts/boolean.js";
     import UvaRepositorioMediaOnce from "../observer/Uva-repositorio-media-once.svelte";
+    import ImagePlaceholder from "../images/ImagePlaceholder.svelte";
     export let value;
     const { id, fonte, tamanho } = value;
+    const src= `https://arte.estadao.com.br/uva/content/${fonte}/uploads/fallback.jpg`;
+    const descrição = "Gráfico indisponível";
     const mostrar_título = boolean(value.mostrar_título);
     const mostrar_descrição = boolean(value.mostrar_descrição);
     const mostrar_marca = boolean(value.mostrar_marca);
@@ -12,7 +15,7 @@
 <UvaRepositorioMediaOnce {id} {tamanho} {rootMargin}>
     <script 
         type="text/javascript" 
-        class="uva-grafico" 
+        class="uva-static-chart" 
         data-uva-id={fonte} 
         data-show-title= {mostrar_descrição}
         data-show-description={mostrar_título} 
@@ -20,12 +23,6 @@
         src="https://arte.estadao.com.br/uva/scripts/embed.min.js">
     </script>
     <placeholder slot="placeholder">
-        <img 
-            loading="lazy"
-            width="180px"
-            height="120px"
-            src="https://arte.estadao.com.br/uva/content/{fonte}/uploads/fallback.jpg" 
-            alt="Gráfico indisponível"
-        />
+        <ImagePlaceholder {src} {descrição} />
     </placeholder>
 </UvaRepositorioMediaOnce>

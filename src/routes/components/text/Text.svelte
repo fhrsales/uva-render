@@ -2,9 +2,9 @@
     export let value;
 </script>
 
-<p class="uva-corpo">{@html value}</p>
+<p>{@html value}</p>
 <style>
-:global(.uva-corpo) {
+:global(.uva-body), p {
     font-family: var(--texto);
     font-weight: 500;
     font-size: var(--corpo-mobile);
@@ -16,16 +16,16 @@
     color: var(--texto)
 }
 
-:global(.uva-corpo b) {
+:global(.uva-body b) {
     font-weight: 800;
 }
 
-:global(.uva-corpo i) {
+:global(.uva-body i) {
     font-weight: 500;
 }
 
 @media (min-width:740px) { /* desktop */
-    :global(.uva-corpo) {
+    :global(.uva-body), p {
         font-size: var(--corpo-desktop);
         line-height: var(--entrelinha-desktop);
         margin-bottom: calc(var(--margem-vertical) * 0.5);

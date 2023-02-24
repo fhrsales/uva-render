@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="uva-estante-de-livros-descricao">
-        <p class="uva-corpo" itemprop="description">{@html texto} •</p>
+        <p class="uva-body" itemprop="description">{@html texto} •</p>
     </div>
 </div>
 <style>

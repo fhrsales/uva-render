@@ -105,30 +105,6 @@
     border: none
 }
 
-
-/* ******** */
-/* Regras gerais
-/* ******** */
-:global(.uva-botao) {
-    margin: 1rem 0;
-    display: block;
-    padding: 0.625rem 1.25rem;
-    font-family: var(--condensed);
-    font-weight: 500;
-    font-size: 1.063rem;
-    line-height: 1.5;
-    letter-spacing: 0.053rem;
-    text-transform: uppercase;
-    text-align: left;
-    border-radius: 2.5rem;
-    border: none;
-    cursor: pointer;
-    transition: all .35s ease-out;
-    color: white;
-    background-color: var(--cor-secundaria);
-}
-
-
 /* ******** */
 /* Largura dos containers
 /* ******** */
@@ -177,12 +153,12 @@
     max-width: var(--G);
 } */
 
-:global(.uva-imagem,
+/* :global(.uva-imagem,
 .uva-video) {
     width: 100%;
     object-fit: cover;
     height: auto;
-}
+} */
 
 
 

@@ -7,7 +7,7 @@
 </script>
 
 <style>
-img {
+:global(.uva-image) {
     width: 100%;
     height: auto;
     object-fit: cover;
@@ -18,7 +18,7 @@ img {
 <img 
     width={contentWidth}
     height={contentHeight}
-    class="uva-imagem{classe ? " " + classe : ""}"
+    class="uva-image{classe ? " " + classe : ""}"
     src="https://www.estadao.com.br{src}"
     alt={alt}
 />
