@@ -32,18 +32,18 @@
 
 <div 
     class="uva-media-container P"
-    style="{editoria === "hardnews" ? "border-color: var(--cor-secundaria" : "" || 
-            editoria === "economia" ? "border-color: var(--cor-EeN-secundaria" : "" ||
-            editoria === "cultura" ? "border-color: var(--cor-c2-secundaria" : ""}"
->
-    <div class="previous"><a href={anterior}>‹ Anterior</a></div>
-    <ImageContainer value={value} src="https://arte.estadao.com.br/arc/images/{fonte}" />
-    {#if typeof próximo === undefined}
-        <div class="next" style="text-align: right; opacity: 0.4">Próxima<br>(em breve)</div>
-    {/if}
-    {#if typeof próximo !== undefined}
-        <div class="next">
-            <a href="{próximo}">Próxima ›</a>
-        </div>
-    {/if}
+    style=
+    "{editoria === "hardnews" ? "border-color: var(--cor-secundaria" : "" || 
+    editoria === "economia" ? "border-color: var(--cor-EeN-secundaria" : "" ||
+    editoria === "cultura" ? "border-color: var(--cor-c2-secundaria" : ""}" >
+        <div class="previous"><a href={anterior}>‹ Anterior</a></div>
+        <ImageContainer value={value} src="https://arte.estadao.com.br/arc/images/{fonte}" />
+        {#if !próximo}
+            <div class="next" style="text-align: right; opacity: 0.4">Próxima<br>(em breve)</div>
+        {/if}
+        {#if próximo}
+            <div class="next">
+                <a href="{próximo}">Próxima ›</a>
+            </div>
+        {/if}
 </div>
