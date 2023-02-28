@@ -8,7 +8,7 @@
     export let tamanho;
 </script>
 <IntersectionObserver once element={node} rootMargin={rootMargin} threshold={threshold} bind:intersecting={visible}>
-    <div id={id} class="uva-media-container {visible ? "loaded " : ""}{tamanho}" bind:this={node}>
+    <div id={id} class="uva-media-container {visible ? "loaded" : ""}{tamanho ? " " + tamanho : ""}" bind:this={node}>
         {#if visible}
             <slot />
         {:else}
@@ -18,12 +18,12 @@
 </IntersectionObserver>
 
 <style>
-:global(.uva-media-container) {
+.uva-media-container {
     /* margin: calc(var(--margem-vertical) * 1) auto; */
     opacity: 0;
 }
 
-:global(.uva-media-container.loaded) {
+.uva-media-container.loaded {
     opacity: 1;
     transition: all 1s ease-in;
 }

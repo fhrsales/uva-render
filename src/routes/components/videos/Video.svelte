@@ -23,14 +23,14 @@
 </style>
 
 <video 
-        width={contentWidth} 
-        height={contentHeight} 
-        class={classe} 
-        playsinline={playsinline} 
-        autoplay={autoplay}
-        muted={muted}
-        preload={preload} 
-        loop={loop}
-        src={src}
+    width={contentWidth} 
+    height={contentHeight} 
+    class={classe} 
+    playsinline={playsinline} 
+    autoplay={autoplay}
+    muted={muted}
+    preload={preload} 
+    loop={loop}
+    src={src}
 >
 </video>

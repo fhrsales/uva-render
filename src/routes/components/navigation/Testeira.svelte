@@ -15,7 +15,7 @@
     }
 </style>
 
-<div class="P">
+<div class="uva-media-container P">
     <a href={link}>
         <ImageContainer value={value} src="https://arte.estadao.com.br/public/pages/{UvaPages}/{fonte}" />
     </a>

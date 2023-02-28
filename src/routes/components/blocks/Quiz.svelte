@@ -40,28 +40,28 @@
         if (explanation) {
             const explanationContainer = document.createElement('div');
             explanationContainer.classList.add("uva-quiz-explanation");
-            explanationContainer.classList.add("P");
+            // explanationContainer.classList.add("P");
             explanation.forEach(item => {
                 if (item.type === "text")
                     explanationContainer.innerHTML += `<p>${item.value}</p>`;
                 else if (item.type === "imagem") {
                     explanationContainer.innerHTML +=`
-                        <figure class="s--GPsEB6YqfJT">
+                        <figure class="P" style="margin-top: calc(var(--margem-vertical) * 2)">
                             <img 
                                 width="180"
                                 height="120"
-                                class="uva-image ${item.value.classe} s-_EdyOrJzQMFJ"
+                                class="uva-image"
                                 src="https://estadao.com.br${item.value.fonte}"
                                 alt="${item.value.legenda}"
                             />
-                            <figcaption class="s--GPsEB6YqfJT" style="text-align: right; margin-top: 0">
-                                <span class="uva-credits s-P6s0UGDWQeag">${item.value.crédito}</span>
+                            <figcaption style="text-align: right; margin-top: 0">
+                                <span class="uva-credits">${item.value.crédito}</span>
                             </figcaption>
                         </figure>`;
                 }
                 else if (item.type === "youtube") {
                     explanationContainer.innerHTML +=`
-                        <figure>
+                        <figure class="P">
                             <div class="uva-quiz-youtube">
                                 <iframe
                                     title="Vídeo do Youtube" 
@@ -107,9 +107,9 @@
         border-color: var(--cor-primaria);
     }
 
-    :global(.uva-quiz-question, .uva-quiz-explanation) {
-        margin: calc(var(--margem-vertical) * 1) auto;
-        font: 400 calc(var(--corpo-mobile) * 0.9)/calc(var(--entrelinha-mobile) * 1) var(--semicondensed);
+    :global(.uva-quiz-question, .uva-quiz-explanation > p) {
+        margin-top: calc(var(--margem-vertical) * 1) 0;
+        font: 400 calc(var(--corpo-mobile) * 1)/calc(var(--entrelinha-mobile) * 1) var(--semicondensed);
         text-align: left;
         color: var(--cor-texto);
     }
@@ -117,8 +117,8 @@
     :global(.uva-quiz-score) {
         display: flex;
         justify-content: space-between;
-        margin: calc(var(--margem-vertical) * 1.25) 0 -5px 0;
-        font: 600 calc(var(--corpo-mobile) * 0.9)/calc(var(--entrelinha-mobile) * 1) var(--condensed);
+        margin-top: calc(var(--margem-vertical) * 1.25);
+        font: 600 calc(var(--corpo-mobile) * 0.9)/calc(var(--entrelinha-mobile) * 0.9) var(--condensed);
         letter-spacing: 0.04rem;
         text-transform: uppercase;
     }
@@ -134,9 +134,7 @@
         box-shadow: var(--sombra-leve);
     }
     
-    :global(.uva-quiz-button.s-quPV9sMOo0BV) {
-        width: var(--largura-celular);
-        max-width: var(--P);
+    :global(.uva-quiz-button) {
         margin: 0.5rem auto;
         transition-property: padding, background-color;
         background-color: var(--cor-secundaria);
@@ -146,11 +144,11 @@
         color: var(--cor-fundo);
     }
 
-    :global(.uva-quiz-button.s-quPV9sMOo0BV:hover) {
+    :global(.uva-quiz-button:hover) {
         background-color: var(--cor-primaria);
     }
 
-    :global(.uva-quiz-button.s-quPV9sMOo0BV:disabled) {
+    :global(.uva-quiz-button:disabled) {
         color: #b4b3b3;
         cursor: default;
         background-color: #f2f2f2;
@@ -178,18 +176,26 @@
         padding-bottom:56.25%;
         height:0;
         overflow:hidden;
-        margin: calc(var(--margem-vertical) * 1) auto;
+        margin: calc(var(--margem-vertical) * 2) auto;
         border-radius: 6px;
         box-shadow: var(--sombra-forte);
     }
 
     :global(.uva-quiz-youtube > iframe) {
-        position:absolute;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
     }
+
+    @media (min-width:740px) { /* Desktop */
+        :global(.uva-quiz-question, .uva-quiz-explanation > p) {
+            font-size: calc(var(--corpo-desktop) * 1);
+            line-height: calc(var(--entrelinha-desktop) * 1);
+        }
+    }
+
 </style>
 
 <div class="uva-quiz">
@@ -220,7 +226,7 @@
                     }} />
                 {/if}
             {#each item.value.alternativas as item, i}
-                <Button classe="uva-quiz-button" value={item.value} {handleClick} />
+                <Button classe="uva-quiz-button P" value={item.value} {handleClick} />
             {/each}
         </div>
     {/each}

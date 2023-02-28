@@ -1,6 +1,6 @@
 <script>
     import ChartHeading from "../headings/ChartHeading.svelte";
-    import Text from "../text/Text.svelte";
+    import Text from "../texts/Text.svelte";
 
     // import * as d3 from 'd3';
     // import * as topojson from 'topojson-client';

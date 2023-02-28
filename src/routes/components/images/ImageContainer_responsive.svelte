@@ -1,26 +1,21 @@
 <script>
-    import UvaRepositorioMediaOnce from "../observer/Uva-repositorio-media-once.svelte";
-    import Image from "./Image.svelte";
-    import Caption from "./Caption.svelte";
-    import ImagePlaceholder from "./ImagePlaceholder.svelte";
+    import UvaRepositorioMediaOnce from '../observer/Uva-repositorio-media-once.svelte';
+    import Image from './Image.svelte';
+    import Caption from './Caption.svelte';
+    import ImagePlaceholder from './ImagePlaceholder.svelte';
     export let value;
-    export const { classe, crédito, fonte, id, legenda, mostrarLegenda, tamanho } = value;
-    const rootMargin = "0px 0px 35% 0px";
+    export const {
+        classe,
+        crédito,
+        fonte,
+        id,
+        legenda,
+        mostrarLegenda,
+        tamanho
+    } = value;
+    const rootMargin = '0px 0px 95% 0px';
     const descrição = legenda;
-    let clientWidth;
-    let clientHeight;
-    $: contentWidth = clientWidth;
-    $: contentHeight = clientHeight;
-    import { onMount } from "svelte";
-    onMount(() => {    
-        window.addEventListener("resize", () => {
-            let image = document.querySelectorAll(".uva-imagem");
-            if (image !== null) {
-                image.width = image.clientWidth;
-                image.height = image.clientHeight;
-            }
-        });
-    });
+    let node;
 </script>
 
 <style>
@@ -29,26 +24,21 @@
     }
 </style>
 
-<UvaRepositorioMediaOnce {id} {tamanho} {rootMargin}>
-    <figure bind:clientWidth bind:clientHeight>
-            <Image
-                contentWidth={contentWidth} 
-                contentHeight={contentHeight} 
-                classe={classe} 
-                src="https://www.estadao.com.br{fonte}" 
-                alt={legenda} 
-            />
-        <figcaption style="{tamanho === "GG" ? "width: var(--largura-celular); margin-left: auto; margin-right: auto" : ""}{mostrarLegenda === "não" ? "text-align: right; margin-top: 0" : ""}">
-            <Caption 
-                mostrarLegenda={mostrarLegenda} 
-                tamanho={tamanho}
-                legenda={legenda} 
-                crédito={crédito} 
-            />
-        </figcaption>
+<UvaRepositorioMediaOnce {id} {tamanho} {rootMargin} bind:this={node}>
+    <figure>
+        <Image classe={classe} src='https://www.estadao.com.br{fonte}' alt={legenda} />
+        {#if mostrarLegenda}
+            <figcaption style='{tamanho === 'GG' ? 'width: var(--largura-celular); margin-left: auto; margin-right: auto' : ''}{mostrarLegenda === 'não' ? 'text-align: right; margin-top: 0' : ''}'>
+                <Caption 
+                    mostrarLegenda={mostrarLegenda} 
+                    tamanho={tamanho}
+                    legenda={legenda} 
+                    crédito={crédito} 
+                />
+            </figcaption>
+        {/if}
     </figure>
-
-    <placeholder slot="placeholder">
+    <placeholder slot='placeholder'>
         <ImagePlaceholder {descrição} />
     </placeholder>
 </UvaRepositorioMediaOnce>

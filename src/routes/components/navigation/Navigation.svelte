@@ -5,7 +5,7 @@
 </script>
 
 <style>
-    .uva-container-navigation {
+    .uva-media-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -18,20 +18,20 @@
         letter-spacing: 0.03rem;
     }
     
-    .uva-container-navigation a:link, .uva-container-navigation a:visited {
+    .uva-media-container a:link, .uva-media-container a:visited {
         color: var(--cor-texto);
         text-decoration: none;
         font-family: inherit;
         font-weight: inherit;
     }
     
-    .uva-container-navigation a:hover {
+    .uva-media-container a:hover {
         color: var(--cor-c2-primaria);
     }
 </style>
 
 <div 
-    class="uva-container-navigation P"
+    class="uva-media-container P"
     style="{editoria === "hardnews" ? "border-color: var(--cor-secundaria" : "" || 
             editoria === "economia" ? "border-color: var(--cor-EeN-secundaria" : "" ||
             editoria === "cultura" ? "border-color: var(--cor-c2-secundaria" : ""}"

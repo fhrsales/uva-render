@@ -32,6 +32,7 @@
         height:0;
         overflow:hidden;
         margin: calc(var(--margem-vertical) * 1) auto;
+        background-color: #f0f0f0;
         border-radius: 6px;
         box-shadow: var(--sombra-forte);
     }

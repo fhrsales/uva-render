@@ -1,6 +1,6 @@
-<style>
-    @import 'https://arte.estadao.com.br/arc/styles/uva-font.min.css';
-    :root {
+<style>@import 'https://arte.estadao.com.br/arc/styles/uva-font.min.css';
+
+:root {
     --sans-serif: 'Flama', sans-serif;
     --serif: 'Estado Headline', serif;
     --fine: 'Estado Fine', serif;
@@ -26,11 +26,12 @@
     --cor-fundo: #fff;
     --cor-texto: #333;
     --cor-primaria: #005d92;
-    --cor-secundaria: #0093d6;
+    --cor-secundaria: #008ed0;
     --cor-terciaria: #f5f5f5;
     --cor-EeN-primaria: #007367;
     --cor-EeN-secundaria: #86ae1c;
-    --cor-c2-primaria: #c20736;;
+    --cor-c2-primaria: #c20736;
+    ;
     --cor-c2-secundaria: #e677a8;
 
     --filete: 2.5rem;
@@ -40,6 +41,7 @@
 
     --margem-horizontal: 1rem;
     --margem-vertical: 2rem;
+    --margem-capitular: 0.13em 0.6em 0 0.4em;
 
     --P: 580px;
     --M: 768px;
@@ -64,9 +66,18 @@
 }
 
 :global(a:link, a:visited, a:hover, a:active) {
-    color:var(--cor-primaria);
+    color: var(--cor-primaria);
+    font-family: inherit;
     font-weight: bold;
     text-decoration: underline;
+}
+
+:global(.news-body.container) {
+    background-color: inherit !important;
+}
+
+:global(.social-media-sticky-bar) {
+    display: none !important;
 }
 
 :global(.news-header) {
@@ -147,47 +158,14 @@
 }
 
 /* ******** */
-/* Imagem e video
+/* Bold e itálico
 /* ******** */
-:global(figure) {
-    margin: 0;
+:global(b) {
+    font-weight: 800;
 }
 
-/* :global(figcaption) {
-    font-family: var(--sans-serif);
-    margin: 10px auto 20px auto;
-}
-
-:global(.GG > figcaption) {
-    width: var(--largura-celular);
-    max-width: var(--G);
-} */
-
-/* :global(.uva-imagem,
-.uva-video) {
-    width: 100%;
-    object-fit: cover;
-    height: auto;
-} */
-
-
-
-/* :global(.uva-legenda) {
+:global(i) {
     font-weight: 500;
-    font-size: 0.875rem;
-} */
-
-/* :global(.uva-creditos) {
-    font-weight: 400;
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    letter-spacing: 0.017rem;
-    opacity: 0.8;
-} */
-
-@media (min-width:748px) { /* Desktop */
-    /* :global(.uva-legenda) {
-        font-size: 0.9375rem;
-    } */
 }
+
 </style>

@@ -11,6 +11,7 @@
 
     import { gsap } from "gsap";
     import { ScrollTrigger } from "gsap/ScrollTrigger";
+    import Text from "../texts/Text.svelte";
     gsap.registerPlugin(ScrollTrigger);
     let dimensões = window.innerWidth;
     let images= [];
@@ -58,72 +59,78 @@
         }
     });    
 </script>
-<!-- <IntersectionObserver once element={node} rootMargin={rootMargin} threshold={threshold} bind:intersecting={nasVista}> -->
-    <!-- <div id={id} class="uva-repositorio-scrollytelling{nasVista ? ' carregada' : ''} {classe} {tamanho}" bind:this={node}> -->
-        <div id={id} class="uva-repositorio-scrollytelling carregada {classe} {tamanho}" >
-        <!-- {#if nasVista} -->
-            <div style="height: {height}px;">
-                <figure class="fundo">
-                    <img loading="lazy"            
-                        src={ dimensões > 580 ? 
-                            "https://arte.estadao.com.br/public/pages/" + UvaPages + "0001.jpg" : 
-                            "https://arte.estadao.com.br/public/pages/" + UvaPages + "0001-mobile.jpg"
-                            }
-                        alt="Sequência da animação"
-                    />
-                </figure>
-            </div>
-            <div class="passos">
-                {#each conteúdo as passo , i}
-                    {#if passo.type === 'passo'}
-                        <div 
-                            data-index={i + 1} class="passo{passo.value.classe !== undefined ? ' ' + passo.value.classe : ''}"
-                            style="height: auto; position: absolute; top: {passo.value.percentual * height}px; left: 50%; transform: translate(-50%, 0%);"
-                        >
-                            <p class="uva-body">{passo.value.texto}</p>
-                        </div>
-                    {/if}
-                {/each}
-            </div>
-        <!-- {/if} -->
-    </div>
-<!-- </IntersectionObserver> -->
+
 <style>
-.scrolly-animado {
-        position: relative;
+    .scrolly-animado {
+            position: relative;
+        }
+    
+    .scrolly-animado > div > figure.fundo {
+        position: sticky;
+        width: 100%;
+        height: 100vh;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        margin: 0;
+    }
+    
+    .scrolly-animado > div > figure.fundo > img {
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        position: absolute;
+        object-fit: cover;
+    }
+    
+    .scrolly-animado div.passos > div.passo {
+        opacity: 1;
+        z-index: 1;
+        width: 80%;
     }
 
-.scrolly-animado > div > figure.fundo {
-    position: sticky;
-    width: 100%;
-    height: 100vh;
-    top: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden
-}
+    :global(.guias-scrolly-animado) {
+        width: 100%;
+        line-height: -0.344rem;
+        color: red;
+        background-color: red;
+    }
 
-.scrolly-animado > div > figure.fundo > img {
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    position: absolute;
-    object-fit: cover;
-}
-
-.scrolly-animado div.passos > div.passo {
-    opacity: 1;
-    z-index: 1;
-}
-
-:global(.guias-scrolly-animado) {
-    width: 100%;
-    line-height: -0.344rem;
-    color: red;
-    background-color: red;
-}
+    @media (min-width:740px) { /* Desktop */
+        .scrolly-animado div.passos > div.passo {
+            width: 45%;
+            max-width: 580px;
+        }
+    }
 </style>
+
+<div id={id} class="uva-repositorio-scrollytelling carregada {classe} {tamanho}" >
+    <div style="height: {height}px;">
+        <figure class="fundo">
+            <img loading="lazy"            
+                src={ dimensões > 580 ? 
+                    "https://arte.estadao.com.br/public/pages/" + UvaPages + "0001.jpg" : 
+                    "https://arte.estadao.com.br/public/pages/" + UvaPages + "0001-mobile.jpg"
+                    }
+                alt="Sequência da animação"
+            />
+        </figure>
+    </div>
+    <div class="passos">
+        {#each conteúdo as passo , i}
+            {#if passo.type === 'passo'}
+                <div 
+                    data-index={i + 1} class="passo{passo.value.classe !== undefined ? ' ' + passo.value.classe : ''}"
+                    style="height: auto; position: absolute; top: {passo.value.percentual * height}px; left: 50%; transform: translate(-50%, 0%);"
+                >
+                    <Text value={passo.value.texto} />
+                </div>
+            {/if}
+        {/each}
+    </div>
+</div>

@@ -5,7 +5,7 @@
 <style>
     button {
         display: block;
-        margin: 0.5rem 0;
+        /* margin: 0.5rem 0; */
         padding: 0.625rem 1.25rem;
         font-family: var(--condensed);
         font-weight: 500;

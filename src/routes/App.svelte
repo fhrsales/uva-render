@@ -13,27 +13,32 @@
   import EstanteDeLivros from "./components/blocks/EstanteDeLivros.svelte";
   import DefaultHeading from "./components/headings/DefaultHeading.svelte";
   import ImageContainer from "./components/images/ImageContainer_responsive.svelte";
-  import Map from "./components/maps/Map.svelte";
+  // import Map from "./components/maps/Map.svelte";
   import Navigation from "./components/navigation/Navigation.svelte";
   import Quiz from "./components/blocks/Quiz.svelte";
   import Rule from "./components/rules/Rule.svelte";
   import Scrolly from "./components/scrollytelling/Scrolly.svelte";
   import Styles from "./components/styles/Styles.svelte";
   import Testeira from "./components/navigation/Testeira.svelte";
-  import Text from "./components/text/Text.svelte";
+  import Text from "./components/texts/Text.svelte";
   import UvaContainer from "./components/charts/UvaContainer.svelte";
   import Video from "./components/videos/VideoContainer.svelte";
   import YoutubeContainer from "./components/videos/YoutubeContainer.svelte";
 
   import { version } from "../scripts/version.js";
   import { onMount } from "svelte";
-  const json = `https://arte.estadao.com.br/public/pages/${UvaPages}/page.json?v=${version()}`;
+  const json = `https://arte.estadao.com.br/public/pages/${UvaPages}page.json?v=${version()}`;
+  let functionExecuted = false;
   let conteúdo = [];
   onMount(async function () {
     const response = await fetch(json);
     const data = await response.json();
     conteúdo = Object.values(data.conteúdo);
-    console.log(conteúdo);
+    // console.log(conteúdo);
+    if (functionExecuted) {
+        return;
+    }
+    functionExecuted = true;
   });
 
   import { viewportHeight } from "../scripts/viewportHeight.js";
@@ -64,9 +69,9 @@
   {#if block.type === "imagem"}
     <ImageContainer value={block.value} />
   {/if}
-  {#if block.type === "mapa"}
+  <!-- {#if block.type === "mapa"}
     <Map value={block.value} />
-  {/if}
+  {/if} -->
   {#if block.type === "mudaFundo"}
     <ChangeBackground value={block.value} />
   {/if}

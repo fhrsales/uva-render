@@ -1,4 +1,5 @@
 <script>
+    import Text from "../texts/Text.svelte";
     let dimensões = window.innerWidth;
     export let value;
     const { conteúdo, classe, id, tamanho } = value;
@@ -71,6 +72,13 @@
                                 image.src = image.dataset.src;
                             }
                         }
+                        if (video !== null) {
+                            let video = document.querySelector('#' + id + ' > div > div.fundo[data-index="' + entry.target.dataset.index + '"] > video');
+                            if (video !== null) {
+                                video.src = video.dataset.src;
+                                video.play();
+                            }
+                        }
                         let script = document.querySelector('#' + id + ' > div > div.fundo[data-index="' + entry.target.dataset.index + '"] > script');
                         if (script !== null) {
                             script.classList.add('carregado')
@@ -87,10 +95,84 @@
             }
     });
 </script>
+
+<style>
+    .uva-repositorio-scrollyTelling {
+        position: relative;
+        width: 100%;
+        margin: calc(var(--margem-vertical) * 2) auto;
+        pointer-events: none;
+        /* opacity: 0; */
+    }
+    
+    /* .uva-repositorio-scrollyTelling.carregado {
+        opacity: 1;
+        transition: all 1.8s ease-in-out;
+    } */
+    
+    .fundos {
+        position: sticky;
+        width: 100%;
+        height: 100vh;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+    
+    .fundos > div {
+        position: absolute;
+        opacity: 0;
+    }
+    
+    .fundos > div:nth-child(1) {
+        opacity: 1;
+    }
+    
+    .fundo.carregado {
+        opacity: 1;
+        transition: all .45s ease-in-out;
+    }
+    
+    .fundo {
+        width: 100%;
+    }
+    
+    .passo {
+        position: relative;
+        box-sizing: border-box;
+        margin: 0 auto;
+        height: 110vh;
+        padding-bottom: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        opacity: 0;
+        width: 100%;
+        max-width: var(--largura-celular);
+    }
+    
+    .passo > p {
+        width: 90%;
+    }
+    
+    .passo.carregado {
+        opacity: 1;
+        transition: all .3s ease-in;
+    }
+
+    figure {
+        margin: 0;
+    }
+</style>
+
 <div id={id} class="uva-repositorio-scrollyTelling {classe} {tamanho}">
     <div class="fundos">
         {#each passos as item, i}
-            {#if item.value.uva !== undefined}
+            {#if item.value.uva}
                 <div data-index={i + 1} class="fundo">
                     <script 
                         type="text/javascript" 
@@ -104,13 +186,13 @@
                     </script>
                 </div>
             {/if}
-            {#if item.value.imagemDesk !== undefined}
+            {#if item.value.imagemDesk}
                 <div data-index={i + 1} class="fundo">
                     <figure class="uva-repositorio-media">
                         <img
-                            width=""
-                            height=""
-                            style="height: 100vh"
+                            width="180"
+                            height="120"
+                            style="width: 100%; height: 100vh; object-fit: cover;"
                             class="uva-imagem"
                             data-src={ dimensões > 580 ? `https://www.estadao.com.br` + item.value.imagemDesk : `https://www.estadao.com.br` + item.value.imagemMobile }
                             alt="{item.value.legenda}"
@@ -118,17 +200,18 @@
                     </figure>
                 </div>
             {/if}
-            {#if item.value.videoDesk !== undefined}
+            {#if item.value.videoDesk}
                 <div data-index={i + 1} class="fundo">
                     <figure class="uva-repositorio-media">
                         <!-- svelte-ignore a11y-media-has-caption -->
                         <video
-                            width=""
-                            height=""
+                            width="180"
+                            height="120"
                             class="uva-video"
-                            src={ dimensões > 580 ? `` + item.value.videoDesk : `` + item.value.videoMobile }
+                            style="width: 100%; height: 100vh; object-fit: cover;"
+                            data-src={ dimensões > 580 ? `` + item.value.videoDesk : `` + item.value.videoMobile }
                             alt="{item.value.legenda}"
-                            controls
+                            autoplay muted loop
                         />
                     </figure>
                 </div>
@@ -138,77 +221,8 @@
     <div class="passos">
         {#each passos as item, i}
             <div data-index={i + 1} class="passo{item.value.classe !== undefined ? ' ' + item.value.classe : ''}" data-transform={item.value.transformações}>
-                <p class="uva-body">{@html item.value.texto}</p>
+                <Text value={item.value.texto} />
             </div>
         {/each}
     </div>
 </div>
-
-<style>
-.uva-repositorio-scrollyTelling {
-    position: relative;
-    width: 100%;
-    margin: calc(var(--margem-vertical) * 2) auto;
-    pointer-events: none;
-    /* opacity: 0; */
-}
-
-/* .uva-repositorio-scrollyTelling.carregado {
-    opacity: 1;
-    transition: all 1.8s ease-in-out;
-} */
-
-.fundos {
-    position: sticky;
-    width: 100%;
-    height: 100vh;
-    top: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
-
-.fundos > div {
-    position: absolute;
-    opacity: 0;
-}
-
-.fundos > div:nth-child(1) {
-    opacity: 1;
-}
-
-.fundo.carregado {
-    opacity: 1;
-    transition: all .45s ease-in-out;
-}
-
-.fundo {
-    width: 100%;
-}
-
-.passo {
-    position: relative;
-    box-sizing: border-box;
-    margin: 0 auto;
-    height: 110vh;
-    padding-bottom: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    opacity: 0;
-    width: 100%;
-    max-width: var(--largura-celular);
-}
-
-.passo > p {
-    width: 80%;
-}
-
-.passo.carregado {
-    opacity: 1;
-    transition: all .3s ease-in;
-}
-</style>

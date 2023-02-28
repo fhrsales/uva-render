@@ -23,7 +23,14 @@
   });
 </script>
 
-<style>img { height: auto; }</style>
+<style>
+  figure {
+    margin: 0;
+  } 
+  img { 
+    height: auto; 
+  }
+</style>
 
 <figure bind:clientHeight>
   <img
