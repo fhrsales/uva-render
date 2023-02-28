@@ -1,8 +1,14 @@
 <script>
+    import UvaContainer from '../charts/UvaContainer.svelte';
+	import VideoContainer from './../videos/VideoContainer.svelte';
+    import ImageContainer from "../images/ImageContainer_responsive.svelte";
     import Text from "../texts/Text.svelte";
     let dimensões = window.innerWidth;
     export let value;
     const { conteúdo, classe, id, tamanho } = value;
+    const autoplay = "sim";
+    const muted = "sim";
+    const loop = "sim";
     const passos = conteúdo.filter(item => item.type === "passo");
     let options = {
         rootMargin: '0px 0px 6% 0px',
@@ -67,16 +73,16 @@
                         let figure = document.querySelector('#' + id + ' > div > div.fundo[data-index="' + entry.target.dataset.index + '"] > figure');
                         if (figure !== null) {
                             figure.classList.add('carregada');
-                            let image = document.querySelector('#' + id + ' > div > div.fundo[data-index="' + entry.target.dataset.index + '"] > figure > img');
-                            if (image !== null) {
-                                image.src = image.dataset.src;
-                            }
+                            // let image = document.querySelector('#' + id + ' > div > div.fundo[data-index="' + entry.target.dataset.index + '"] > figure > img');
+                            // if (image !== null) {
+                            //     image.src = image.dataset.src;
+                            // }
                         }
                         if (video !== null) {
-                            let video = document.querySelector('#' + id + ' > div > div.fundo[data-index="' + entry.target.dataset.index + '"] > video');
+                            let video = document.querySelector('#' + id + ' > div > div.fundo[data-index="' + entry.target.dataset.index + '"] figure > video');
                             if (video !== null) {
-                                video.src = video.dataset.src;
-                                video.play();
+                                // video.src = video.dataset.src;
+                                // video.play();
                             }
                         }
                         let script = document.querySelector('#' + id + ' > div > div.fundo[data-index="' + entry.target.dataset.index + '"] > script');
@@ -139,6 +145,10 @@
     .fundo {
         width: 100%;
     }
+
+    :global(.fullHeight) {
+        height: 100vh !important; 
+    }
     
     .passo {
         position: relative;
@@ -174,46 +184,35 @@
         {#each passos as item, i}
             {#if item.value.uva}
                 <div data-index={i + 1} class="fundo">
-                    <script 
-                        type="text/javascript" 
-                        class="uva-imagem" 
-                        data-uva-id={item.value.uva} 
-                        data-show-title="false" 
-                        data-show-description="false" 
-                        data-show-brand="false"
-                        data-src="https://arte.estadao.com.br/uva/scripts/embed.min.js"
-                        >
-                    </script>
+                    <UvaContainer value={{
+                        classe: item.value.classe, 
+                        fonte: item.value.uva,
+                        showTitle: false,
+                        showDescription: false,
+                        showBrand: false
+                    }} />
                 </div>
             {/if}
             {#if item.value.imagemDesk}
                 <div data-index={i + 1} class="fundo">
-                    <figure class="uva-repositorio-media">
-                        <img
-                            width="180"
-                            height="120"
-                            style="width: 100%; height: 100vh; object-fit: cover;"
-                            class="uva-imagem"
-                            data-src={ dimensões > 580 ? `https://www.estadao.com.br` + item.value.imagemDesk : `https://www.estadao.com.br` + item.value.imagemMobile }
-                            alt="{item.value.legenda}"
-                        />
-                    </figure>
+                    <ImageContainer value={{
+                        classe: "fullHeight " + item.value.classe, 
+                        fonte: dimensões > 580 ? item.value.imagemDesk : item.value.imagemMobile ,
+                        legenda: item.value.legenda
+                    }} />
                 </div>
             {/if}
             {#if item.value.videoDesk}
                 <div data-index={i + 1} class="fundo">
-                    <figure class="uva-repositorio-media">
-                        <!-- svelte-ignore a11y-media-has-caption -->
-                        <video
-                            width="180"
-                            height="120"
-                            class="uva-video"
-                            style="width: 100%; height: 100vh; object-fit: cover;"
-                            data-src={ dimensões > 580 ? `` + item.value.videoDesk : `` + item.value.videoMobile }
-                            alt="{item.value.legenda}"
-                            autoplay muted loop
-                        />
-                    </figure>
+                    <VideoContainer value={{
+                        classe: "fullHeight " + item.value.classe, 
+                        fonteDesk: item.value.videoDesk,
+                        fonteMobile: item.value.videoMobile,
+                        legenda: item.value.legenda,
+                        autoplay: autoplay,
+                        muted: muted,
+                        loop: loop
+                    }} />
                 </div>
             {/if}
         {/each}

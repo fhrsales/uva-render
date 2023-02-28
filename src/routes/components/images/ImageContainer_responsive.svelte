@@ -31,7 +31,6 @@
             <figcaption style='{tamanho === 'GG' ? 'width: var(--largura-celular); margin-left: auto; margin-right: auto' : ''}{mostrarLegenda === 'não' ? 'text-align: right; margin-top: 0' : ''}'>
                 <Caption 
                     mostrarLegenda={mostrarLegenda} 
-                    tamanho={tamanho}
                     legenda={legenda} 
                     crédito={crédito} 
                 />

@@ -40,13 +40,13 @@
         if (explanation) {
             const explanationContainer = document.createElement('div');
             explanationContainer.classList.add("uva-quiz-explanation");
-            // explanationContainer.classList.add("P");
+            explanationContainer.classList.add("P");
             explanation.forEach(item => {
                 if (item.type === "text")
                     explanationContainer.innerHTML += `<p>${item.value}</p>`;
                 else if (item.type === "imagem") {
                     explanationContainer.innerHTML +=`
-                        <figure class="P" style="margin-top: calc(var(--margem-vertical) * 2)">
+                        <figure style="margin: calc(var(--margem-vertical) * 2) 0 0 0">
                             <img 
                                 width="180"
                                 height="120"

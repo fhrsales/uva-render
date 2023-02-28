@@ -139,10 +139,10 @@
         height: 12px;
         width: 12px;
         margin: -15px 0 0 51px;
-        border: 1px solid #C7C7C7;
+        border: var(--borda-fina);
         border-radius: 4px;
         transform: rotate(45deg);
-        box-shadow: 2px 2px 2px hsl(0deg 0% 7% / 20%);
+        box-shadow: var(--sombra-leve);
         z-index: -1;
     }
 
@@ -150,10 +150,10 @@
         list-style: none;
         opacity: 1;
         background-color: var(--cor-fundo);
-        border: 1px solid #C7C7C7;
+        border: var(--borda-fina);
         border-radius: 4px;
         font-family: var(--condensed), sans-serif;
-        box-shadow: 2px 2px 2px hsl(0deg 0% 7% / 20%);
+        box-shadow: var(--sombra-leve);
         left: 0px;
         margin-top: -8px;
         padding: 12px;
