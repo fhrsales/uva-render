@@ -8,6 +8,7 @@
     const questions = conteúdo.filter(item => item.type === "questão");
 
     let score = 0;
+    let mostrarExplicacao = false;
 
     function handleClick(event) {
         event.target.classList.add('selected');
@@ -78,6 +79,40 @@
         }
     }
 </script>
+
+<div class="uva-quiz">
+    {#each questions as item, i}
+        <div data-question={i + 1} class="uva-quiz-container-question unanswered">
+            <div class="uva-quiz-counter P"> {i + 1} de {questions.length}</div>
+            <h3 class="uva-quiz-question P">{@html item.value.pergunta}</h3>
+                {#if item.value.imagem}
+                    <ImageContainer value={{
+                        tamanho: item.value.imagem.tamanho,
+                        classe: item.value.imagem.classe, 
+                        fonte: item.value.imagem.fonte, 
+                        mostrarLegenda: item.value.imagem.mostrarLegenda, 
+                        legenda: item.value.imagem.legenda, 
+                        crédito: item.value.imagem.crédito
+                    }} />
+                {/if}
+                {#if item.value.audio}
+                    <AudioContainer value={{
+                        tamanho: item.value.audio.tamanho,
+                        fonte: item.value.audio.fonte
+                    }} />
+                {/if}
+                {#if item.value.youtube}
+                    <YoutubeContainer value={{
+                        tamanho: item.value.youtube.tamanho,
+                        fonte: item.value.youtube.fonte
+                    }} />
+                {/if}
+            {#each item.value.alternativas as item, i}
+                <Button classe="uva-quiz-button P" value={item.value} {handleClick} />
+            {/each}
+        </div>
+    {/each}
+</div>
 
 <style>
     .uva-quiz-counter::before {
@@ -197,37 +232,3 @@
     }
 
 </style>
-
-<div class="uva-quiz">
-    {#each questions as item, i}
-        <div data-question={i + 1} class="uva-quiz-container-question unanswered">
-            <div class="uva-quiz-counter P"> {i + 1} de {questions.length}</div>
-            <h3 class="uva-quiz-question P">{@html item.value.pergunta}</h3>
-                {#if item.value.imagem}
-                    <ImageContainer value={{
-                        tamanho: item.value.imagem.tamanho,
-                        classe: item.value.imagem.classe, 
-                        fonte: item.value.imagem.fonte, 
-                        mostrarLegenda: item.value.imagem.mostrarLegenda, 
-                        legenda: item.value.imagem.legenda, 
-                        crédito: item.value.imagem.crédito
-                    }} />
-                {/if}
-                {#if item.value.audio}
-                    <AudioContainer value={{
-                        tamanho: item.value.audio.tamanho,
-                        fonte: item.value.audio.fonte
-                    }} />
-                {/if}
-                {#if item.value.youtube}
-                    <YoutubeContainer value={{
-                        tamanho: item.value.youtube.tamanho,
-                        fonte: item.value.youtube.fonte
-                    }} />
-                {/if}
-            {#each item.value.alternativas as item, i}
-                <Button classe="uva-quiz-button P" value={item.value} {handleClick} />
-            {/each}
-        </div>
-    {/each}
-</div>

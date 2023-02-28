@@ -27,6 +27,18 @@
     //         }
     //     });
     // });
+
+    let videoPlaying = false;
+    function handleIntersection({ entry, observer }) {
+        const { intersectionRatio } = entry;
+        if (intersectionRatio > 0) {
+            videoPlaying = true;
+            entry.target.play();
+        } else {
+            videoPlaying = false;
+            entry.target.pause();
+        }
+    }
 </script>
 
 <style>
@@ -35,7 +47,7 @@
     }
 </style>
 
-<UvaRepositorioMediaOnce {id} {tamanho} {rootMargin}>
+<UvaRepositorioMediaOnce {id} {tamanho} {rootMargin} on:intersection={handleIntersection} threshold={[0, 1]}>
     <figure bind:clientWidth bind:clientHeight>
         <Video
             contentWidth={contentWidth} 
@@ -43,7 +55,7 @@
             classe={classe} 
             playsinline={playsinline} 
             autoplay={autoplay}
-            muted={muted}
+            muted={!videoPlaying}
             preload={preload} 
             loop={loop}
             fonteDesk={fonteDesk}
