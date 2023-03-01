@@ -6,7 +6,7 @@
     });
 
     export let value;
-    const { tamanho, id, classe, guias, frames, framesTotais, conteúdo } = value;
+    const { tamanho, tamanho_fundo, id, classe, guias, frames, framesTotais, conteúdo } = value;
     const height = Math.round(frames) * (framesTotais) - window.innerHeight;
 
     import { gsap } from "gsap";
@@ -60,7 +60,7 @@
 </script>
 
 <div id={id} class="uva-media-container carregada {classe} {tamanho}" >
-    <div style="height: {height}px;">
+    <div class={tamanho_fundo} style="height: {height}px;">
         <figure class="fundo">
             <img loading="lazy"            
                 src={ window.innerWidth > 580 ? 

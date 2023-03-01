@@ -1,20 +1,18 @@
 <script>
     import ImageContainer from '../images/ImageContainer_fixed.svelte';
+    import { version } from "../../../scripts/version.js";
     export let value;
-    const { anterior, editoria, fonte, próximo } = value;
+    const { anterior, fonte, próximo } = value;
 </script>
 
-<div 
-    class="uva-media-container P"
-    style="{ editoria === "hardnews" ? "border-color: var(--cor-secundaria)" : "" || 
-            editoria === "economia" ? "border-color: var(--cor-EeN-secundaria)" : "" ||
-            editoria === "cultura" ? "border-color: var(--cor-c2-secundaria)" : "" }">
+<div class="uva-media-container P">
     <div class="previous"><a href={anterior}>‹ Anterior</a></div>
-    <ImageContainer value={value} src="https://arte.estadao.com.br/arc/images/{fonte}" />
-    {#if typeof próximo === undefined}
-        <div class="next" style="text-align: right; opacity: 0.4">Próxima<br>(em breve)</div>
+    <ImageContainer value={value} src="{fonte}?v=${version()}" />
+    {#if !próximo}
+        <div class="next" style="width: 60px"> </div>
+        <!-- <div class="next" style="text-align: left; opacity: 0.3">Próxima<br>(em breve)</div> -->
     {/if}
-    {#if typeof próximo !== undefined}
+    {#if próximo}
         <div class="next">
             <a href="{próximo}">Próxima ›</a>
         </div>
@@ -28,8 +26,9 @@
         align-items: center;
         margin: 0 auto calc(var(--margem-vertical) * 1.5) auto;
         padding: calc(var(--margem-vertical) * 0.6) 0 calc(var(--margem-vertical) * 0.4) 0;
-        border-top: var(--fio-solido-fino);
-        border-bottom: var(--fio-solido-fino);
+        border-top: var(--fio-solido-grosso);
+        border-color: var(--cor-primaria);
+        border-bottom: var(--fio-pontilhado);
         font: 500 calc(var(--corpo-mobile) * 0.7) var(--condensed);
         text-transform: uppercase;
         letter-spacing: 0.03rem;
@@ -43,6 +42,6 @@
     }
     
     .uva-media-container a:hover {
-        color: var(--cor-c2-primaria);
+        color: var(--cor-primaria);
     }
 </style>

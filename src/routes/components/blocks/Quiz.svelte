@@ -23,7 +23,7 @@
         if (alternativeSelected == questionAnswer) {
             score++;
             event.target.classList.add('correct');
-            question.innerHTML += `<p class="uva-quiz-score P" style="color:var(--cor-EeN-primaria)">Correto! 🎉🎉🎉<span>Pontuação atual: ${score}/${questions.length}</span></p>`;
+            question.innerHTML += `<p class="uva-quiz-score P" style="color:var(--cor-correto)">Correto! 🎉🎉🎉<span>Pontuação atual: ${score}/${questions.length}</span></p>`;
         } else {
             event.target.classList.add('incorrect');
             buttons.forEach(button => {
@@ -31,7 +31,7 @@
                     button.classList.add('correct');
                 }
             });
-            question.innerHTML += `<p class="uva-quiz-score P" style="color:var(--cor-c2-primaria)">Incorreto! 😢<span>Pontuação atual: ${score}/${questions.length}</p>`;
+            question.innerHTML += `<p class="uva-quiz-score P" style="color:var(--cor-incorreto)">Incorreto! 😢<span>Pontuação atual: ${score}/${questions.length}</p>`;
         }
 
         const explanation = questions[questionIndex].value.explicação;
@@ -188,17 +188,17 @@
 
     :global(.uva-quiz-button.correct) {
         background-image: url(https://arte.estadao.com.br/arc/images/quiz-correta.svg);
-        color: var(--cor-EeN-primaria);
+        color: var(--cor-correto);
     }
 
     :global(.uva-quiz-button.selected.correct) {
-        background-color: var(--cor-EeN-primaria);
+        background-color: var(--cor-correto);
         background-image: url(https://arte.estadao.com.br/arc/images/quiz-correta.svg);
         color: var(--cor-fundo);
     }
 
     :global(.uva-quiz-button.selected.incorrect) {
-        background-color: var(--cor-c2-primaria);
+        background-color: var(--cor-incorreto);
         background-image: url(https://arte.estadao.com.br/arc/images/quiz-incorreta.svg);
         color: var(--cor-fundo);
     }

@@ -5,7 +5,7 @@
     import Button from '../buttons/Button.svelte';
     import Text from '../texts/Text.svelte';
     export let value;
-    const {
+    export let {
         assinatura,
         autor,
         complemento,
@@ -16,7 +16,7 @@
         paginas,
         texto,
         titulo,
-        valor
+        valor,
     } = value;
     const rootMargin = '0px 0px 95% 0px';
     const descrição = titulo + ', por ' + autor;
@@ -43,6 +43,27 @@
             let contraCapa = livro[i].style;
             contraCapa.setProperty('--contraCapa', height + 'px');
         }
+
+        function setCorPrimaria() {
+            switch (value.editoria) {
+                case 'hardnews':
+                    document.documentElement.style.setProperty('--cor-primaria', '#005d92');
+                    document.documentElement.style.setProperty('--cor-secundaria', '#008ed0');
+                    document.documentElement.style.setProperty('--cor-terciaria', '#f5f5f5');
+                    break;
+                case 'economia':
+                    document.documentElement.style.setProperty('--cor-primaria', '#007367');
+                    document.documentElement.style.setProperty('--cor-secundaria', '#86ae1c');
+                    document.documentElement.style.setProperty('--cor-terciaria', '#f5f5f5');
+                    break;
+                case 'cultura':
+                    document.documentElement.style.setProperty('--cor-primaria', '#c20736');
+                    document.documentElement.style.setProperty('--cor-secundaria', '#e677a8');
+                    document.documentElement.style.setProperty('--cor-terciaria', '#f5f5f5');
+                    break;
+            }
+        }
+        setCorPrimaria(value.editoria);
     });
 
     function handleClick() {
@@ -114,7 +135,7 @@
         width: var(--filete);
         height: 0.188rem;
         margin-top: 0.375rem;
-        background-color: var(--cor-c2-primaria);
+        background-color: var(--cor-primaria);
     }
 
     .ficha {
@@ -132,7 +153,7 @@
     .ficha>[itemprop='title'] {
         margin: 0.563rem 0;
         font: 500 calc(var(--corpo-mobile) * 1) / calc(var(--entrelinha-mobile) * 1) var(--condensed);
-        color: var(--cor-c2-primaria);
+        color: var(--cor-primaria);
         text-transform: uppercase;
         letter-spacing: 0.009rem;
     }
@@ -196,12 +217,12 @@
 
     :global(.book-store-button) {
         margin-top: calc(var(--margem-vertical) * 0.5);
-        background-color: var(--cor-c2-secundaria);
+        background-color: var(--cor-secundaria);
         color: var(--cor-fundo);
     }
 
     :global(.book-store-button):hover {
-        background-color: var(--cor-c2-primaria);
+        background-color: var(--cor-primaria);
     }
 
     @media (min-width:740px) {

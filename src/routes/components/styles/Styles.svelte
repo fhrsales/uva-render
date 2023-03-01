@@ -1,3 +1,4 @@
+
 <style>@import 'https://arte.estadao.com.br/arc/styles/uva-font.min.css';
 
 :root {
@@ -23,17 +24,13 @@
     --entrelinha-h3-mobile: 1.725rem;
     --entrelinha-h3-desktop: 2.1rem;
 
-    --cor-fundo: #fff;
-    --cor-placeholder: #eeeeee;
-    --cor-texto: #333;
     --cor-primaria: #005d92;
     --cor-secundaria: #008ed0;
-    --cor-terciaria: #f5f5f5;
-    --cor-EeN-primaria: #007367;
-    --cor-EeN-secundaria: #86ae1c;
-    --cor-c2-primaria: #c20736;
-    ;
-    --cor-c2-secundaria: #e677a8;
+    --cor-fundo: #fff;
+    --cor-texto: #333;
+    --cor-placeholder: #eeeeee;
+    --cor-correto: #007367;
+    --cor-incorreto: #c20736;
 
     --filete: 2.5rem;
     --fio-solido-grosso: 3px solid var(--cor-texto);
@@ -42,7 +39,6 @@
 
     --margem-horizontal: 1rem;
     --margem-vertical: 2rem;
-    --margem-capitular: 0.13em 0.6em 0 0.4em;
 
     --P: 580px;
     --M: 768px;

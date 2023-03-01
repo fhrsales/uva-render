@@ -8,7 +8,8 @@
         conteúdo,
         classe,
         id,
-        tamanho
+        tamanho,
+        tamanho_fundo
     } = value;
     const autoplay = "sim";
     const muted = "sim";
@@ -124,7 +125,7 @@
 </script>
 
 <div id={id} class="uva-media-container {classe} {tamanho}">
-    <div class="fundos">
+    <div class="fundos {tamanho_fundo}">
         {#each passos as item, i}
             {#if item.value.uva}
                 <div data-index={i + 1} class="fundo">

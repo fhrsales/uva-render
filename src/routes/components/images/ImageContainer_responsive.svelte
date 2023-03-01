@@ -22,6 +22,10 @@
     figure {
         margin: calc(var(--margem-vertical) * 1.5) auto;
     }
+
+    figcaption {
+        margin: calc(var(--margem-vertical) * 0.1) auto calc(var(--margem-vertical) * 1) auto;
+    }
 </style>
 
 <UvaRepositorioMediaOnce {id} {tamanho} {rootMargin} bind:this={node}>
