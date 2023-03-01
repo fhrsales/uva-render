@@ -212,5 +212,10 @@
             justify-content: space-between;
             margin-bottom: -30px;
         }
+        
+        :global(.uva-estante-de-livros > div:nth-child(2) > p) {
+            width: 350px;
+            max-width: 350px;
+        }
     }
 </style>
