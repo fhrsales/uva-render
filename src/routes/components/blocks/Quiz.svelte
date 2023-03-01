@@ -6,10 +6,7 @@
     export let value;
     const { conteúdo } = value;
     const questions = conteúdo.filter(item => item.type === "questão");
-
     let score = 0;
-    let mostrarExplicacao = false;
-
     function handleClick(event) {
         event.target.classList.add('selected');
         const question = event.target.closest('.uva-quiz-container-question');
@@ -62,7 +59,7 @@
                 }
                 else if (item.type === "youtube") {
                     explanationContainer.innerHTML +=`
-                        <figure class="P">
+                        <figure>
                             <div class="uva-quiz-youtube">
                                 <iframe
                                     title="Vídeo do Youtube" 
@@ -143,7 +140,7 @@
     }
 
     :global(.uva-quiz-question, .uva-quiz-explanation > p) {
-        margin-top: calc(var(--margem-vertical) * 1) 0;
+        margin: calc(var(--margem-vertical) * 1) auto;
         font: 400 calc(var(--corpo-mobile) * 1)/calc(var(--entrelinha-mobile) * 1) var(--semicondensed);
         text-align: left;
         color: var(--cor-texto);
@@ -212,6 +209,7 @@
         height:0;
         overflow:hidden;
         margin: calc(var(--margem-vertical) * 2) auto;
+        background-color: var(--cor-texto);
         border-radius: 6px;
         box-shadow: var(--sombra-forte);
     }

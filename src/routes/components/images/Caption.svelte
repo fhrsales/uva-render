@@ -2,8 +2,17 @@
     export let legenda;
     export let crédito;
     export let mostrarLegenda;
-    export const tamanho = { property: "value" };
+    export const tamanho = {
+        property: "value"
+    };
 </script>
+
+{#if mostrarLegenda === "sim"}
+    <span class="uva-caption">{legenda}</span>
+    <span class="uva-credits"> • {crédito}</span>
+{:else}
+    <span class="uva-credits">{crédito}</span>
+{/if}
 
 <style>
     :global(.uva-caption) {
@@ -13,7 +22,7 @@
     }
 
     :global(.uva-credits) {
-        font: 400 calc(var(--corpo-mobile) * 0.55) var(--semicondensed);
+        font: 400 calc(var(--corpo-mobile) * 0.5) var(--semicondensed);
         letter-spacing: 0.04rem;
         text-transform: uppercase;
         opacity: 0.8;
@@ -24,14 +33,7 @@
             font-size: calc(var(--corpo-desktop) * 0.7);
         }
         :global(.uva-credits) {
-            font-size: calc(var(--corpo-desktop) * 0.55);
+            font-size: calc(var(--corpo-desktop) * 0.5);
         }
     }
 </style>
-
-{#if mostrarLegenda === "sim"}
-    <span class="uva-caption">{legenda}</span>
-    <span class="uva-credits"> • {crédito}</span>
-{:else}
-    <span class="uva-credits">{crédito}</span>
-{/if}

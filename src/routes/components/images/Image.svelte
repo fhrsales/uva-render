@@ -1,17 +1,8 @@
 <script>
-    export let {
-        alt,
-        classe,
-        imgProp,
-        lazy,
-        livro,
-        src
-    } = [];
+    export let { alt, classe, imgProp, lazy, livro, src } = [];
     let contentWidth;
     let contentHeight;
-    import {
-        onMount
-    } from "svelte";
+    import { onMount } from "svelte";
     onMount(() => {
         function setImageSize(img) {
             contentWidth = img.clientWidth;
@@ -26,11 +17,28 @@
     });
 </script>
 
+{#if livro}
+    <div class="book-spine"></div>
+{/if}
+<img
+    loaging={lazy}
+    itemprop={imgProp}
+    width={contentWidth} 
+    height={contentHeight} 
+    class="uva-image{classe ? " " + classe : ""}"
+    src={src} 
+    alt={alt} 
+/>
+{#if livro}
+    <div class="book-back-cover"></div>
+{/if}
+
 <style>
     :global(.uva-image) {
         width: 100%;
         height: auto;
         object-fit: cover;
+        background-color: var(--cor-placeholder);
     }
 
     .book-cover {
@@ -48,7 +56,7 @@
         content: '';
         left: 0;
         top: 5px;
-        width: 26px;
+        width: 32px;
         height: var(--lombada);
         transform: translateX(182.5px) rotateY(90deg);
         background: linear-gradient(90deg,
@@ -82,25 +90,9 @@
         content: '';
         width: 200px;
         height: var(--contraCapa);
-        transform: translateZ(-6px);
+        transform: translateZ(-29px);
         background-color: #01060f;
         border-radius: 0 2px 2px 0;
         box-shadow: -10px 0 50px 10px #a4a4a4;
     }
 </style>
-
-{#if livro}
-    <div class="book-spine"></div>
-{/if}
-<img
-    loaging={lazy}
-    itemprop={imgProp}
-    width={contentWidth} 
-    height={contentHeight} 
-    class="uva-image{classe ? " " + classe : ""}"
-    src={src} 
-    alt={alt} 
-/>
-{#if livro}
-    <div class="book-back-cover"></div>
-{/if}

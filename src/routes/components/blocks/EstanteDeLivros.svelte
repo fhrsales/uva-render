@@ -26,11 +26,7 @@
     let descProp = 'description';
     let showLojas = false;
     let node;
-
-    import {
-        onMount
-    } from 'svelte';
-
+    import { onMount } from 'svelte';
     onMount(async () => {
         let livro = node.querySelectorAll('figure');
         for (let i = 0; i < livro.length; i++) {
@@ -54,8 +50,45 @@
     }
 </script>
 
+<div class='uva-estante-de-livros P'>
+    <div>
+        <div class='uva-container-media' bind:this={node}>
+            <figure>
+                <Image {imgProp} {lazy} {livro} classe='book-cover' src='https://www.estadao.com.br{fonte}' alt={titulo + ', por ' + autor} />
+            </figure>
+        </div>
+        <div class='ficha'>
+            <h4 itemprop='genre'>{genero}</h4>
+            <h3 itemprop='title'>{titulo}</h3>
+            <p itemprop='author'><strong>{autor}</strong></p>
+            {#if complemento}
+                <p itemprop='complement'>{complemento}</p>
+            {/if}
+            <p itemprop='publisher'>Editora {editora}</p>
+            <p><span itemprop='pages'>{paginas}</span> • <span itemprop='price'>{valor}</span></p>
+            {#if comprar}
+                <Button classe='book-store-button' value='Comprar ▾' {handleClick} />
+            {/if}
+            {#if showLojas}
+                <div></div>
+                <div></div>
+                <ul class='book-stores'>
+                    {#each comprar as item}
+                        <li class='book-store'>
+                            <a href={item.link} target='_blank' rel='noopener noreferrer'>{item.nome}</a>
+                        </li>
+                    {/each}
+                </ul>
+            {/if}
+        </div>
+    </div>
+    <div style='margin: 0 calc(var(--filete) * -0.5)'>
+        <Text {assinatura} {descProp} value={texto} />
+    </div>
+</div>
+
 <style>
-    .uva-container-estante-de-livros {
+    .uva-estante-de-livros {
         display: block;
     }
 
@@ -122,18 +155,18 @@
         margin: 0;
     }
 
-    :global(.uva-container-estante-de-livros > div:nth-child(1) > div > div) {
+    :global(.uva-estante-de-livros > div:nth-child(1) > div > div) {
         position: absolute;
         display: inline-block;
         background-color: var(--cor-fundo);
         height: 12px;
         width: 12px;
-        margin: -14px 0 0 52px;
+        margin: -6px 0 0 52px;
         z-index: 1;
         transform: rotate(45deg);
     }
 
-    :global(.uva-container-estante-de-livros > div:nth-child(1) > div > div > div) {
+    :global(.uva-estante-de-livros > div:nth-child(1) > div > div > div) {
         position: absolute;
         display: inline-block;
         height: 12px;
@@ -155,7 +188,7 @@
         font-family: var(--condensed), sans-serif;
         box-shadow: var(--sombra-leve);
         left: 0px;
-        margin-top: -8px;
+        margin-top: 0px;
         padding: 12px;
         /* top: 28px; */
         width: 176px;
@@ -174,47 +207,10 @@
     @media (min-width:740px) {
 
         /* Desktop */
-        .uva-container-estante-de-livros {
+        .uva-estante-de-livros {
             display: flex;
             justify-content: space-between;
             margin-bottom: -30px;
         }
     }
 </style>
-
-<div class='uva-container-estante-de-livros P'>
-    <div>
-        <div class='uva-container-media' bind:this={node}>
-            <figure>
-                <Image {imgProp} {lazy} {livro} classe='book-cover' src='https://www.estadao.com.br{fonte}' alt={titulo + ', por ' + autor} />
-            </figure>
-        </div>
-        <div class='ficha'>
-            <h4 itemprop='genre'>{genero}</h4>
-            <h3 itemprop='title'>{titulo}</h3>
-            <p itemprop='author'><strong>{autor}</strong></p>
-            {#if complemento}
-                <p itemprop='complement'>{complemento}</p>
-            {/if}
-            <p itemprop='publisher'>Editora {editora}</p>
-            <p><span itemprop='pages'>{paginas}</span> • <span itemprop='price'>{valor}</span></p>
-            {#if comprar}
-                <Button classe='book-store-button' value='Comprar ▾' {handleClick} />
-            {/if}
-            {#if showLojas}
-                <div></div>
-                <div></div>
-                <ul class='book-stores'>
-                    {#each comprar as item}
-                        <li class='book-store'>
-                            <a href={item.link} target='_blank' rel='noopener noreferrer'>{item.nome}</a>
-                        </li>
-                    {/each}
-                </ul>
-            {/if}
-        </div>
-    </div>
-    <div style='margin: 0 calc(var(--filete) * -0.5)'>
-        <Text {assinatura} {descProp} value={texto} />
-    </div>
-</div>

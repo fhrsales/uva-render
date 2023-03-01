@@ -3,7 +3,7 @@
     import ImagePlaceholder from "../images/ImagePlaceholder.svelte";
     export let value;
     const { fonte, id, tamanho } = value;
-    const rootMargin = "0px 0px 35% 0px";
+    const rootMargin = "0px 0px 0px 0px";
     const descrição = "Vídeo do Youtube";
     let clientWidth;
     let clientHeight;
@@ -21,30 +21,6 @@
     });
 </script>
 
-<style>
-    figure {
-        margin: calc(var(--margem-vertical) * 1.5) auto;
-    }
-
-    div {
-        position:relative;
-        padding-bottom:56.25%;
-        height:0;
-        overflow:hidden;
-        margin: calc(var(--margem-vertical) * 1) auto;
-        background-color: #f0f0f0;
-        border-radius: 6px;
-        box-shadow: var(--sombra-forte);
-    }
-    iframe {
-        position:absolute;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
-    }
-</style>
-
 <UvaRepositorioMediaOnce {id} {tamanho} {rootMargin}>
     <figure bind:clientWidth bind:clientHeight>
         <div>
@@ -59,6 +35,30 @@
     </figure>
 
     <placeholder slot="placeholder">
-        <ImagePlaceholder {descrição} />
+        <ImagePlaceholder {descrição} src="https://img.youtube.com/vi/{fonte}/sddefault.jpg" />
     </placeholder>
 </UvaRepositorioMediaOnce>
+
+<style>
+    figure {
+        margin: calc(var(--margem-vertical) * 1.5) auto;
+    }
+
+    div {
+        position:relative;
+        padding-bottom:56.25%;
+        height:0;
+        overflow:hidden;
+        margin: calc(var(--margem-vertical) * 1) auto;
+        background-color: var(--cor-texto);
+        border-radius: 6px;
+        box-shadow: var(--sombra-forte);
+    }
+    iframe {
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+    }
+</style>

@@ -1,12 +1,17 @@
 <script>
     let node;
     export let value;
-    const { corNova, corOriginal } = value;
+    const {
+        corNova,
+        corOriginal
+    } = value;
     let options = {
         rootMargin: '0px 0px 0px 0px',
         threshold: 0,
     }
-    import { onMount } from "svelte";
+    import {
+        onMount
+    } from "svelte";
     onMount(async () => {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {

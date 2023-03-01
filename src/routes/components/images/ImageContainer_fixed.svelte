@@ -23,15 +23,6 @@
   });
 </script>
 
-<style>
-  figure {
-    margin: 0;
-  } 
-  img { 
-    height: auto; 
-  }
-</style>
-
 <figure bind:clientHeight>
   <img
     loading="lazy"
@@ -41,3 +32,12 @@
     bind:this={imageElement}
   />
 </figure>
+
+<style>
+  figure {
+    margin: 0;
+  } 
+  img { 
+    height: auto; 
+  }
+</style>

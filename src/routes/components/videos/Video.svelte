@@ -1,5 +1,4 @@
 <script>
-    export let dimensões = window.innerWidth;
     export let fonteDesk;
     export let fonteMobile;
     export let playsinline;
@@ -10,17 +9,8 @@
     export let contentWidth;
     export let contentHeight;
     export let classe;
-    export let src = dimensões > 580 ? fonteDesk : fonteMobile;
+    export let src = window.innerWidth > 580 ? fonteDesk : fonteMobile;
 </script>
-
-<style>
-    video {
-        width: 100%;
-        height: auto;
-        object-fit: cover;
-        background-color: #f0f0f0;
-    }
-</style>
 
 <video 
     width={contentWidth} 
@@ -34,3 +24,12 @@
     src={src}
 >
 </video>
+
+<style>
+    video {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        background-color: var(--cor-placeholder);
+    }
+</style>

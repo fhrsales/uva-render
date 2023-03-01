@@ -24,6 +24,7 @@
     --entrelinha-h3-desktop: 2.1rem;
 
     --cor-fundo: #fff;
+    --cor-placeholder: #eeeeee;
     --cor-texto: #333;
     --cor-primaria: #005d92;
     --cor-secundaria: #008ed0;

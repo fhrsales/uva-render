@@ -12,24 +12,12 @@
     export const loop = boolean(value.loop); 
     export const rootMargin = "0px 0px 35% 0px";
     export const descrição = legenda;   
-    let dimensions = window.innerWidth;
     let clientWidth;
     let clientHeight;
     $: contentWidth = clientWidth;
     $: contentHeight = clientHeight;
-    // import { onMount } from "svelte";
-    // onMount(() => {    
-    //     window.addEventListener("resize", () => {
-    //         let image = document.querySelectorAll(".uva-video");
-    //         if (image !== null) {
-    //             image.width = image.clientWidth;
-    //             image.height = image.clientHeight;
-    //         }
-    //     });
-    // });
-
     let videoPlaying = false;
-    function handleIntersection({ entry, observer }) {
+    function handleIntersection({ entry }) {
         const { intersectionRatio } = entry;
         if (intersectionRatio > 0) {
             videoPlaying = true;
@@ -40,12 +28,6 @@
         }
     }
 </script>
-
-<style>
-    figure {
-        margin: calc(var(--margem-vertical) * 1.5) auto;
-    }
-</style>
 
 <UvaRepositorioMediaOnce {id} {tamanho} {rootMargin} on:intersection={handleIntersection} threshold={[0, 1]}>
     <figure bind:clientWidth bind:clientHeight>
@@ -60,7 +42,7 @@
             loop={loop}
             fonteDesk={fonteDesk}
             fonteMobile={fonteMobile}
-            src={dimensions > 580 ? fonteDesk : fonteMobile}
+            src={window.innerWidth > 580 ? fonteDesk : fonteMobile}
         />
         {#if mostrarLegenda}
             <figcaption style="{tamanho === "GG" ? "width: var(--largura-celular);" : ""}{mostrarLegenda === "não" ? "text-align: right; margin-top: 0;" : ""}">
@@ -72,8 +54,13 @@
             </figcaption>
         {/if}
     </figure>
-
     <placeholder slot="placeholder">
         <ImagePlaceholder {descrição} />
     </placeholder>
 </UvaRepositorioMediaOnce>
+
+<style>
+    figure {
+        margin: calc(var(--margem-vertical) * 1.5) auto;
+    }
+</style>

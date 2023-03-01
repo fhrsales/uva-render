@@ -14,7 +14,7 @@
         tamanho
     } = value;
     const rootMargin = '0px 0px 95% 0px';
-    const descrição = legenda;
+    export const descrição = legenda;
     let node;
 </script>
 
