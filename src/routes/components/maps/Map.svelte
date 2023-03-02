@@ -1,57 +1,56 @@
 <script>
-    import { UvaPath } from "../../../scripts/store.js"
-    let UvaPages = "";
-    UvaPath.subscribe(value => { UvaPages = value; });
+    import { onMount } from 'svelte';
+    import * as d3 from 'd3';
+    import * as topojson from 'topojson-client';
+    import { UvaPath } from "../../../scripts/store.js";
     import { version } from "../../../scripts/version.js";
     import ChartHeading from '../headings/ChartHeading.svelte';
     import Text from '../texts/Text.svelte';
-    import * as d3 from 'd3';
-    import * as topojson from 'topojson-client';
+
     export let value;
-    const { editoria, id, tipo, mapa, tamanho, largura, altura, título, linhaFina, dado, variável, domínio, faixa, tituloLegenda, textoLegenda, orientaçãoLegenda, posiçãoLegenda, shapePadding, shapeWidth, shapeHeight, labelOffset, tooltip, fonte } = value;
+    const { editoria, id, tipo, mapa, tamanho, largura, altura, título, linhaFina, dado, variável, tituloLegenda, textoLegenda, orientaçãoLegenda, posiçãoLegenda, shapePadding, shapeWidth, shapeHeight, labelOffset, fonte } = value;
 
-    let caminho;
-    let sigla;
-    let json;
+    let UvaPages = "";
+    UvaPath.subscribe(value => { UvaPages = value; });
 
-    let locale = d3.formatLocale({
+    onMount(() => {
+        const svg = d3.select(`#${id}`)
+            .append('svg')
+            .attr('preserveAspectRatio', 'xMidYMid meet')
+            .attr('viewBox', '0 0 ' + largura + ' ' + altura)
+            let caminho, sigla, jsonUrl;
+            let locale = d3.formatLocale({
                     "decimal": ",",
                     "thousands": ".",
                     "grouping": [3],
                     "currency": ["R$", ""]
                 });
-    let brasil = locale.format(",d");
+            if (tipo === 'coroplético') {
+                if (mapa === 'Brasil') {
+                    caminho = 'brasil';
+                    sigla = 'cities';
+                    jsonUrl = 'https://gist.githubusercontent.com/Dienert/290f1428cca865cdfb5bc7d0dfcec473/raw/3d45041b0d31c5622ad8764460accdd8634caa10/brasil_estados_cidades_topo.json';
+                    // sigla = '-';
+                    // jsonUrl = 'https://arte.estadao.com.br/politica/eleicoes/2018/maptse/data/topojson/brasil/brasil-municipios.json';
 
-    import { onMount } from 'svelte';
-    onMount (() => {
-        // define dimensões do mapa
-        const width = largura;
-        const height = altura;
-        const svg = d3.select('#' + id)
-            .append('svg')
-            .attr('preserveAspectRatio', 'xMidYMid meet')
-            .attr('viewBox', '0 0 ' + width + ' ' + height)
+                } if (mapa === 'cachorrão') {
+                    sigla = 'sp-zonas-eleitorais';
+                    jsonUrl = 'https://arte.estadao.com.br/arc/data/sp-cachorrao.json';
 
-        // desenha o mapa com divisão por municípios
-        if (tipo === 'municípios') {
-            // se Brasil, com todos os municípios
-            if (value.mapa === 'Brasil') {
-                caminho = 'brasil';
-                sigla = '-';
-                sigla = 'cities';
-                json = 'https://gist.githubusercontent.com/Dienert/290f1428cca865cdfb5bc7d0dfcec473/raw/3d45041b0d31c5622ad8764460accdd8634caa10/brasil_estados_cidades_topo.json';
-                // json = 'https://arte.estadao.com.br/politica/eleicoes/2018/maptse/data/topojson/brasil/brasil-municipios.json';
-            // se estados
-            } else {
-                caminho = mapa.toLowerCase();
-                sigla = caminho + '-municipios';
-                json = 'https://arte.estadao.com.br/politica/eleicoes/2018/maptse/data/topojson/estados/' + caminho + '-municipios.json';
-            }
-            d3.json(json)
-                .then(function (brasil) {
-                    let mapa = topojson.feature(brasil, brasil.objects[`${sigla}`]);
-                    let projection = d3.geoMercator().fitSize([width, height], mapa);
-                    let path = d3.geoPath().projection(projection);
+                } else if (mapa !== 'Brasil' && mapa !== 'cachorrão') {
+                    caminho = mapa.toLowerCase();
+                    sigla = caminho + '-municipios';
+                    jsonUrl = 'https://arte.estadao.com.br/politica/eleicoes/2018/maptse/data/topojson/estados/' + caminho + '-municipios.json';
+                }
+                Promise.all([
+                    d3.json(jsonUrl),
+                    d3.json('https://arte.estadao.com.br/arc/data/brasil-nomes-municipios.json'),
+                    d3.csv(`https://arte.estadao.com.br/public/pages/${UvaPages}${dado}?v=${version()}`)
+                ]).then(([brasil, ibge, dado]) => {
+                    const mapa = topojson.feature(brasil, brasil.objects[`${sigla}`]);
+                    const projection = d3.geoMercator().fitSize([largura, altura], mapa);
+                    const path = d3.geoPath().projection(projection);
+                    // Desenha o mapa
                     svg.append('g')
                     .attr('class', 'uva-mapa-municipios')
                     .selectAll('path')
@@ -60,135 +59,77 @@
                     .append('path')
                     .attr('d', path)
                     .attr('class', 'municipio')
-                    .attr('data-tse', function (d) {
-                        return d.properties.tse;
+                    .attr('data-tse', d => d.properties.tse)
+                    .attr('data-distrito', d => d.properties.distrito);
+                    // Adiciona os dados do IBGE
+                    mapa.features.forEach(d => {
+                        const element = ibge.find(e => e.codigo_tse === +d.properties.tse);
+                        if (element) {
+                            d3.select(`[data-tse="${d.properties.tse}"]`)
+                            .attr('data-ibge', element.codigo_ibge)
+                            .attr('data-uf', element.uf)
+                            .attr('data-nome', element.nome_municipio)
+                        }
                     });
-                })
-
-            // cruza os dados do TSE com os dados do IBGE e nome de cidade
-            d3.json('https://arte.estadao.com.br/arc/data/brasil-nomes-municipios.json')
-            .then (function (ibge) {
-                d3.selectAll('.municipio')
-                .each(function (d) {
-                    var tse = d3.select(this).attr('data-tse');
-                    var codigo_ibge = '';
-                    var uf = '';
-                    var municipio = '';
-                    ibge.forEach(function (element) {
-                    if (element.codigo_tse === +tse) {
-                        codigo_ibge = element.codigo_ibge;
-                        uf = element.uf;
-                        municipio = element.nome_municipio;
+                    // Aplica os dados no mapa
+                    const dados = dado.map(d => {
+                        return {
+                            ibge: +d.ibge,
+                            valor: +d[variável]
+                        }
+                    });                    
+                    const domínio = JSON.parse(value.domínio);
+                    const faixa = eval(value.faixa)
+                    const escala = d3.scaleLinear()
+                        .domain(domínio)
+                        .range(faixa);
+                    svg.selectAll('.municipio')
+                    .attr('data-number', d => {
+                        const element = dados.find(e => e.ibge === +d.properties.ibge);
+                        if (element) {
+                            return element.valor
+                        } else {
+                            return 'Sem valor';
+                        }
+                    })
+                    .attr('fill', d => {
+                        const element = dados.find(e => e.ibge === +d.properties.ibge);
+                        if (element) {
+                            return escala(element.valor);
+                        } else {
+                            return '#ccc';
+                        }
+                    })
+                    // Cria um tooltip
+                    if (window.innerWidth > 768) {
+                        let brasil = locale.format(",d");
+                        d3.selectAll('path')
+                        .on('mouseover', function() {
+                            const conteúdoTooltip = eval(value.tooltip);
+                            const tooltip = d3.select('body')
+                            .append('div')
+                            .attr('class', 'uva-tooltip-mapa')
+                            tooltip.append('div')
+                                .attr('class', 'label')
+                                .html(conteúdoTooltip)
+                            d3.select('body')
+                            .on('mousemove', function (event) {
+                                const mouse = d3.pointer(event);
+                                tooltip
+                                    .style('left', `${mouse[0] + 20}px`)
+                                    .style('top', `${mouse[1] - 20}px`)
+                                    .style('display', 'block')
+                                    .style('opacity', 1);
+                            });
+                        })
+                        .on('mouseout', function() {
+                            d3.select('.uva-tooltip-mapa').remove();
+                            d3.select('body')
+                                .on('mousemove', null);
+                        });
                     }
-                    });
-                    d3.select(this).attr('data-ibge', codigo_ibge);
-                    d3.select(this).attr('data-uf', uf);
-                    d3.select(this).attr('data-nome', municipio);
-                });
-            })
-
-        // desenha o mapa de distritos de São Paulo
-        } else if (value.tipo === 'cachorrão') {
-            d3.json('https://arte.estadao.com.br/arc/data/sp-cachorrao.json')
-            .then(function (distrito) {
-                var cachorrao = topojson.feature(distrito, distrito.objects['sp-zonas-eleitorais']);
-                var projection = d3.geoMercator().fitSize([width, height], cachorrao);
-                var path = d3.geoPath().projection(projection);
-                svg.append('g')
-                .attr('class', 'uva-mapa-distritos-sp')
-                .selectAll('path')
-                .data(cachorrao.features)
-                .enter()
-                .append('path')
-                .attr('d', path)
-                .attr('class', 'distrito')
-                .attr('data-distrito', function (d) {
-                    return d.properties.distrito;
-                })
-            })
-        }
-
-        // // puxa os dados e aplica no mapa
-        d3.csv(`https://arte.estadao.com.br/public/pages/${UvaPages}${dado}?v=${version()}`)
-        .then(function (dado) {
-            var data = variável;
-            // var min = d3.min(data, function (d) {
-            //     return +d[data];
-            // });
-            // var max = d3.max(data, function (d) {
-            //     return +d[data];
-            // });
-            var domínio = JSON.parse(value.domínio);
-            var faixa = eval(value.faixa);
-            var color = d3.scaleLinear()
-            // .domain([min, max])
-            // .range(domínio);
-            .domain(domínio)
-            .range(faixa);
-            d3.selectAll('.municipio')
-            .attr('fill', function (d) {
-                var ibge = d3.select(this).attr('data-ibge');
-                var dataPoint = '';
-                dado.some(function (element) {
-                    if (element.ibge === ibge) {
-                        dataPoint = element[data];
-                        return true;
-                    }
-                });
-                d3.select(this).attr('data-number', dataPoint);
-                return color(dataPoint);
-            });
-
-
-            // cria legenda
-            // let label = eval(textoLegenda);
-            // let legenda = d3.legendColor()
-            //     .title(`${tituloLegenda}`)
-            //     .cells(domínio)
-            //     .orient(`${orientaçãoLegenda}`)
-            //     .labelFormat(brasil)
-            //     .labels(label)
-            //     .scale(color)
-            //     .shapePadding(shapePadding)
-            //     .shapeWidth(shapeWidth)
-            //     .shapeHeight(shapeHeight)
-            //     .labelOffset(labelOffset);
-            // svg.append("g")
-            //     .attr("class", "uva-legenda-mapa")
-            //     .attr(`transform`, `translate(${posiçãoLegenda})`)
-            // svg.select(".uva-legenda-mapa")
-            //     .call(legenda);
-
-
-            // cria tooltip
-            if (window.innerWidth > 768) {
-            d3.selectAll('path')
-                .on('mouseover', function (d) {
-                    var conteúdoTooltip = eval(value.tooltip);
-                    //var conteúdoTooltip = "<strong>" + d3.select(this).attr("data-nome") + "</strong><hr>" + "População: " + brasil(d3.select(this).attr("data-number")) + " habitantes"
-                    var tooltip = d3.select('body')
-                        .append('div')
-                        .attr('class', 'uva-tooltip-mapa')
-                    tooltip.append('div')
-                        .attr('class', 'label')
-                        .html(conteúdoTooltip)
-                    d3.select('body')
-                    .on('mousemove', function (event) {
-                        var mouse = d3.pointer(event);
-                        tooltip
-                            .style('left', `${mouse[0] + 20}px`)
-                            .style('top', `${mouse[1] - 20}px`)
-                            .style('display', 'block')
-                            .style('opacity', 1);
-                    });
-                })
-                .on('mouseout', function (d) {
-                    d3.select('.uva-tooltip-mapa').remove();
-                    d3.select('body')
-                        .on('mousemove', null);
                 });
             }
-        })
     })
 </script>
 
@@ -209,11 +150,6 @@
 .uva-map-container {
     margin: calc(var(--margem-vertical) * 1) auto calc(var(--margem-vertical) * 2) auto;
 }
-
-/* .uva-body {
-   font-size: calc(var(--corpo-desktop) * 0.8);
-   line-height: calc(var(--entrelinha-desktop) * 0.8);
-} */
 
 :global(.municipio, .distrito) {
     stroke: rgb(127 127 127);
