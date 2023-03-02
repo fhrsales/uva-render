@@ -17,7 +17,7 @@
   import ImageContainer from "./components/images/ImageContainer_responsive.svelte";
   import Janela from "./components/texts/Janela.svelte";
   import Lead from "./components/texts/Lead.svelte";
-  // import Map from "./components/maps/Map.svelte";
+  import Map from "./components/maps/Map.svelte";
   import Navigation from "./components/navigation/Navigation.svelte";
   import Quiz from "./components/blocks/Quiz.svelte";
   import Quote from "./components/texts/Quote.svelte";
@@ -39,7 +39,7 @@
     const response = await fetch(json);
     const data = await response.json();
     conteúdo = Object.values(data.conteúdo);
-    console.log(conteúdo);
+    // console.log(conteúdo);
     if (functionExecuted) {
         return;
     }
@@ -86,9 +86,9 @@
   {#if block.type === "lead"}
     <Lead value={block.value} />
   {/if}
-  <!-- {#if block.type === "mapa"}
+  {#if block.type === "mapa"}
     <Map value={block.value} />
-  {/if} -->
+  {/if}
   {#if block.type === "mudaFundo"}
     <ChangeBackground value={block.value} />
   {/if}
