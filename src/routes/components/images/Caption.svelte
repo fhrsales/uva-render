@@ -21,8 +21,8 @@
     }
 
     :global(.uva-credits) {
-        font: 400 calc(var(--corpo-mobile) * 0.45) var(--semicondensed);
-        letter-spacing: 0.04rem;
+        font: 400 calc(var(--corpo-mobile) * 0.5) var(--semicondensed);
+        letter-spacing: 0.03rem;
         text-transform: uppercase;
         opacity: 0.8;
     }
@@ -32,7 +32,7 @@
             font-size: calc(var(--corpo-desktop) * 0.8);
         }
         :global(.uva-credits) {
-            font-size: calc(var(--corpo-desktop) * 0.45);
+            font-size: calc(var(--corpo-desktop) * 0.5);
         }
     }
 </style>

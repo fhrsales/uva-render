@@ -15,7 +15,7 @@
     export const mostrar_título = boolean(value.mostrar_título);
     export const mostrar_descrição = boolean(value.mostrar_descrição);
     export const mostrar_marca = boolean(value.mostrar_marca);
-    export const rootMargin = "0px 0px 100px 0px";
+    export const rootMargin = "0px 0px 15% 0px";
 </script>
 
 <UvaRepositorioMediaOnce {id} {tamanho} {rootMargin}>

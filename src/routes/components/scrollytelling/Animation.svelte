@@ -1,4 +1,5 @@
 <script>
+    import { onMount } from "svelte";
     import { UvaPath } from "../../../scripts/store.js"
     let UvaPages = "";
     UvaPath.subscribe(value => {
@@ -13,7 +14,7 @@
     import { ScrollTrigger } from "gsap/ScrollTrigger";
     import Text from "../texts/Text.svelte";
     gsap.registerPlugin(ScrollTrigger);
-    let images= [];
+    const images= [];
         for (let i = 1; i <= framesTotais; i++) {
             { window.innerWidth > 580 ? 
                 images.push("https://arte.estadao.com.br/public/pages/" + UvaPages + i.toString().padStart(4, `0`) + `.jpg`) : 
@@ -22,14 +23,17 @@
         }
     let firstImage = 0;
 
-    import { onMount } from "svelte";
-    onMount(async () => {
-        let ImageContainer = document.querySelector("#" + id + "> div:nth-child(1) > figure > img");
+    function animateImages () {
+        const ImageContainer = document.querySelector(`#${id} > div:nth-child(1) > figure > img`);
+        ImageContainer.setAttribute('preload', 'true');
         gsap.to({}, {
             scrollTrigger: {
-                trigger: ".scrolly-animado > div",
+                trigger: `#${id} > div`,
+                markers: false,
+                ease: "none",
                 start: "top top",
                 end: "bottom bottom",
+                delay: 1,
                 scrub: true,
                 onUpdate: (self) => {
                     const progress = self.progress;
@@ -45,8 +49,9 @@
             }
         }
         );
+    }
 
-        let passos = document.querySelector("#" + id + " > div.passos");
+    const passos = document.querySelector("#" + id + " > div.passos");
         if (guias === "sim") {
             for (let i = 0; i < 1; i += 0.01) {
                 let debug = document.createElement("div");
@@ -56,6 +61,9 @@
                 passos.appendChild(debug);
             }
         }
+
+    onMount(async () => {
+        animateImages();        
     });    
 </script>
 
