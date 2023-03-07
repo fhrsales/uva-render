@@ -58,7 +58,7 @@
         top: 5px;
         width: 32px;
         height: var(--lombada);
-        transform: translateX(182.5px) rotateY(90deg);
+        transform: translateX(181.5px) rotateY(90deg);
         background: linear-gradient(90deg,
                 var(--cor-fundo) 0%,
                 #f9f9f9 5%,

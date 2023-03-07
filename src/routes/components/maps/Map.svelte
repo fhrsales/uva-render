@@ -1,151 +1,51 @@
 <script>
     import { onMount } from 'svelte';
-    import * as d3 from 'd3';
-    import * as topojson from 'topojson-client';
-    import { UvaPath } from "../../../scripts/store.js";
-    import { version } from "../../../scripts/version.js";
+    import { mapaMundo } from './mundo.js'
+    import { mapaBrasil } from './brasil.js'
+    import { mapaBrasilUFs } from './brasilUFs.js'
+    import { mapaEstados } from './estados.js'
+    import { mapaCachorrao } from './cachorrao.js'
     import ChartHeading from '../headings/ChartHeading.svelte';
     import Text from '../texts/Text.svelte';
 
     export let value;
-    const { id, tipo, mapa, tamanho, largura, altura, título, linhaFina, faixa, dado, variável, tituloLegenda, textoLegenda, fonte } = value;
-
-    let UvaPages = "";
-    UvaPath.subscribe(value => { UvaPages = value; });
+    const { id, tipo, mapa, tamanho, largura, altura, título, linha_fina, cores, dados, variável, título_legenda, texto_legenda, fonte } = value;
+    
     let el;
-
-    let legendColors = faixa.split(', ');
-    let legendText = textoLegenda.split(', ');
+    let legendColors = cores.split(', ');
+    let legendText = texto_legenda.split(', ');
 
     onMount(() => {
-        const svg = d3.select(el)
-            .append('svg')
-            .attr('preserveAspectRatio', 'xMidYMid meet')
-            .attr('viewBox', '0 0 ' + largura + ' ' + altura)
-            let caminho, sigla, jsonUrl;
-            let locale = d3.formatLocale({
-                    "decimal": ",",
-                    "thousands": ".",
-                    "grouping": [3],
-                    "currency": ["R$", ""]
-                });
-            if (tipo === 'coroplético') {
-                if (mapa === 'Brasil') {
-                    caminho = 'brasil';
-                    sigla = '-';
-                    jsonUrl = 'https://arte.estadao.com.br/arc/data/brasil.json';
-
-                } if (mapa === 'cachorrão') {
-                    sigla = 'sp-zonas-eleitorais';
-                    jsonUrl = 'https://arte.estadao.com.br/arc/data/sp-cachorrao.json';
-
-                } else if (mapa !== 'Brasil' && mapa !== 'cachorrão') {
-                    caminho = mapa.toLowerCase();
-                    sigla = caminho + '-municipios';
-                    jsonUrl = 'https://arte.estadao.com.br/politica/eleicoes/2018/maptse/data/topojson/estados/' + caminho + '-municipios.json';
-                }
-                Promise.all([
-                    d3.json(jsonUrl),
-                    d3.json('https://arte.estadao.com.br/arc/data/brasil-nomes-municipios.json'),
-                    d3.csv(`https://arte.estadao.com.br/public/pages/${UvaPages}${dado}?v=${version()}`)
-                ]).then(([brasil, ibge, dado]) => {
-                    const mapa = topojson.feature(brasil, brasil.objects[`${sigla}`]);
-                    const projection = d3.geoMercator().fitSize([largura, altura], mapa);
-                    const path = d3.geoPath().projection(projection);
-                    // Desenha o mapa
-                    svg.append('g')
-                    .attr('class', 'mapa')
-                    .selectAll('path')
-                    .data(mapa.features)
-                    .enter()
-                    .append('path')
-                    .attr('d', path)
-                    .attr('class', 'regiao')
-                    .attr('data-tse', d => d.properties.tse)
-                    .attr('data-distrito', d => d.properties.distrito);
-                    // Adiciona os dados do IBGE
-                    mapa.features.forEach(d => {
-                        const element = ibge.find(e => e.codigo_tse === +d.properties.tse);
-                        if (element) {
-                            d3.select(`[data-tse="${d.properties.tse}"]`)
-                            .attr('data-ibge', element.codigo_ibge)
-                            .attr('data-uf', element.uf)
-                            .attr('data-nome', element.nome_municipio)
-                        }
-                    });
-                    // Aplica os dados no mapa
-                    const dados = dado.map(d => {
-                        return {
-                            ibge: +d.ibge,
-                            valor: +d[variável]
-                        }
-                    });                    
-                    const domínio = JSON.parse(value.domínio);
-                    const faixa = value.faixa.split(', ');
-                    const escala = d3.scaleLinear()
-                        .domain(domínio)
-                        .range(faixa);
-                    svg.selectAll('.regiao')
-                    .attr('data-number', d => {
-                        const element = dados.find(e => e.ibge === +d.properties.ibge);
-                        if (element) {
-                            return element.valor
-                        } else {
-                            return 'Sem valor';
-                        }
-                    })
-                    .attr('fill', d => {
-                        const element = dados.find(e => e.ibge === +d.properties.ibge);
-                        if (element) {
-                            return escala(element.valor);
-                        } else {
-                            return '#eeeeee';
-                        }
-                    })
-                    
-                    // Cria um tooltip
-                    if (window.innerWidth > 768) {
-                        let brasil = locale.format(",d");
-                        d3.selectAll('path')
-                        .on('mouseover', function() {
-                            const conteúdoTooltip = "<strong>" + d3.select(this).attr("data-nome") + ", " + d3.select(this).attr("data-uf") + "</strong><hr style='border: 0; border-top: var(--fio-solido-fino);'>" + "População: " + brasil(d3.select(this).attr("data-number")) + " habitantes";
-                            const tooltip = d3.select('body')
-                            .append('div')
-                            .attr('class', 'tooltip')
-                            tooltip.append('div')
-                                .attr('class', 'label')
-                                .html(conteúdoTooltip)
-                            d3.select('body')
-                            .on('mousemove', function (event) {
-                                const mouse = d3.pointer(event);
-                                tooltip
-                                    .style('left', `${mouse[0] - 102}px`)
-                                    .style('top', `${mouse[1] + 15}px`)
-                                    .style('display', 'block')
-                                    .style('opacity', 1);
-                            });
-                        })
-                        .on('mouseout', function() {
-                            d3.select('.tooltip').remove();
-                            d3.select('body')
-                                .on('mousemove', null);
-                        });
-                    }
-                });
-            }
+        if (mapa === 'Mundo') {
+            mapaMundo(el, tipo, dados, largura, altura, variável, value);
+        }
+        if (mapa === 'Brasil') {
+            mapaBrasil(el, tipo, dados, largura, altura, variável, value);
+        }
+        if (mapa === 'BrasilUFs') {
+            mapaBrasilUFs(el, tipo, dados, largura, altura, variável, value);
+        }
+        if (mapa === 'cachorrao-distritos') {
+            mapaCachorrao(el, tipo, mapa, dados, largura, altura, variável, value);
+        }
+        if (mapa === 'cachorrao-delegacias-policiais') {
+            mapaCachorrao(el, tipo, mapa, dados, largura, altura, variável, value);
+        } else if (mapa !== 'Mundo' && mapa !== 'Brasil' && mapa !== 'BrasilUFs' && mapa !== 'cachorrao-distritos' && mapa !== 'cachorrao-delegacias-policiais') {
+            mapaEstados(el, tipo, mapa, dados, largura, altura, variável, value);
+        }
     })
 </script>
 
 {#if título}
     <ChartHeading value={título} />
 {/if}
-{#if linhaFina}
-    <Text value="<strong>{linhaFina}</strong>" />
+{#if linha_fina}
+    <Text value="<strong>{linha_fina}</strong>" />
 {/if}
 <figure class="uva-map-container {tamanho}">
     <div class='uva-credits P' style='display: flex; justify-content: flex-end; text-align: right; '>
         <div style='width:fit-content'>
-            <div>{tituloLegenda}</div>
+            <div>{título_legenda}</div>
             <div class='uva-legend-container'>
                 {#each legendColors as item}
                     <div class="uva-legend-colors" style="background-color: {item};"></div>                    
@@ -181,9 +81,29 @@
         height: 4px; 
     }
 
-    :global(.regiao) {
+    :global(.regiao.mundo, .regiao.estado, .regiao.distrito, .regiao.DP) {
         stroke: rgb(121, 121, 121);
-        stroke-width: 0.2;
+        stroke-width: 0.4;
+        stroke-linejoin: round;
+        stroke-miterlimit: 20;
+        stroke-linecap: round;
+    }
+
+    :global(.regiao.brasil) {
+        stroke: white;
+        stroke-width: 0.1;
+        stroke-linejoin: round;
+        stroke-miterlimit: 20;
+        stroke-linecap: round;
+    }
+
+    :global(.estados) {
+        fill: none;
+        stroke: rgb(121, 121, 121);
+        stroke-width: 1.5;
+        stroke-linejoin: round;
+        stroke-miterlimit: 20;
+        stroke-linecap: round;
     }
 
     :global(.tooltip) {
@@ -209,7 +129,7 @@
         }
 
         :global(.regiao) {
-        stroke-width: 0.5;
-    }
+            stroke-width: 0.5;
+        }
     }
 </style>

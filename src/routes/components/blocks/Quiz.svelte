@@ -59,7 +59,7 @@
                 }
                 else if (item.type === "youtube") {
                     explanationContainer.innerHTML +=`
-                        <figure>
+                        <figure style='margin:0'>
                             <div class="uva-quiz-youtube">
                                 <iframe
                                     title="Vídeo do Youtube" 
