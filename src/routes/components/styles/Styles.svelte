@@ -114,7 +114,7 @@
 }
 
 :global(body) {
-    transition: background .5s
+    transition: background .5s;
 }
 
 :global(iframe) {

@@ -38,7 +38,7 @@
 
     div > p:nth-child(2) {
         margin: 0 auto calc(var(--margem-vertical) * 1.2) auto;
-        font: 500 calc(var(--corpo-mobile) * 1) / calc(var(--entrelinha-mobile) * 0.9) var(--semicondensed);
+        font: 500 calc(var(--corpo-mobile) * 1.2) / calc(var(--entrelinha-mobile) * 1) var(--semicondensed);
         color: var(--cor-secundaria);
     }
 
@@ -50,8 +50,8 @@
         }
 
         div > p:nth-child(2) {
-            font-size: calc(var(--corpo-desktop) * 1.05);
-            line-height: calc(var(--entrelinha-desktop) * 0.9);
+            font-size: calc(var(--corpo-desktop) * 1.2);
+            line-height: calc(var(--entrelinha-desktop) * 1);
         }
     }
 </style>

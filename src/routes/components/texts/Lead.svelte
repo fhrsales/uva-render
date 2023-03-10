@@ -10,7 +10,7 @@
     } from 'svelte';
     onMount(async function () {
         function marginCapitular (valor){
-            if (margem_capitular === undefined) {
+            if (value.margem_capitular === undefined) {
                 valor = '0.13em 0.58em 0 0.4em';
             }
             let capitular = document.documentElement.style.setProperty('--margem-capitular', (valor));

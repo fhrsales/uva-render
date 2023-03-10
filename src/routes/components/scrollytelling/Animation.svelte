@@ -7,7 +7,7 @@
     });
 
     export let value;
-    const { tamanho, tamanho_fundo, id, classe, guias, frames, framesTotais, conteúdo } = value;
+    const { tamanho, tamanho_fundo, id, guias, classe, frames, framesTotais, conteúdo } = value;
     const height = Math.round(frames) * (framesTotais) - window.innerHeight;
 
     import { gsap } from "gsap";
@@ -51,19 +51,18 @@
         );
     }
 
-    const passos = document.querySelector("#" + id + " > div.passos");
-        if (guias === "sim") {
-            for (let i = 0; i < 1; i += 0.01) {
-                let debug = document.createElement("div");
-                debug.classList.add("guias-scrolly-animado");
-                debug.setAttribute(`style`, `height: 1px; position: absolute; top: ${height * i}px;`);
-                debug.innerHTML = i.toFixed(2);
-                passos.appendChild(debug);
-            }
-        }
-
     onMount(async () => {
-        animateImages();        
+        animateImages();  
+        const passos = document.querySelector("#" + id + " > div.passos");
+            if (guias === "não") {
+                for (let i = 0; i < 1; i += 0.01) {
+                    let debug = document.createElement("div");
+                    debug.classList.add("guias-scrolly-animado");
+                    debug.setAttribute(`style`, `height: 1px; position: absolute; top: ${height * i}px;`);
+                    debug.innerHTML = i.toFixed(2);
+                    passos.appendChild(debug);
+                }
+            }
     });    
 </script>
 

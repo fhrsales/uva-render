@@ -4,7 +4,8 @@
   let { descrição, larguraDesk, larguraMobile } = value;
   let imageElement;
   let clientHeight;
-  $: contentHeight = clientHeight;
+  // $: contentHeight = clientHeight;
+  $: contentHeight = 20;
 
   const setAttributes = async () => {
       if (imageElement) {

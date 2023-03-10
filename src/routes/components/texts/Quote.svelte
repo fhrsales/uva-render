@@ -35,7 +35,7 @@
 
     div > p:nth-child(1) {
         margin: calc(var(--margem-vertical) * 0.5) auto 0 auto;
-        font: 800 calc(var(--corpo-mobile) * 1.1) / calc(var(--entrelinha-mobile) * 0.9) var(--texto);
+        font: 800 calc(var(--corpo-mobile) * 1.2) / calc(var(--entrelinha-mobile) * 1) var(--texto);
         font-style: italic;
         color: var(--cor-secundaria);
         text-align: left;
@@ -59,8 +59,8 @@
     @media (min-width:748px) {
         /* Desktop */
         div > p:nth-child(1) {
-            font-size: calc(var(--corpo-desktop) * 1.1);
-            line-height: calc(var(--entrelinha-desktop) * 0.9);
+            font-size: calc(var(--corpo-desktop) * 1.2);
+            line-height: calc(var(--entrelinha-desktop) * 1);
         }
 
         div > p:nth-child(2) {

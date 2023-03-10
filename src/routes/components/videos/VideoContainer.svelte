@@ -19,7 +19,7 @@
     let videoPlaying = false;
     function handleIntersection({ entry }) {
         const { intersectionRatio } = entry;
-        if (intersectionRatio > 0) {
+        if ( intersectionRatio > 0 ) {
             videoPlaying = true;
             entry.target.play();
         } else {

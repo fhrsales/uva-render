@@ -19,9 +19,7 @@
         rootMargin: '0px 0px 6% 0px',
         threshold: 0,
     }
-    import {
-        onMount
-    } from "svelte";
+    import { onMount } from "svelte";
     onMount(async () => {
         const grafico = new IntersectionObserver((entries) => {
             entries.forEach(entry => {

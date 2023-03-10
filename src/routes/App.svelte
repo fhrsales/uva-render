@@ -7,6 +7,8 @@
 
   import Animation from "./components/scrollytelling/Animation.svelte";
   import AudioContainer from "./components/audios/AudioContainer.svelte";
+  import AudioQuote from "./components/audios/AudioQuote.svelte";
+  import BuscadorH3 from "./components/search/BuscadorH3.svelte";
   import ChangeBackground from "./components/transitions/ChangeBackground.svelte";
   import Chapeu from "./components/texts/Chapeu.svelte";
   import Code from "./components/codes/Code.svelte";
@@ -52,12 +54,17 @@
 
 <Styles />
 
+<BuscadorH3 />
+
 {#each conteúdo as block}
   {#if block.type === "animação"}
     <Animation value={block.value} />
   {/if}
   {#if block.type === "audio"}
     <AudioContainer value={block.value} />
+  {/if}
+  {#if block.type === "audioFrase"}
+    <AudioQuote value={block.value} />
   {/if}
   {#if block.type === "chapéu"}
     <Chapeu value={block.value} />

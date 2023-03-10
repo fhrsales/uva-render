@@ -46,7 +46,7 @@ export const mapaEstados = (el, tipo, mapa, dados, largura, altura, variável, v
                         valor: +d[variável]
                     }
                 });
-                const domínio = JSON.parse(value.intervalo);
+                const domínio = value.intervalo.split(',').map(Number);
                 const faixa = value.cores.split(', ');
                 const escala = d3.scaleLinear()
                     .domain(domínio)

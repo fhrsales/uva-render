@@ -16,7 +16,7 @@ export const mapaCachorrao = (el, tipo, mapa, dados, largura, altura, variável,
 
     if (tipo === 'coroplético') {
         if (mapa === 'cachorrao-distritos') {
-            sigla = 'sp-zonas-eleitorais';
+            sigla = 'distritos-sp';
             jsonUrl = 'https://arte.estadao.com.br/arc/data/sp-distritos.json';
             classe = 'regiao distrito';
 
@@ -57,7 +57,7 @@ export const mapaCachorrao = (el, tipo, mapa, dados, largura, altura, variável,
                     valor: +d[variável]
                 }
             });
-            const domínio = JSON.parse(value.intervalo);
+            const domínio = value.intervalo.split(',').map(Number);
             const faixa = value.cores.split(', ');
             const escala = d3.scaleLinear()
                 .domain(domínio)

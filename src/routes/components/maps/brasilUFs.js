@@ -38,7 +38,7 @@ export const mapaBrasilUFs = (el, tipo, dados, largura, altura, variável, value
                         valor: +d[variável]
                     }
                 });
-                const domínio = JSON.parse(value.intervalo);
+                const domínio = value.intervalo.split(',').map(Number);
                 const faixa = value.cores.split(', ');
                 const escala = d3.scaleLinear()
                     .domain(domínio)

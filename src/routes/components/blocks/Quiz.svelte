@@ -228,5 +228,4 @@
             line-height: calc(var(--entrelinha-desktop) * 1);
         }
     }
-
 </style>

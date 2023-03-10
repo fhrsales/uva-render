@@ -30,7 +30,8 @@
         }
         if (mapa === 'cachorrao-delegacias-policiais') {
             mapaCachorrao(el, tipo, mapa, dados, largura, altura, variável, value);
-        } else if (mapa !== 'Mundo' && mapa !== 'Brasil' && mapa !== 'BrasilUFs' && mapa !== 'cachorrao-distritos' && mapa !== 'cachorrao-delegacias-policiais') {
+        } 
+        else if (mapa !== 'Mundo' && mapa !== 'Brasil' && mapa !== 'BrasilUFs' && mapa !== 'cachorrao-distritos' && mapa !== 'cachorrao-delegacias-policiais') {
             mapaEstados(el, tipo, mapa, dados, largura, altura, variável, value);
         }
     })
@@ -46,6 +47,12 @@
     <div class='uva-credits P' style='display: flex; justify-content: flex-end; text-align: right; '>
         <div style='width:fit-content'>
             <div>{título_legenda}</div>
+            <div style="background-color: black;
+            top: 17px;
+                width: 1px;
+                height: 12px;
+                position: relative;
+                margin: -10px auto 0 auto;"></div>
             <div class='uva-legend-container'>
                 {#each legendColors as item}
                     <div class="uva-legend-colors" style="background-color: {item};"></div>                    
@@ -91,7 +98,7 @@
 
     :global(.regiao.brasil) {
         stroke: white;
-        stroke-width: 0.1;
+        stroke-width: 0;
         stroke-linejoin: round;
         stroke-miterlimit: 20;
         stroke-linecap: round;
@@ -100,7 +107,7 @@
     :global(.estados) {
         fill: none;
         stroke: rgb(121, 121, 121);
-        stroke-width: 1.5;
+        stroke-width: 1.2;
         stroke-linejoin: round;
         stroke-miterlimit: 20;
         stroke-linecap: round;
