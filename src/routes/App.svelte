@@ -8,7 +8,7 @@
   import Animation from "./components/scrollytelling/Animation.svelte";
   import AudioContainer from "./components/audios/AudioContainer.svelte";
   import AudioQuote from "./components/audios/AudioQuote.svelte";
-  import BuscadorH3 from "./components/search/BuscadorH3.svelte";
+  import Buscador from "./components/search/Buscador.svelte";
   import ChangeBackground from "./components/transitions/ChangeBackground.svelte";
   import Chapeu from "./components/texts/Chapeu.svelte";
   import Code from "./components/codes/Code.svelte";
@@ -41,7 +41,7 @@
     const response = await fetch(json);
     const data = await response.json();
     conteúdo = Object.values(data.conteúdo);
-    // console.log(conteúdo);
+    //console.log(conteúdo);
     if (functionExecuted) {
         return;
     }
@@ -54,79 +54,56 @@
 
 <Styles />
 
-<BuscadorH3 />
-
 {#each conteúdo as block}
   {#if block.type === "animação"}
     <Animation value={block.value} />
-  {/if}
-  {#if block.type === "audio"}
+  {:else if block.type === "audio"}
     <AudioContainer value={block.value} />
-  {/if}
-  {#if block.type === "audioFrase"}
+  {:else if block.type === "buscador"}
+    <Buscador value={block.value} />
+  {:else if block.type === "audioFrase"}
     <AudioQuote value={block.value} />
-  {/if}
-  {#if block.type === "chapéu"}
+  {:else if block.type === "chapéu"}
     <Chapeu value={block.value} />
-  {/if}
-  {#if block.type === "customização"}
+  {:else if block.type === "customização"}
     <Customization value={block.value} />
-  {/if}
-  {#if block.type === "html"}
+  {:else if block.type === "html"}
     <Code value={block.value} />
-  {/if}
-  {#if block.type === "estanteDeLivros"}
+  {:else if block.type === "estanteDeLivros"}
     <EstanteDeLivros value={block.value} />
-  {/if}
-  {#if block.type === "gênero"}
+  {:else if block.type === "gênero"}
     <Genre value={block.value} />
-  {/if}
-  {#if block.type === "gráfico"}
+  {:else if block.type === "gráfico"}
     <UvaContainer value={block.value} />
-  {/if}
-  {#if block.type === "imagem"}
+  {:else if block.type === "imagem"}
     <ImageContainer value={block.value} />
-  {/if}
-  {#if block.type === "janela"}
+  {:else if block.type === "janela"}
     <Janela value={block.value} />
-  {/if}
-  {#if block.type === "lead"}
+  {:else if block.type === "lead"}
     <Lead value={block.value} />
-  {/if}
-  {#if block.type === "mapa"}
+  {:else if block.type === "mapa"}
     <Map value={block.value} />
-  {/if}
-  {#if block.type === "mudaFundo"}
+  {:else if block.type === "mudaFundo"}
     <ChangeBackground value={block.value} />
-  {/if}
-  {#if block.type === "navegador"}
+  {:else if block.type === "navegador"}
     <Navigation value={block.value} />
-  {/if}
-  {#if block.type === "quiz"}
+  {:else if block.type === "quiz"}
     <Quiz value={block.value} />
-  {/if}
-  {#if block.type === "frase"}
+  {:else if block.type === "frase"}
     <Quote value={block.value} />
-  {/if}
-  {#if block.type === "separador"}
+  {:else if block.type === "separador"}
     <Rule />
-  {/if}
-  {#if block.type === "scrolly"}
+  {:else if block.type === "scrolly"}
     <Scrolly value={block.value} />
-  {/if}
-  {#if block.type === "testeira"}
+  {:else if block.type === "testeira"}
     <Testeira value={block.value} />
-  {/if}
-  {#if block.type === "text"}
+  {:else if block.type === "text"}
     <Text value={block.value} />
-  {/if}
-  {#if block.type === "título"}
+  {:else if block.type === "título"}
     <DefaultHeading value={block.value} />
-  {/if}
-  {#if block.type === "vídeo"}
+  {:else if block.type === "vídeo"}
     <Video value={block.value} />
-  {/if}
-  {#if block.type === "youtube"}
+  {:else if block.type === "youtube"}
     <YoutubeContainer value={block.value} />
   {/if}
 {/each}

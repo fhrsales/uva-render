@@ -54,7 +54,7 @@
     onMount(async () => {
         animateImages();  
         const passos = document.querySelector("#" + id + " > div.passos");
-            if (guias === "não") {
+            if (guias === "sim") {
                 for (let i = 0; i < 1; i += 0.01) {
                     let debug = document.createElement("div");
                     debug.classList.add("guias-scrolly-animado");

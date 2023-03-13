@@ -5,12 +5,13 @@
     let autor;
     let replay;
     let quote;
+    let time = [];
 
     export let value;
     export let { id, tamanho, frase, descrição, fonte, intervalo } = value;
-    let time = intervalo.split(',').map(Number);
+    time = intervalo.split(',').map(Number);
 
-    onMount(() => {
+    onMount(async () => {
         const playPhrase = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {

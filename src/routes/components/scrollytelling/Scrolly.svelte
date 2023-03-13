@@ -75,14 +75,17 @@
                     entry.target.classList.add('loaded');
                     let fundos = document.querySelector('#' + id + ' > div.fundos');
                     if (fundos !== null) {
-                        fundos.style.setProperty('-webkit-transform', entry.target.dataset
-                            .transform);
+                        
                     }
-                    let fundo = document.querySelector('#' + id +
-                        ' > div > div.fundo[data-index="' + entry.target.dataset.index + '"]');
+                    let fundo = document.querySelector('#' + id + ' > div > div.fundo[data-index="' + entry.target.dataset.index + '"]');
                     if (fundo !== null) {
                         fundo.classList.add('loaded');
+                        let todosFundos = [...document.querySelectorAll('#' + id + ' > div > div.fundo')];
+                        todosFundos.forEach(i => {
+                            i.style.setProperty('-webkit-transform', entry.target.dataset.transform);
+                        });
                     }
+
                     let figure = document.querySelector('#' + id +
                         ' > div > div.fundo[data-index="' + entry.target.dataset.index +
                         '"] > figure');
@@ -207,6 +210,8 @@
     .fundo.loaded {
         opacity: 1;
         transition: all .45s ease-in-out;
+        transition: transform 0.5s ease-in-out, transform-origin 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        will-change: transform
     }
 
     .fundo {
@@ -232,9 +237,9 @@
         max-width: var(--largura-celular);
     }
 
-    .passo>p {
+    /* .passo>p {
         width: 90%;
-    }
+    } */
 
     .passo.loaded {
         opacity: 1;
