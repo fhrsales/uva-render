@@ -1,18 +1,16 @@
 <script>
-    import UvaRepositorioMediaOnce from "../observer/Uva-repositorio-media-once.svelte";
-    import ImagePlaceholder from "../images/ImagePlaceholder.svelte";
+    import UvaRepositorioMediaOnce from '../observer/Uva-repositorio-media-once.svelte';
+    import ImagePlaceholder from '../images/ImagePlaceholder.svelte';
     export let value;
     const { fonte, id, tamanho } = value;
-    const rootMargin = "0px 0px 0px 0px";
-    const descrição = "Vídeo do Youtube";
     let clientWidth;
     let clientHeight;
     // $: contentWidth = clientWidth;
     // $: contentHeight = clientHeight;
-    import { onMount } from "svelte";
+    import { onMount } from 'svelte';
     onMount(() => {    
-        window.addEventListener("resize", () => {
-            let image = document.querySelectorAll(".uva-imagem");
+        window.addEventListener('resize', () => {
+            let image = document.querySelectorAll('.uva-imagem');
             if (image !== null) {
                 image.width = image.clientWidth;
                 image.height = image.clientHeight;
@@ -21,21 +19,21 @@
     });
 </script>
 
-<UvaRepositorioMediaOnce {id} {tamanho} {rootMargin}>
+<UvaRepositorioMediaOnce {id} {tamanho} rootMargin='0px 0px 0px 0px'>
     <figure bind:clientWidth bind:clientHeight>
         <div>
             <iframe 
-                title="Vídeo do Youtube" 
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen="" 
-                src="https://www.youtube.com/embed/{fonte}">
+                title='Vídeo do Youtube' 
+                frameborder='0' 
+                allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' 
+                allowfullscreen='' 
+                src='https://www.youtube.com/embed/{fonte}'>
             </iframe>
         </div>
     </figure>
 
-    <placeholder slot="placeholder">
-        <ImagePlaceholder {descrição} src="https://img.youtube.com/vi/{fonte}/sddefault.jpg" />
+    <placeholder slot='placeholder'>
+        <ImagePlaceholder src='https://img.youtube.com/vi/{fonte}/sddefault.jpg' descrição='Vídeo do Youtube' />
     </placeholder>
 </UvaRepositorioMediaOnce>
 

@@ -1,0 +1,731 @@
+[+conteúdo]
+{.customização}
+editoria: cultura
+CSS: sim
+JS: não
+{}
+
+Testeira
+
+{.testeira}
+fonte: testeira.svg
+link: https://www.estadao.com.br
+descrição: Quiz da Copa#11
+larguraMobile: 200 
+larguraDesk: 280
+{} 
+
+Navegador
+
+{.navegador}
+fonte: https://arte.estadao.com.br/arc/images/estante.svg
+descrição: Aliás – Estante de Livros
+larguraMobile: 140
+larguraDesk: 160
+anterior: https://www.estadao.com.br/alias/estante-dos-ensaios-sobre-pasolini-a-uma-mocambique-vista-por-duas-autoras-de-diferentes-geracoes/
+próximo:https://www.estadao.com.br/
+{}
+
+{.lead}
+margem_capitular: 0.13em 0.55em 0 0.4em
+texto: Podemos começar um texto com uma capitular estilizada. Utilize a markup {.lead} e preencha seus atributos. Para que se tenha uma cor padrão da editoria para todo o documento, preencha a variável ‘editoria’  na markup {.customização}.  As variações são hardnews, economia e cultura. O iste natus error sit voluptatem accusantium doloremque laudantium.
+{}
+
+
+Também é possível iniciar um texto sem a capitular. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
+
+{.mapa}
+id: sao-paulo
+tipo: coroplético
+mapa: SP
+tamanho: G
+largura: 768
+altura: 510
+título: Mapa por estado
+linha_fina: Troque no documento a variável ‘mapa’ pelas letras da sigla do estado correspondente para modificar o desenho do mapa
+dados: populacao.csv
+variável: populacao
+intervalo: 771, 5000, 100000, 300000, 500000, 1000000
+cores: #deebf7, #c6dbef, #6baed6, #4292c6, #08519c, #08306b
+título_legenda: População de SP
+texto_legenda: Menor, Maior
+fonte: Fonte: IBGE / Infográficos: Estadão
+{} 
+
+É possível utilizar o mapa sem colocar o título e linha fina. Apague variáveis ‘título’ e ‘linha_fina’ se quiser que estes componentes não sejam renderizados.
+
+{.mapa}
+id: brasil
+tipo: coroplético
+mapa: Brasil
+tamanho: G
+largura: 960
+altura: 827
+dados: populacao.csv
+variável: populacao
+intervalo: 771, 5000, 100000, 300000, 500000, 1000000
+cores: #deebf7, #c6dbef, #6baed6, #4292c6, #08519c, #08306b
+título_legenda: Título da legenda
+texto_legenda: 700, 1 milhão ou mais
+fonte: Fonte: IBGE / Infográficos: Estadão
+{} 
+
+{.mapa}
+id: brasilUFs
+tipo: coroplético
+mapa: BrasilUFs
+tamanho: P
+largura: 960
+altura: 827
+título: Unidades federativas do Brasil
+dados: populacao.csv
+variável: populacao
+intervalo: 771, 5000, 100000, 300000, 500000, 1000000
+cores: #deebf7, #c6dbef, #6baed6, #4292c6, #08519c, #08306b
+título_legenda: Título da legenda
+texto_legenda: 700, 1 milhão ou mais
+fonte: Fonte: IBGE / Infográficos: Estadão
+{} 
+
+{.mapa}
+id: cachorrao-distritos
+tipo: coroplético
+mapa: cachorrao-distritos
+tamanho: P
+largura: 580
+altura: 900
+título: Distritos de SP
+linha_fina: Lorem ipsum matem dolor sed ut perspiciatis unde omnis iste natus error sit voluptatem
+dados: populacao.csv
+variável: populacao
+intervalo: 771, 5000, 100000, 300000, 500000, 1000000
+cores: #deebf7, #c6dbef, #6baed6, #4292c6, #08519c, #08306b
+título_legenda: Lorem ipsum
+texto_legenda: Menor, Maior
+fonte: Fonte: IBGE / Infográficos: Estadão
+{} 
+
+{.mapa}
+id: cachorrao-delegacias-policiais
+tipo: coroplético
+mapa: cachorrao-delegacias-policiais
+tamanho: P
+largura: 580
+altura: 900
+título: Delegacias de SP
+linha_fina: Lorem ipsum matem dolor sed ut perspiciatis unde omnis iste natus error sit voluptatem
+dados: populacao.csv
+variável: populacao
+intervalo: [771, 5000, 100000, 300000, 500000, 1000000]
+cores: #deebf7, #c6dbef, #6baed6, #4292c6, #08519c, #08306b
+título_legenda: Lorem ipsum
+texto_legenda: Menor, Maior
+fonte: Fonte: IBGE / Infográficos: Estadão
+{} 
+
+{.mapa}
+id: Mundo
+tipo: coroplético
+mapa: Mundo
+tamanho: G
+largura: 960
+altura: 827
+dados: populacao.csv
+variável: populacao
+intervalo: [771, 5000, 100000, 300000, 500000, 1000000]
+cores: #deebf7, #c6dbef, #6baed6, #4292c6, #08519c, #08306b
+título_legenda: Título da legenda
+texto_legenda: 700, 1 milhão ou mais
+fonte: Fonte: IBGE / Infográficos: Estadão
+{} 
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+
+{.html}
+tamanho: P
+[.+conteúdo]
+<div class="" style="width: 100%;">
+    <div class="styles__Container-sc-1v8tg5g-0 hpzqMC">
+        <p class="ads-placeholder-label">Continua após a publicidade</p>
+        <div class="ads-placeholder-wrapper">
+            <div id="hmeio1-1">
+            </div>
+        </div>
+    </div>
+</div>
+[]
+{} 
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+{.imagem}
+tamanho: G
+fonte:/resizer/9zmK9Qy8G75LP5KRmCNBiLw-kT8=/arc-anglerfish-arc2-prod-estadao/public/IUNRYB6OGVHDFPADCPDH4TSVYA.jpg
+id: testeID
+classe: PB
+mostrarLegenda: sim
+legenda: Agronegócio brasileiro tem enorme potencial de crescimento sustentável 
+crédito: Rafael Arbex/Estadão
+{}
+
+:skip Este tipo de sintaxe ignora o conteúdo. A linha não pode ser quebrada, ou seja, não pode ter enter.
+:endskip
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+
+{.html}
+tamanho: P
+[.+conteúdo]
+<p class='P' style='color: blue'>Teste de HTML customizado</p>
+<p class='P' style='color: blue'>Agora é possível colocar o HTML em linhas diferentes</p>
+[]
+{}  
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+{.imagem}
+tamanho: M
+fonte:/resizer/2I_6cRkEV9Fb_9Btaz2wEMwDwzM=/arc-anglerfish-arc2-prod-estadao/public/GYA5KNN4FZEFJK6JKLISSLDAMQ.jpg
+mostrarLegenda: sim
+legenda: Agronegócio brasileiro tem enorme potencial de crescimento sustentável 
+crédito: Rafael Arbex/Estadão
+{}
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+
+chapéu: Buscador
+Título lorem ipsum matem dolor
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+{.buscador}
+[.+conteúdo]
+Devo me preocupar com a transmissão do coronavírus por contato com superfícies contaminadas?
+Leonardo Weissmann, consultor da Sociedade Brasileira de Infectologia (SBI), diz que o vírus presente em superfícies pode ser uma fonte de infecção, quando o indivíduo toca nela e em seguida toca nos olhos, no nariz ou na boca. “Ainda é incerta a frequência dessa transmissão, mas todos devem manter suas residências limpas”, afirma. Para Fernando Bellissimo, professor da Faculdade de Medicina da USP de Ribeirão Preto, entretanto, mais importante do que limpar desenfreadamente as superfícies é focar em descontaminar as mãos com higienização. “Esse vírus tem porta de saída e porta de entrada. É importante barrar a porta de saída, que é a tosse, o espirro e as gotículas de saliva, e também bloquear a entrada, que é contato com olhos, nariz e boca, com a higienização das mãos. O caminho do meio é mais difícil de controlar”, diz Bellissimo.
+Qual é a melhor forma de deixar a casa segura?
+Segundo Leonardo Weissmann, consultor da Sociedade Brasileira de Infectologia (SBI), uma das medidas principais é fazer diariamente a limpeza e a desinfecção de superfícies que são tocadas frequentemente, como mesas, cadeiras, maçanetas, interruptores de luz, controles remotos, torneiras e descargas. “Nas residências onde há casos suspeitos ou confirmados de covid-19, o cuidado deve ser bem maior. No quarto usado para o isolamento, a maçaneta deve ser limpa frequentemente com álcool 70% ou água sanitária. Os móveis da casa precisam ser limpos com maior frequência. Após usar o banheiro, a pessoa com infecção deve sempre limpar vaso, pia e demais superfícies com álcool ou água sanitária para desinfecção do ambiente”, afirma Weissmann.
+
+{.imagem}
+tamanho: M
+fonte:/resizer/anYrSkuIBYw11zTRwIdVASV04fs=/arc-anglerfish-arc2-prod-estadao/public/T7IQ4T3BQFLU3JD2UCJU5LHL5U.jpg
+mostrarLegenda: sim
+legenda: Neque porro quisquam est, qui dolorem ipsum quia 
+crédito: Rafael Arbex/Estadão
+{}
+Quanto tempo o vírus resiste em cada superfície?
+Estudo de cientistas americanos publicado em 16 de abril na revista New England Journal of Medicine mostrou que o vírus consegue sobreviver até três dias em superfícies como plástico e aço, e por até 24 horas em superfícies de papelão. Especialistas alertam, porém, que esse tempo de sobrevivência depende da temperatura e da umidade do ambiente. “Por isso, a limpeza e a desinfecção são importantes”, diz Plínio Trabasso, médico infectologista da Unicamp. “Imagine em poucas horas quantas pessoas podem manipular uma maçaneta de uma porta e um corrimão, por exemplo.”
+
+{.gráfico}
+tamanho: P
+id: id2
+fonte: ydA4NQ
+mostrar_título: sim
+mostrar_descrição: sim
+mostrar_marca: sim
+{} 
+
+[]
+{}
+
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+{.vídeo}
+tamanho: M
+id: Video01
+classe: uva-video
+posterMobile: 
+fonteMobile:https://arte.estadao.com.br/arc/teste/fog-top-vertical-640w.mp4
+fonteDesk:https://arte.estadao.com.br/arc/teste/fog-topper-desktop-new.mp4
+posterDesk:
+playsinline: sim
+autoplay: sim
+muted: sim
+preload: auto
+loop: não
+mostrarLegenda: não
+legenda: Agronegócio brasileiro tem enorme potencial de crescimento sustentável 
+crédito: Rafael Arbex/Estadão
+{}
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
+
+{.audio}
+id: audio01
+tamanho: P
+fonte:uva-quiz-audio.mp3
+{}
+
+
+{.gênero}
+tipo: Entrevista
+nome: Fulano de Tal
+descrição: Descrição do Fulano
+{}
+‘Títulos dentro da matéria lorem ipsum matem dolor ectum’
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+{.imagem}
+tamanho: GG
+fonte:/resizer/nOGe3ZSbzasqR5tZOR_3NdNoNQc=/arc-anglerfish-arc2-prod-estadao/public/A4EKTZK4SZAAJNDMX447THWWTQ.jpg
+mostrarLegenda: sim
+legenda: Agronegócio brasileiro tem enorme potencial de crescimento sustentável 
+crédito: Rafael Arbex/Estadão
+{}
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+{.imagem}
+tamanho: P
+fonte:/resizer/oqz8JfNXvyhrfaPGUkcwHlR_Cbk=/arc-anglerfish-arc2-prod-estadao/public/76GWDEPOBVALBKJEE2FWTKWQZI.jpg
+mostrarLegenda: não
+legenda: Agronegócio brasileiro tem enorme potencial de crescimento sustentável 
+crédito: Rafael Arbex/Estadão
+{}
+
+{.mudaFundo}
+corNova: rgb(175, 201, 227)
+corOriginal: white
+{}
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+{.markup}
+chave: Markup sem render
+chave2: Segunda chave
+{} 
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+{.gráfico}
+tamanho: M
+id: Teste ID gráfico
+fonte: 2NZR92
+mostrar_título: não
+mostrar_descrição: não
+mostrar_marca: não
+{} 
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+
+{.scrolly}
+:skip Scrollytelling com gráficos estáticos do Uva
+:endskip
+tamanho: P
+tamanho_fundo: P
+id: onibus
+classe:scrolly-grafico
+
+[.+conteúdo]
+{.passo}
+uva: yANdwQ
+classe: classe customizada
+texto:  O <span class="passoDestacado">banheiro</span> em uma luz ultravioleta que desinfecta o ambiente. É acionada automaticamente quando o passageiro sai do local e fecha a porta; nesse período, é vetada a entrada
+{}
+
+{.passo}
+uva: zPARBy
+transformações: scale(1) translate(0%,0%)
+texto: As <span class="passoDestacado">barras</span> são feitas ou encapadas com material plástico ou tecido antiviral que neutraliza qualquer tipo de bactéria e vírus, evitando a retransmissão
+{}
+
+{.passo}
+uva: QglKX2
+transformações: scale(1) translate(0%,0%)
+texto: A <span class="passoDestacado">poltrona</span> é coberta com tecido antiviral; para novos veículos, o próprio banco poderá ser feito com o material, dispensando assim a capa
+{}
+[]
+{}
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+
+{.scrolly}
+:skip Scrollytelling com imagens ocupando todo o container
+:endskip
+tamanho: GG
+tamanho_fundo: GG
+id: slideshow
+classe:scrolly-imagens
+
+[.+conteúdo]
+{.passo}
+imagemMobile: /resizer/2I_6cRkEV9Fb_9Btaz2wEMwDwzM=/arc-anglerfish-arc2-prod-estadao/public/GYA5KNN4FZEFJK6JKLISSLDAMQ.jpg
+imagemDesk: /resizer/2I_6cRkEV9Fb_9Btaz2wEMwDwzM=/arc-anglerfish-arc2-prod-estadao/public/GYA5KNN4FZEFJK6JKLISSLDAMQ.jpg
+transformações: scale(1) translate(0%,0%)
+classe: classe customizada
+legenda: Lorem ipsum matem dolor
+texto: A <span class="passoDestacado">poltrona</span> é coberta com tecido antiviral; para novos veículos, o próprio banco poderá ser feito com o material, dispensando assim a capa
+{}
+
+{.passo}
+imagemMobile: /resizer/2I_6cRkEV9Fb_9Btaz2wEMwDwzM=/arc-anglerfish-arc2-prod-estadao/public/GYA5KNN4FZEFJK6JKLISSLDAMQ.jpg
+imagemDesk: /resizer/2I_6cRkEV9Fb_9Btaz2wEMwDwzM=/arc-anglerfish-arc2-prod-estadao/public/GYA5KNN4FZEFJK6JKLISSLDAMQ.jpg
+transformações: scale(2) translate(10%,5%)
+legenda: Lorem ipsum matem dolor
+texto: Lorem ipsum matem dolor ectum matem dev
+{}
+
+{.passo}
+imagemMobile: /resizer/2I_6cRkEV9Fb_9Btaz2wEMwDwzM=/arc-anglerfish-arc2-prod-estadao/public/GYA5KNN4FZEFJK6JKLISSLDAMQ.jpg
+imagemDesk: /resizer/2I_6cRkEV9Fb_9Btaz2wEMwDwzM=/arc-anglerfish-arc2-prod-estadao/public/GYA5KNN4FZEFJK6JKLISSLDAMQ.jpg
+transformações: scale(2) translate(-20%,5%)
+legenda: Lorem ipsum matem dolor
+texto: Lorem ipsum matem dolor ectum matem dev
+{}
+
+{.passo}
+imagemMobile: /resizer/2I_6cRkEV9Fb_9Btaz2wEMwDwzM=/arc-anglerfish-arc2-prod-estadao/public/GYA5KNN4FZEFJK6JKLISSLDAMQ.jpg
+imagemDesk: /resizer/2I_6cRkEV9Fb_9Btaz2wEMwDwzM=/arc-anglerfish-arc2-prod-estadao/public/GYA5KNN4FZEFJK6JKLISSLDAMQ.jpg
+transformações: scale(1) translate(0%,0%)
+legenda: Lorem ipsum matem dolor
+texto: Último texto lorem ipsum matem dolor
+{}
+
+[]
+{}
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
+
+{.frase}
+texto: O sistema se tornou muito complexo. E a complexidade gera um custo econômico para a sociedade. Se gera um custo, gera ineficiência e acaba reduzindo a produtividade.
+nome: Bráulio Borges
+descrição: Economista da LCA Consultores
+{}
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
+
+{.audioFrase}
+id: audioFrase1
+tamanho: GG
+frase: “We were like a bunch of ants standing on our back legs with our front legs in the air, and a meteor is coming.”
+descrição: Fulano de Tal, descrição
+fonte: https://static01.nytimes.com/newsgraphics/2023-02-14-mag-covid-project/0680605c3b94f52a8658973c504a1db31f4d9cd7/_big_assets/audio/palmer.mp3
+intervalo: 0.05, 0.10, 0.15, 0.2, 0.27, 1.09, 1.18, 1.8, 2.08, 2.12, 2.16, 2.28, 3.19, 3.25, 3.29, 4.06, 4.16, 4.18, 4.22, 5.12, 5.15, 5.20, 6.03, 6.08
+{}
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+
+{.scrolly}
+:skip Scrollytelling com um vídeo animado por scroll
+:endskip
+tamanho: GG
+tamanho_fundo: GG
+id: fog
+classe: scrolly-video
+
+[.+conteúdo]
+{.passo}
+videoMobile: https://int.nyt.com/data/videotape/finished/2022/09/1663101756/fog-top-vertical-640w.mp4
+videoDesk: https://int.nyt.com/newsgraphics/2022/cli-fog/main/fog-topper-desktop-new.mp4
+transformações: scale(1) translate(0%,0%)
+classe: classe customizada
+texto: A <span class="passoDestacado">poltrona</span> é coberta com tecido antiviral; para novos veículos, o próprio banco poderá ser feito com o material, dispensando assim a capa
+{}
+
+{.passo}
+videoMobile: https://int.nyt.com/newsgraphics/2022/08-02-fog/Scene-2-1-Desktop.mp4
+videoDesk: https://int.nyt.com/newsgraphics/2022/08-02-fog/Scene-2-1-Desktop.mp4
+texto: Lorem ipsum matem dolor
+{}
+[]
+{}
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
+
+
+
+chapéu: Chapéu
+Scrollytelling com sequência de imagens: como funciona o sistema de ventilação do metrô
+
+O sistema de ventilação do metrô move o ar dentro dos vagões com mais eficiência do que restaurantes, escolas e outros ambientes internos, de acordo com especialistas em aerossóis. Mas não é uma garantia de proteção contra o vírus. Veja como o sistema funciona.
+
+{.animação}
+:skip Sequência de imagens animada
+:endskip
+tamanho: GG
+tamanho_fundo: GG
+id: metro
+classe:scrolly-animado
+guias: não
+frames: 24
+framesTotais: 569
+
+[.+conteúdo]
+{.passo}
+percentual: 0.18
+texto: A qualquer momento, 75% do ar que você respira em um vagão do metrô é reciclado. O resto é puxado de fora.
+classe: custom1
+{}
+
+{.passo}
+percentual: 0.29
+texto: O ar é constantemente sugado por aberturas, resfriado e filtrado antes de ser empurrado de volta pelos dutos.
+{}
+
+{.passo}
+percentual: 0.34
+texto: Ao mesmo tempo, o ar externo é puxado para dentro do sistema, combinado com a mistura existente e liberado no carro através dos painéis de dutos , que vão até o teto.
+{}
+
+{.passo}
+percentual: 0.48
+texto: É assim que o ar se move em um vagão típico do metrô.
+{}
+
+{.passo}
+percentual: 0.55
+texto: O fluxo de ar contínuo através dessas aberturas ajuda a impedir que as partículas virais se acumulem dentro de um carro e infectem as pessoas ao inalar.
+{}
+
+{.passo}
+percentual: 0.69
+texto: A maioria dos carros tem duas unidades de ventilação em cada extremidade, que ajudam a substituir totalmente o ar do carro pelo ar externo a cada três minutos e 20 segundos, em média.
+{}
+
+{.passo}
+percentual: 0.8
+texto: Dentro das unidades, os ventiladores puxam o ar através de filtros e serpentinas de resfriamento.
+{}
+
+
+{.passo}
+percentual: 0.92
+texto: Os filtros trabalham para bloquear aerossóis grandes e pequenos antes que o ar entre nos dutos . Mas os filtros não pegam tudo – e algumas partículas virais podem passar e se dispersar em trens.
+{}
+[]
+{} 
+
+{.scrollyVideo}
+:skip Com Vídeo animado
+:endskip
+tamanho: GG
+id: uva-scrolly-video-animado
+classe:scrolly-video-animado
+videoMobile: https://arte.estadao.com.br/arc/teste/top-v2-800.mp4
+videoDesk: https://arte.estadao.com.br/arc/teste/top-v2-1920.mp4
+guias: não
+frames: 24
+duração: 23
+offset: 400
+
+[.+conteúdo]
+{.passo}
+percentual: 0.21
+texto: A qualquer momento, 75% do ar que você respira em um vagão do metrô é reciclado. O resto é puxado de fora.
+classe: custom1
+{}
+
+{.passo}
+percentual: 0.28
+texto: O ar é constantemente sugado por aberturas, resfriado e filtrado antes de ser empurrado de volta pelos dutos.
+{}
+
+{.passo}
+percentual: 0.39
+texto: Ao mesmo tempo, o ar externo é puxado para dentro do sistema, combinado com a mistura existente e liberado no carro através dos painéis de dutos , que vão até o teto.
+{}
+
+{.passo}
+percentual: 0.48
+texto: É assim que o ar se move em um vagão típico do metrô.
+{}
+
+{.passo}
+percentual: 0.59
+texto: O fluxo de ar contínuo através dessas aberturas ajuda a impedir que as partículas virais se acumulem dentro de um carro e infectem as pessoas ao inalar.
+{}
+
+{.passo}
+percentual: 0.70
+texto: A maioria dos carros tem duas unidades de ventilação em cada extremidade, que ajudam a substituir totalmente o ar do carro pelo ar externo a cada três minutos e 20 segundos, em média.
+{}
+
+{.passo}
+percentual: 0.8
+texto: Dentro das unidades, os ventiladores puxam o ar através de filtros e serpentinas de resfriamento.
+{}
+
+
+{.passo}
+percentual: 0.92
+texto: Os filtros trabalham para bloquear aerossóis grandes e pequenos antes que o ar entre nos dutos . Mas os filtros não pegam tudo – e algumas partículas virais podem passar e se dispersar em trens.
+{}
+[]
+{} 
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+{.janela}
+destaque: Crescimento
+texto: Economias mais ricas têm tecnologias modernas, menos burocracia e boa infraestrutura
+{}
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+
+Quizes
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab 
+
+{.quiz}
+[.+conteúdo]
+
+{.questão}
+pergunta: Copa de 1950. O jogador de futebol se eterniza na mente dos torcedores de seu time. E, se ele é muito bom, pode se eternizar na mente dos torcedores de outros times. Dificilmente a história do futebol guarda para sempre o nome de um vilão, mas na Copa de 1950 um nome ficou amargamente eternizado. Seu nome?
+{.imagem}
+tamanho: G
+classe: PB
+fonte:/resizer/nOGe3ZSbzasqR5tZOR_3NdNoNQc=/arc-anglerfish-arc2-prod-estadao/public/A4EKTZK4SZAAJNDMX447THWWTQ.jpg
+mostrarLegenda: sim
+legenda: Agronegócio brasileiro tem enorme potencial de crescimento sustentável 
+crédito: Rafael Arbex/Estadão
+{}
+[.+alternativas]
+alternativa: Barbosa
+alternativa: Zizinho
+alternativa: Didi
+[]
+resposta: Didi
+[.+explicação]
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore.
+
+Esse é um segundo parágrafo
+{.imagem}
+tamanho: P
+classe: PB
+fonte:/resizer/oqz8JfNXvyhrfaPGUkcwHlR_Cbk=/arc-anglerfish-arc2-prod-estadao/public/76GWDEPOBVALBKJEE2FWTKWQZI.jpg
+mostrarLegenda: não
+legenda: Agronegócio brasileiro tem enorme potencial de crescimento sustentável 
+crédito: Rafael Arbex/Estadão
+{}
+[]
+{}
+
+{.questão}
+pergunta: Outro contexto. Outra pergunta?
+[.+alternativas]
+alternativa: Um
+alternativa: Dois
+alternativa: Três
+[]
+resposta: Três
+[.+explicação]
+Explicação pergunta 2
+[]
+{}
+
+{.questão}
+pergunta: Esta pergunta vai ter um audio lorem ipsum matem dolor? Precisa ser feito o upload do arquivo no próprio repositório do uva e colocar o nome do arquivo na chave 'fonte'.
+{.audio}
+tamanho: P
+fonte:uva-quiz-audio.mp3
+{}
+[.+alternativas]
+alternativa: Quatro
+alternativa: Cinco
+alternativa: Seis
+[]
+resposta: Cinco
+[.+explicação]
+Explicação pergunta 3
+[]
+{}
+
+{.questão}
+pergunta: Esta pergunta vai ter um vídeo do youtube lorem ipsum matem dolor? Copie o ID do vídoe e coloque na chave 'fonte'.
+{.youtube}
+tamanho: P
+fonte:mEqVKrynAmc
+{}
+[.+alternativas]
+alternativa: Sete
+alternativa: Oito
+alternativa: Nove
+[]
+resposta: Sete
+[.+explicação]
+Explicação pergunta 4
+[]
+{}
+
+[]
+{}
+
+
+
+ porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+
+
+{.estanteDeLivros}
+genero:  Gênero
+titulo: Nome do livro
+fonte: /resizer/84ysHDZWoJckohuAE4RcaRUDLAY=/arc-anglerfish-arc2-prod-estadao/public/3LI5DGS345E6HOQOYMB7JT7UHA.png
+autor: Nome do autor, autora ou autores
+editora: Editora
+paginas: XX páginas
+valor: R$ 00,00
+texto: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum incididunt ut labore et dolore magna aliqua. Ut ad minim veniam, quis nostrud lorem ipsum matem dolor.
+[.comprar]
+nome:Amazon
+link:https://www.amazon.com.br/Pequenas-vingan%C3%A7as-hist%C3%B3rias-inoc%C3%AAncia-esperan%C3%A7a/dp/6588016255?gclid=CjwKCAiAuOieBhAIEiwAgjCvcuCrwFQS4_dgXNaFBUWQN7yNAJyvrp7JWm-hfs00s3XtELOzfm1kUhoCCB4QAvD_BwE
+nome:Livraria da Vila
+link:https://www.livrariadavila.com.br/pequenas-vingancas--e-outras-historias-de-amor-furia-perfidia-obsessao-remorso-inocencia-espan-825467/p
+[]
+{}
+
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+{.youtube}
+tamanho: G
+fonte:mEqVKrynAmc
+{}
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? •
+
+[]

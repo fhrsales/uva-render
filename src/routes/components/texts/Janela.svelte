@@ -32,13 +32,13 @@
 
     div > p:nth-child(1) {
         margin: calc(var(--margem-vertical) * 0.5) auto 0 auto;
-        font: 600 calc(var(--corpo-mobile) * 1) / calc(var(--entrelinha-mobile) * 0.9) var(--semicondensed);
+        font: 700 calc(var(--corpo-mobile) * 1) / calc(var(--entrelinha-mobile) * 0.9) var(--semicondensed);
         color: var(--cor-texto);
     }
 
     div > p:nth-child(2) {
         margin: 0 auto calc(var(--margem-vertical) * 1.2) auto;
-        font: 500 calc(var(--corpo-mobile) * 1.2) / calc(var(--entrelinha-mobile) * 1) var(--semicondensed);
+        font: 600 calc(var(--corpo-mobile) * 1.2) / calc(var(--entrelinha-mobile) * 1) var(--semicondensed);
         color: var(--cor-secundaria);
     }
 

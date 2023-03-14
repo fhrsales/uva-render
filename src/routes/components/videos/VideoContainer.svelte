@@ -4,6 +4,7 @@
     import Video from "../videos/Video.svelte";
     import Caption from "../images/Caption.svelte";
     import ImagePlaceholder from "../images/ImagePlaceholder.svelte";
+    
     export let value;
     export const { id, classe, crédito, fonteMobile, fonteDesk, legenda, mostrarLegenda, posterDesk, posterMobile, preload, tamanho } = value;
     export const playsinline = boolean(value.playsinline);

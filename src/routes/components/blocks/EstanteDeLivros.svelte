@@ -1,6 +1,4 @@
 <script>
-    import UvaRepositorioMediaOnce from '../observer/Uva-repositorio-media-once.svelte';
-    import ImagePlaceholder from '../images/ImagePlaceholder.svelte';
     import Image from '../images/Image.svelte';
     import Button from '../buttons/Button.svelte';
     import Text from '../texts/Text.svelte';
@@ -18,8 +16,6 @@
         titulo,
         valor,
     } = value;
-    const rootMargin = '0px 0px 95% 0px';
-    const descrição = titulo + ', por ' + autor;
     let livro = true;
     let lazy = 'lazy';
     let imgProp = 'image';

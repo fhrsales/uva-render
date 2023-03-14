@@ -25,6 +25,13 @@
 >
 </video>
 
+<!-- <video poster="video-thumbnail.jpg" controls>
+        <source src="video.mp4" type="video/mp4">
+        <source src="video.webm" type="video/webm">
+        <track label="Português" kind="subtitles" srclang="pt" src="video-subtitles.pt.vtt" default>
+    </video> -->
+
+
 <style>
     video {
         width: 100%;

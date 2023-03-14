@@ -175,7 +175,7 @@
 
     .audio {
         position: absolute; 
-        bottom: 70px; 
+        bottom: 76px; 
         left: 50%; 
         transform: translate3d(-50%,0,0); 
         display: flex; 
@@ -208,7 +208,7 @@
 
     .words {
         color: var(--cor-secundaria);
-        text-align: left;
+        text-align: center;
         width: calc(100% - var(--margem-horizontal) * 3);
         margin: 0 auto;
     }
@@ -218,7 +218,7 @@
     }
 
     .author {
-        width: calc(100% - var(--margem-horizontal) * 3);
+        /* width: calc(100% - var(--margem-horizontal) * 3); */
         margin: calc(var(--margem-vertical)) auto 0 auto;
         font-size: 55%;
         color: var(--texto);
@@ -237,13 +237,13 @@
             align-items: center;
         }
 
-        .words {
+        /* .words {
             text-align: center;
         }
 
         .author {
             width: 100%;
             text-align: center;
-        }
+        } */
     }
 </style>
