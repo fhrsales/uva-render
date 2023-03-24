@@ -29,6 +29,10 @@
         letter-spacing: 0.012rem;
     }
 
+    :global(#uva-embed > p a, #uva-embed > div > p > a){
+        text-decoration: underline;
+    }
+
     @media (min-width:740px) {
         /* desktop */
         p {

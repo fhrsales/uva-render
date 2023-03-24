@@ -1,25 +1,27 @@
 <script>
+	import FlourishContainer from './components/charts/FlourishContainer.svelte';
   import { UvaPath } from "../scripts/store.js"
   let UvaPages = "";
   UvaPath.subscribe(value => {
     UvaPages = value;
   });
 
-  import Animation from "./components/scrollytelling/Animation.svelte";
+  //import Animation from "./components/scrollytelling/Animation.svelte";
   import AudioContainer from "./components/audios/AudioContainer.svelte";
   import AudioQuote from "./components/audios/AudioQuote.svelte";
   import Buscador from "./components/search/Buscador.svelte";
   import ChangeBackground from "./components/transitions/ChangeBackground.svelte";
-  import Chapeu from "./components/texts/Chapeu.svelte";
+  import Chapeu from "./components/headings/Chapeu.svelte";
   import Code from "./components/codes/Code.svelte";
   import Customization from "./components/customization/Customization.svelte";
   import DefaultHeading from "./components/headings/DefaultHeading.svelte";
   import EstanteDeLivros from "./components/blocks/EstanteDeLivros.svelte";
+  import Flourish from "./components/charts/FlourishContainer.svelte";
   import Genre from "./components/texts/Genre.svelte";
   import ImageContainer from "./components/images/ImageContainer_responsive.svelte";
   import Janela from "./components/texts/Janela.svelte";
   import Lead from "./components/texts/Lead.svelte";
-  import Map from "./components/maps/Map.svelte";
+  //import Map from "./components/maps/Map.svelte";
   import Navigation from "./components/navigation/Navigation.svelte";
   import Quiz from "./components/blocks/Quiz.svelte";
   import Quote from "./components/texts/Quote.svelte";
@@ -55,9 +57,11 @@
 <Styles />
 
 {#each conteúdo as block}
-  {#if block.type === "animação"}
+  <!-- {#if block.type === "animação"}
     <Animation value={block.value} />
   {:else if block.type === "audio"}
+    <AudioContainer value={block.value} /> -->
+  {#if block.type === "audio"}
     <AudioContainer value={block.value} />
   {:else if block.type === "buscador"}
     <Buscador value={block.value} />
@@ -71,6 +75,8 @@
     <Code value={block.value} />
   {:else if block.type === "estanteDeLivros"}
     <EstanteDeLivros value={block.value} />
+  {:else if block.type === "flourish"}
+    <Flourish value={block.value} />
   {:else if block.type === "gênero"}
     <Genre value={block.value} />
   {:else if block.type === "gráfico"}
@@ -81,8 +87,8 @@
     <Janela value={block.value} />
   {:else if block.type === "lead"}
     <Lead value={block.value} />
-  {:else if block.type === "mapa"}
-    <Map value={block.value} />
+  <!-- {:else if block.type === "mapa"}
+    <Map value={block.value} /> -->
   {:else if block.type === "mudaFundo"}
     <ChangeBackground value={block.value} />
   {:else if block.type === "navegador"}

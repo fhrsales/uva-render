@@ -65,8 +65,8 @@
 :global(a:link, a:visited, a:hover, a:active) {
     color: var(--cor-primaria);
     font-family: inherit;
-    font-weight: bold;
-    text-decoration: underline;
+    font-weight: inherit;
+    text-decoration: inherit;
 }
 
 :global(.news-body.container) {

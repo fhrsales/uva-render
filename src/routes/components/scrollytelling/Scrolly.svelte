@@ -21,44 +21,56 @@
     }
     import { onMount } from "svelte";
     onMount(async () => {
-        const grafico = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('loaded');
-                    let script = document.querySelector('#' + id + ' > div > div.fundo[data-index="1"] > script');
-                    if (script !== null) {
-                        script.src = script.dataset.src;
+        const graficoElement = document.querySelector('.scrolly-grafico');
+        if (graficoElement) {
+            const grafico = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('loaded');
+                        let script = document.querySelector('#' + id + ' > div > div.fundo[data-index="1"] > script');
+                        if (script !== null) {
+                            script.src = script.dataset.src;
+                        }
+                    } else {
+                        entry.target.classList.remove('loaded');
                     }
-                } else {
-                    entry.target.classList.remove('loaded');
-                }
-            });
-        }, options);
-        grafico.observe(document.querySelector('.scrolly-grafico'));
-        const imagens = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('loaded');
-                    let image = document.querySelector('#' + id +' > div > div.fundo[data-index="1"] > figure > img');
-                    if (image !== null) {
-                        image.src = image.dataset.src;
+                });
+            }, options);
+            grafico.observe(graficoElement);
+        }
+
+        const imagensElement = document.querySelector('.scrolly-imagens');
+        if (imagensElement) {
+            const imagens = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('loaded');
+                        let image = document.querySelector('#' + id +' > div > div.fundo[data-index="1"] > figure > img');
+                        if (image !== null) {
+                            image.src = image.dataset.src;
+                        }
+                    } else {
+                        entry.target.classList.remove('loaded');
                     }
-                } else {
-                    entry.target.classList.remove('loaded');
-                }
-            });
-        }, options);
-        imagens.observe(document.querySelector('.scrolly-imagens'));
-        const video = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('loaded');
-                } else {
-                    entry.target.classList.remove('loaded');
-                }
-            });
-        }, options);
-        video.observe(document.querySelector('.scrolly-video'));
+                });
+            }, options);
+            imagens.observe(imagensElement);
+        }
+
+        const videoElement = document.querySelector('.scrolly-video');
+        if (videoElement) {
+            const video = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('loaded');
+                    } else {
+                        entry.target.classList.remove('loaded');
+                    }
+                });
+            }, options);
+            video.observe(videoElement);
+        }
+
         const disparaPassos = {
             rootMargin: `0px 0px 0px 0px`,
             threshold: 0
@@ -96,7 +108,7 @@
                         //     image.src = image.dataset.src;
                         // }
                     }
-                    if (video !== null) {
+                    if (videoElement !== null) {
                         let video = document.querySelector('#' + id +
                             ' > div > div.fundo[data-index="' + entry.target.dataset.index +
                             '"] figure > video');

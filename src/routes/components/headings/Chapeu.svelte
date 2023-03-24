@@ -2,10 +2,10 @@
     export let value;
 </script>
 
-<h4>{@html value}</h4>
+<h2>{@html value}</h2>
 
 <style>
-    h4 {
+    h2 {
         width: var(--largura-celular);
         max-width: var(--P);
         margin: calc(var(--margem-vertical) * 0.5) auto calc(var(--margem-vertical) * -1.5) auto;
@@ -17,10 +17,9 @@
 
     @media (min-width:740px) {
         /* desktop */
-        p {
+        h2 {
             font-size: var(--corpo-desktop);
             line-height: var(--entrelinha-desktop);
-            margin-bottom: calc(var(--margem-vertical) * 0.5);
         }
     }
 </style>

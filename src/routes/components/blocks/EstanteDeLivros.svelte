@@ -10,10 +10,10 @@
         comprar,
         editora,
         fonte,
-        genero,
-        paginas,
+        gênero,
+        páginas,
         texto,
-        titulo,
+        título,
         valor,
     } = value;
     let livro = true;
@@ -71,18 +71,18 @@
     <div>
         <div class='uva-container-media' bind:this={node}>
             <figure>
-                <Image {imgProp} {lazy} {livro} classe='book-cover' src='https://www.estadao.com.br{fonte}' alt={titulo + ', por ' + autor} />
+                <Image {imgProp} {lazy} {livro} classe='book-cover' src='https://www.estadao.com.br{fonte}' alt={título + ', por ' + autor} />
             </figure>
         </div>
         <div class='ficha'>
-            <h4 itemprop='genre'>{genero}</h4>
-            <h3 itemprop='title'>{titulo}</h3>
+            <h4 itemprop='genre'>{gênero}</h4>
+            <h3 itemprop='title'>{título}</h3>
             <p itemprop='author'><strong>{autor}</strong></p>
             {#if complemento}
                 <p itemprop='complement'>{complemento}</p>
             {/if}
             <p itemprop='publisher'>Editora {editora}</p>
-            <p><span itemprop='pages'>{paginas}</span> • <span itemprop='price'>{valor}</span></p>
+            <p><span itemprop='pages'>{páginas}</span> • <span itemprop='price'>{valor}</span></p>
             {#if comprar}
                 <Button classe='book-store-button' value='Comprar ▾' {handleClick} />
             {/if}
