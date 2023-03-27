@@ -84,7 +84,7 @@
     }
 
     .uva-legend-colors {
-        width: 20px;
+        width: 30px;
         height: 4px; 
     }
 
@@ -131,7 +131,7 @@
     @media (min-width:748px) {
         /* Desktop */
         .uva-legend-colors {
-            width: 26px;
+            width: 30px;
             height: 6px;
         }
 

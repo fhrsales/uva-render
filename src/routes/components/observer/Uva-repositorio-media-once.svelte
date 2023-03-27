@@ -5,10 +5,11 @@
     export let rootMargin = "0px 0px 0px 0px";
     export let threshold = 0;
     export let id;
+    export let classe = '';
     export let tamanho;
 </script>
 <IntersectionObserver once element={node} rootMargin={rootMargin} threshold={threshold} bind:intersecting={visible}>
-    <div id={id} class="uva-media-container{visible ? " loaded" : ""}{tamanho ? " " + tamanho : ""}" bind:this={node}>
+    <div id={id} class="uva-media-container {classe}{visible ? " loaded" : ""}{tamanho ? " " + tamanho : ""}" bind:this={node}>
         {#if visible}
             <slot />
         {:else}

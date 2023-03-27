@@ -1,80 +1,121 @@
 <script>
+    import UvaRepositorioMediaOnce from '../observer/Uva-repositorio-media-once.svelte';
+    import ImagePlaceholder from '../../components/images/ImagePlaceholder.svelte';
+    import Text from "../texts/Text.svelte";
     import { onMount } from "svelte";
     import { UvaPath } from "../../../scripts/store.js"
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    gsap.registerPlugin(ScrollTrigger);
+
     let UvaPages = "";
     UvaPath.subscribe(value => {
         UvaPages = value;
     });
 
     export let value;
-    const { tamanho, tamanho_fundo, id, guias, classe, frames, framesTotais, conteúdo } = value;
-    const height = Math.round(frames) * (framesTotais) - window.innerHeight;
+    const {
+        tamanho,
+        tamanho_fundo,
+        id,
+        guias,
+        classe,
+        offset,
+        frames,
+        duração,
+        conteúdo,
+        videoDesk,
+        videoMobile
+    } = value;
+    const height = Math.round(frames) * (duração * frames) - window.innerHeight;
+    
+    let videoElement;
+    let scrollTimeout;
+    let node;
+    let descrição = 'scroll animado'
+    let isPlaying = false;
+    let lastScrollTime = 0;
+    const rootMargin = '0px 0px 95% 0px';
 
-    import { gsap } from "gsap";
-    import { ScrollTrigger } from "gsap/ScrollTrigger";
-    import Text from "../texts/Text.svelte";
-    gsap.registerPlugin(ScrollTrigger);
-    const images= [];
-        for (let i = 1; i <= framesTotais; i++) {
-            { window.innerWidth > 580 ? 
-                images.push("https://arte.estadao.com.br/public/pages/" + UvaPages + i.toString().padStart(4, `0`) + `.jpg`) : 
-                images.push("https://arte.estadao.com.br/public/pages/" + UvaPages + i.toString().padStart(4, `0`) + `-mobile.jpg`) 
-            }
+    function animateVideo() {
+        if (!videoElement) {
+            console.error("Video element not found");
+            return;
         }
-    let firstImage = 0;
 
-    function animateImages () {
-        const ImageContainer = document.querySelector(`#${id} > div:nth-child(1) > figure > img`);
-        ImageContainer.setAttribute('preload', 'true');
-        gsap.to({}, {
+        gsap.to(videoElement, {
             scrollTrigger: {
                 trigger: `#${id} > div`,
                 markers: false,
                 ease: "none",
-                start: "top top",
-                end: "bottom bottom",
+                start: `top top`,
+                end: `bottom bottom`,
+                offset: `${offset}px`,
                 delay: 1,
                 scrub: true,
+                onEnter: () => {
+                    if (videoElement && !isPlaying) {
+                        videoElement.play().catch((error) => {
+                            console.error("Erro ao reproduzir vídeo:", error);
+                        });
+                        isPlaying = true;
+                    }
+                },
                 onUpdate: (self) => {
                     const progress = self.progress;
-                    const newImage = Math.floor(progress * (images.length));
-                    if (newImage !== firstImage) {
-                        firstImage = newImage;
-                        ImageContainer.setAttribute('src', images[firstImage]);
+                    if (videoElement && videoElement.duration) {
+                        videoElement.currentTime = videoElement.duration * progress;
                     }
-                    if (progress === 1) {
-                        ImageContainer.setAttribute('src', images[images.length - 1]);
+                    if (videoElement && !isPlaying) {
+                        videoElement.play().catch((error) => {
+                            console.error("Erro ao reproduzir vídeo:", error);
+                        });
+                        isPlaying = true;
                     }
-                }
+                    lastScrollTime = gsap.ticker.time;
+                },
+
+                onLeave: () => {
+                    if (videoElement) {
+                        videoElement.pause();
+                        isPlaying = false;
+                    }
+                },
             }
-        }
-        );
+        });
     }
 
     onMount(async () => {
-        animateImages();  
-        const passos = document.querySelector("#" + id + " > div.passos");
-            if (guias === "não") {
-                for (let i = 0; i < 1; i += 0.01) {
-                    let debug = document.createElement("div");
-                    debug.classList.add("guias-scrolly-animado");
-                    debug.setAttribute(`style`, `height: 1px; position: absolute; top: ${height * i}px;`);
-                    debug.innerHTML = i.toFixed(2);
-                    passos.appendChild(debug);
+        gsap.ticker.add(() => {
+            if (isPlaying && gsap.ticker.time - lastScrollTime > 0.15) {
+                if (videoElement) {
+                    videoElement.pause();
+                    isPlaying = false;
                 }
             }
-    });    
+        });
+    });
 </script>
 
-<div id={id} class="uva-media-container carregada {classe} {tamanho}" >
+<UvaRepositorioMediaOnce {id} {classe} {tamanho} {rootMargin} bind:this={node}>
     <div class={tamanho_fundo} style="height: {height}px;">
         <figure class="fundo">
-            <img loading="lazy"            
-                src={ window.innerWidth > 580 ? 
-                    "https://arte.estadao.com.br/public/pages/" + UvaPages + "0001.jpg" : 
-                    "https://arte.estadao.com.br/public/pages/" + UvaPages + "0001-mobile.jpg"
+            <video 
+                on:loadedmetadata={()=> animateVideo()}
+                on:timeupdate={() => {
+                    if (videoElement.currentTime >= videoElement.duration) {
+                        videoElement.pause();
+                        isPlaying = false;
                     }
-                alt="Sequência da animação"
+                }}
+                bind:this={videoElement}
+                width="100%"
+                height="100%"
+                preload="auto"
+                muted="muted"
+                playsinline
+                loop={false}
+                src={window.innerWidth > 580 ? videoDesk : videoMobile}
             />
         </figure>
     </div>
@@ -82,22 +123,36 @@
         {#each conteúdo as passo , i}
             {#if passo.type === 'passo'}
                 <div 
-                    data-index={i + 1} class="passo{passo.value.classe !== undefined ? ' ' + passo.value.classe : ''}"
+                    data-index={i + 1} 
+                    class="passo{passo.value.classe !== undefined ? ' ' + passo.value.classe : ''}"
                     style="height: auto; position: absolute; top: {passo.value.percentual * height}px; left: 50%; transform: translate(-50%, 0%);"
                 >
                     <Text value={passo.value.texto} />
                 </div>
             {/if}
         {/each}
+        {#if guias === "sim"}
+            {#each Array.from({length: 100}) as _, i}
+                <div class="guias-scrolly-animado" style="height: 1px; position: absolute; top: {(i / 100) * height}px;">
+                    {i / 100}
+                </div>
+            {/each}
+        {/if}
     </div>
-</div>
+<placeholder slot='placeholder'>
+    <ImagePlaceholder {descrição} />
+</placeholder>
+</UvaRepositorioMediaOnce>
 
 <style>
-    .scrolly-animado {
-            position: relative;
-        }
+    :global(.scrolly-animado) {
+        position: relative;
+        width: 100%;
+        margin: calc(var(--margem-vertical) * 2) auto;
+        pointer-events: none;        
+    }
     
-    .scrolly-animado > div > figure.fundo {
+    .fundo {
         position: sticky;
         width: 100%;
         height: 100vh;
@@ -110,7 +165,7 @@
         margin: 0;
     }
     
-    .scrolly-animado > div > figure.fundo > img {
+    video {
         width: 100%;
         height: 100%;
         top: 0;
@@ -118,9 +173,11 @@
         overflow: hidden;
         position: absolute;
         object-fit: cover;
+        -o-object-fit: cover;
+        transition: opacity 0.5s;
     }
     
-    .scrolly-animado div.passos > div.passo {
+    .passo {
         opacity: 1;
         z-index: 1;
         width: 80%;
@@ -133,8 +190,9 @@
         background-color: red;
     }
 
-    @media (min-width:740px) { /* Desktop */
-        .scrolly-animado div.passos > div.passo {
+    @media (min-width:740px) { 
+        /* Desktop */
+        .passo {
             width: 45%;
             max-width: 580px;
         }
