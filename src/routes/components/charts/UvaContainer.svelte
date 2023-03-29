@@ -5,7 +5,8 @@
     export let value;
     export const { id, fonte, tamanho } = value;
     const { mostrar_título, mostrar_descrição, mostrar_marca } = value;
-    export const src = `https://arte.estadao.com.br/uva/content/${fonte}/uploads/fallback.jpg`;
+    //export const src = `https://arte.estadao.com.br/uva/content/${fonte}/uploads/fallback.jpg`; Para tentativa de melhoria no Core Web Vitals, não está sendo utilizado o fallback original
+    export const src = "https://arte.estadao.com.br/arc/images/placeholder.jpg";
     export const rootMargin = "0px 0px 15% 0px";
 </script>
 

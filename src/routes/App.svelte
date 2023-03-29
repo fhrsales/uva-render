@@ -5,7 +5,7 @@
     import { viewportHeight } from "../scripts/viewportHeight.js";
     viewportHeight();
     
-    import Animation from "./components/scrollytelling/Animation.svelte";
+    //import Animation from "./components/scrollytelling/Animation.svelte";
     import AudioContainer from "./components/audios/AudioContainer.svelte";
     import AudioQuote from "./components/audios/AudioQuote.svelte";
     import Buscador from "./components/search/Buscador.svelte";
@@ -20,7 +20,8 @@
     import ImageContainer from "./components/images/ImageContainer_responsive.svelte";
     import Janela from "./components/texts/Janela.svelte";
     import Lead from "./components/texts/Lead.svelte";
-    import Map from "./components/maps/Map.svelte";
+    import LeiaMais from "./components/navigation/LeiaMais.svelte";
+    //import Map from "./components/maps/Map.svelte";
     import Navigation from "./components/navigation/Navigation.svelte";
     import Quiz from "./components/blocks/Quiz.svelte";
     import Quote from "./components/texts/Quote.svelte";
@@ -35,6 +36,7 @@
 
     let UvaPages = "";
     UvaPath.subscribe(value => { UvaPages = value; });
+    //const json = `https://arte.estadao.com.br/public/uploads/${UvaPages}page.json?v=${version()}`;
     const json = `https://arte.estadao.com.br/public/pages/${UvaPages}page.json?v=${version()}`;
     let functionExecuted = false;
     let conteúdo = [];
@@ -42,7 +44,7 @@
         const response = await fetch(json);
         const data = await response.json();
         conteúdo = Object.values(data.conteúdo);
-        //console.log(conteúdo);
+        console.log(conteúdo);
         if (functionExecuted) {
             return;
         }
@@ -53,9 +55,9 @@
 <Styles />
 
 {#each conteúdo as block}
-    {#if block.type === "animação"}
-        <Animation value={block.value} />
-    {:else if block.type === "audio"}
+    <!-- {#if block.type === "animação"}
+        <Animation value={block.value} /> -->
+    {#if block.type === "audio"}
         <AudioContainer value={block.value} />
     {:else if block.type === "buscador"}
         <Buscador value={block.value} />
@@ -81,8 +83,10 @@
         <Janela value={block.value} />
     {:else if block.type === "lead"}
         <Lead value={block.value} />
-    {:else if block.type === "mapa"}
-        <Map value={block.value} />
+    {:else if block.type === "leiaMais"}
+        <LeiaMais value={block.value} />
+    <!-- {:else if block.type === "mapa"}
+        <Map value={block.value} /> -->
     {:else if block.type === "mudaFundo"}
         <ChangeBackground value={block.value} />
     {:else if block.type === "navegador"}
