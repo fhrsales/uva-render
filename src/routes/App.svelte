@@ -25,6 +25,7 @@
     import Navigation from "./components/navigation/Navigation.svelte";
     import Quiz from "./components/blocks/Quiz.svelte";
     import Quote from "./components/texts/Quote.svelte";
+    import Rodape from "./components/texts/Rodape.svelte";
     import Rule from "./components/rules/Rule.svelte";
     import Scrolly from "./components/scrollytelling/Scrolly.svelte";
     import Styles from "./components/styles/Styles.svelte";
@@ -44,12 +45,12 @@
         const response = await fetch(json);
         const data = await response.json();
         conteúdo = Object.values(data.conteúdo);
-        console.log(conteúdo);
+        //console.log(conteúdo);
         if (functionExecuted) {
             return;
         }
         functionExecuted = true;
-    });
+});
 </script>
 
 <Styles />
@@ -95,6 +96,8 @@
         <Quiz value={block.value} />
     {:else if block.type === "frase"}
         <Quote value={block.value} />
+    {:else if block.type === "rodapé"}
+        <Rodape value={block.value} />
     {:else if block.type === "separador"}
         <Rule />
     {:else if block.type === "scrolly"}

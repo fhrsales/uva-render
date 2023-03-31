@@ -51,6 +51,11 @@
     /* Normalização do Arc
     /* ******** */
 
+    :global(.OB-REACT-WRAPPER) {
+        max-width: 705px !important;
+        margin-bottom: 80px !important;
+    }
+
     @media (min-width:576px) {
         :global(.container) {
             max-width: 100% !important;
@@ -59,7 +64,7 @@
 
     @media (min-width:768px) {
         :global(.container) {
-            max-width: 736px !important;
+            max-width: 100% !important;
         }
     }
 
