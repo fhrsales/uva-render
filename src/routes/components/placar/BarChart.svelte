@@ -1,0 +1,387 @@
+<script>
+    import { onMount } from 'svelte';
+
+    export let voteSummary = { data: {}, startPositions: {} };
+    export let barChartElement;
+    export let totalVotes;
+    export let filteredData = [];
+    let chartWidth;
+    let contraLabelWidth = 0;
+    let visibleCategories;
+    let anyCategoryVisible;
+    let filtersApplied;
+
+    const categoriesOrder = [
+        'A favor',
+        'A favor com ressalvas',
+        'Não foi encontrado',
+        'Não quis responder',
+        'Contra'
+    ];
+
+    function xScale(value) {
+        return totalVotes === 0 ? 0 : (value * 100) / totalVotes;
+    }
+
+    function updateStartPositions() {
+        let startPos = 0;
+        for (const vote of categoriesOrder) {
+            const count = voteSummary.data[vote] || 0;
+            voteSummary.startPositions[vote] = startPos;
+            startPos += xScale(count);
+        }
+    }
+
+    function updateVisibleCategories() {
+        visibleCategories = categoriesOrder.filter((category) => {
+            return filteredData.some((row) => row['intenção de voto'] === category);
+        });
+        anyCategoryVisible = visibleCategories.some(vote => voteSummary.data[vote] > 0);
+        filtersApplied = filteredData.length < 513;
+    }
+
+    onMount(() => {
+        updateStartPositions();
+        updateVisibleCategories();
+    });
+
+    $: if (voteSummary.data && filteredData.length > 0) {
+        totalVotes = Object.values(voteSummary.data).reduce((a, b) => a + b, 0);
+        updateStartPositions();
+        updateVisibleCategories();
+    }
+
+    $: if (filteredData.length === 0) {
+    visibleCategories = [];
+    anyCategoryVisible = false;
+}
+</script>
+
+<div bind:this={barChartElement} class="uva-container-scoreboard">
+    <div class="uva-scoreboard-chart G">
+        {#if !filtersApplied}
+            <div class="bar-divider"></div>
+        {/if}
+        {#if anyCategoryVisible}
+            {#each categoriesOrder as vote, index}
+                {#if visibleCategories.includes(vote)}
+                    <div class="label {
+                        vote === 'A favor' ? 'afavor' : 
+                        vote === 'A favor com ressalvas' ? 'afavor-com-ressalvas' : 
+                        vote === 'Não foi encontrado' ? 'nao-foi-encontrado' : 
+                        vote === 'Não quis responder' ? 'nao-quis-responder' :
+                        vote === 'Contra' ? 'contra' :  
+                        ''}"
+                        style="left: calc({voteSummary.startPositions[vote]}%); {vote === 'Contra' ? 'left: inherit; right: 0;' : ''}"
+                        on:mount={vote === 'Contra' ? (event) => (contraLabelWidth = event.target.clientWidth) : null}>
+
+                        <div class="count {
+                            vote === 'A favor' ? 'count-large' : 
+                            vote === 'Contra' ? 'count-large' : 
+                            ''}">
+                            {vote === 'A favor' ? (voteSummary.data[vote] || 0) + (voteSummary.data['A favor com ressalvas'] || 0) : (voteSummary.data[vote] || 0)}
+                        </div>
+
+                        <div class="vote">
+                            {#if vote === 'A favor'}
+                                <div>A favor *</div>
+                                <div class='uva-vote-icon afavor'></div>
+                            {/if}
+                            {#if vote === 'A favor com ressalvas'}
+                                <div style='margin-bottom:-18px'>A favor com ressalvas</div>
+                                <div class='uva-vote-icon afavor-com-ressalvas'></div>
+                            {/if}
+                            {#if vote === 'Não foi encontrado'}
+                                <div style='margin-bottom:-18px'>Não foram encontrados</div>
+                                <div class='uva-vote-icon nao-foi-encontrado'></div>
+                            {/if}
+                            {#if vote === 'Não quis responder'}
+                                <div style='margin-bottom:-18px'>Não quiseram responder</div>
+                                <div class='uva-vote-icon nao-quis-responder'></div>
+                            {/if}
+                            {#if vote === 'Contra'}
+                                <div>Contra</div>
+                                <div class='uva-vote-icon contra'></div>
+                            {/if}
+                        </div>
+
+                    </div>
+
+                    <div class="bar {
+                        vote === 'A favor' ? 'afavor' : 
+                        vote === 'A favor com ressalvas' ? 'afavor-com-ressalvas' : 
+                        vote === 'Não foi encontrado' ? 'nao-foi-encontrado' : 
+                        vote === 'Não quis responder' ? 'nao-quis-responder' :
+                        vote === 'Contra' ? 'contra' :  
+                        ''}"
+                        style="width: {xScale(voteSummary.data[vote])}%; left: {voteSummary.startPositions[vote]}%;">
+                    </div>
+                {/if}
+            {/each}
+        {:else}
+            <div class="uva-bar no-category-bar"></div>
+            <div class="uva-label no-category-label">Nenhum dado encontrado</div>
+        {/if}
+    </div>
+    <div class='uva-container-footnote G'>
+        <div>* Somados os votos a favor e a favor com ressalvas</div>
+        <div>Placar Estadão</div>
+    </div>
+</div>
+
+<style>
+    .uva-container-scoreboard {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        margin: 0 auto;
+        padding: calc(var(--margem-vertical) * 0.5) 0 calc(var(--margem-vertical) * 2) 0; 
+        background-color: var(--cor-fundo);
+        width: 100%;
+        height: 130px;
+        overflow: hidden;
+    }
+    
+    .uva-scoreboard-chart {
+        position: relative;
+        white-space: nowrap;
+        display: flex;
+        align-items: flex-end;
+        height:100%;
+    }
+
+    .bar {
+        position: absolute;
+        height: 20px;
+        bottom: 0;
+    }
+
+    .label {
+        position: absolute;
+        color: black;
+        font-size: 14px;
+        line-height: 16px;
+        font-family: var(--condensed);
+        font-weight: 600;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        bottom: 40px;
+        width: 0;
+    }
+
+    .count {
+        font-size: 22px;
+        margin-bottom: -28px;
+    }
+
+    .count-large {
+        font-size: 50px;
+        margin-bottom: 18px;
+    }
+    
+    .vote {
+        text-transform: uppercase;
+        letter-spacing: 0.03rem;
+    }
+
+    .bar.afavor {
+        background-color:#007367;
+        height: 20px;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+        box-shadow: var(--sombra-leve);
+    }
+
+    .label.afavor {
+        color: #007367;
+    }
+
+    .uva-vote-icon.afavor {
+        background-image: url(https://arte.estadao.com.br/arc/images/placar-afavor.svg);
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 20px;
+        height: 20px;
+        margin-top: 6px;
+    }
+
+    .bar.afavor-com-ressalvas {
+        background-color:#007367;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 10 10'%3E%3Cpath d='M-1,1 l2,-2 M0,10 l10,-10 M9,11 l2,-2' stroke='white' stroke-width='1.4' stroke-linecap='square'/%3E%3C/svg%3E");
+        height: 20px;
+        box-shadow: var(--sombra-leve);
+    }
+
+    .label.afavor-com-ressalvas {
+        display: none;
+        color: #007367;
+        word-break: break-word;
+        white-space: pre-wrap;
+        width: 80px;
+        max-width: 120px;
+        line-height: 17px;
+        bottom: 24px;
+    }
+
+    .uva-vote-icon.afavor-com-ressalvas {
+        background-image: url(https://arte.estadao.com.br/arc/images/placar-afavor-com-ressalvas.svg);
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 20px;
+        height: 20px;
+        margin-top: 6px;
+    }
+
+    .bar.nao-foi-encontrado {
+        background-color:#d5d5d5;
+        height: 20px;
+        border-left: 2px solid var(--cor-fundo);
+        box-shadow: var(--sombra-leve);
+    }
+
+    .label.nao-foi-encontrado, .label.nao-quis-responder {
+        display: none;
+        word-break: break-word;
+        white-space: pre-wrap;
+        width: 90px;
+        max-width: 120px;
+        line-height: 17px;
+        bottom: 24px;
+    }
+
+    .uva-vote-icon.nao-foi-encontrado {
+        background-image: url(https://arte.estadao.com.br/arc/images/placar-nao-foi-encontrado.svg);
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 19px;
+        height: 19px;
+        margin-top: 6px;
+    }
+
+    .bar.nao-quis-responder {
+        background-color:#838383;
+        height: 20px;
+        border-left: 2px solid var(--cor-fundo);
+        box-shadow: var(--sombra-leve);
+    }
+
+    .uva-vote-icon.nao-quis-responder {
+        background-image: url(https://arte.estadao.com.br/arc/images/placar-nao-quis-responder.svg);
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 19px;
+        height: 19px;
+        margin-top: 6px;
+    }
+
+    .bar.contra {
+        background-color:#c20736;
+        height: 20px;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        border-left: 2px solid var(--cor-fundo);
+        box-shadow: var(--sombra-leve);
+    }
+
+    .bar-divider {
+        position: absolute;
+        width: 1px;
+        height: 40px;
+        left: 60.04%;
+        top: 80;
+        transform: translate(-60.04%, 0px);
+        background-color: var(--cor-texto);
+        z-index: 1;
+    }
+
+    .bar-divider:after {
+        content: '308 votos necessários';
+        font: 500 calc(var(--corpo-mobile) * 0.6) / calc(var(--entrelinha-mobile) * 0.6) var(--condensed);
+        text-transform: uppercase;
+        letter-spacing: 0.03rem;
+        color: var(--cor-texto);
+        position: absolute;
+        width: 1px;
+        right: 50%;
+        bottom: 0;
+        transform: translate(-106px, -44px);
+        z-index: 1;
+    }
+
+    .label.contra{
+        color: #c20736;
+        align-items: flex-end;
+        padding-bottom: 25px;
+    }
+
+    .uva-vote-icon.contra {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.1 19.1"%3E%3Cpolygon points="17.4,4.4 14.6,1.6 9.5,6.7 4.4,1.6 1.6,4.4 6.7,9.5 1.6,14.6 4.4,17.4 9.5,12.3 14.6,17.4 17.4,14.6 12.3,9.5"  fill="%23c20736"/%3E%3C/svg%3E');
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 20px;
+        height: 20px;
+        margin-top: 6px;
+    }
+
+    .uva-container-footnote {
+        display: flex; 
+        justify-content: space-between; 
+        padding-top: 15px;
+        font: 500 calc(var(--corpo-mobile) * 0.6) / calc(var(--entrelinha-mobile) * 0.6) var(--condensed);
+        text-transform: uppercase;
+        letter-spacing: 0.03rem;
+        color: var(--cor-texto);
+    }
+
+    .no-category-bar {
+        background-color: var(--cor-terciaria);
+        width: 100%;
+        height: 20px;
+        border-radius: 4px;
+    }
+
+    .no-category-label {
+        position: absolute;
+        top: 75px;
+        left: 0;
+        font: 500 calc(var(--corpo-mobile) * 0.8) / calc(var(--entrelinha-mobile) * 0.8) var(--condensed);
+        text-transform: uppercase;
+        letter-spacing: 0.03rem;
+        color: var(--cor-texto);
+    }
+    @media (min-width:740px) {
+        /* desktop */
+        .label.nao-foi-encontrado, .label.nao-quis-responder, .label.afavor-com-ressalvas {
+            display: block;
+        }
+
+        .bar-divider {
+            position: absolute;
+            width: 1px;
+            height: 30px;
+            left: 60.04%;
+            top: 80;
+            transform: translate(-60.04%, 10px);
+            background-color: var(--cor-texto);
+            z-index: 1;
+        }
+
+        .bar-divider:after {
+            content: '308 votos necessários';
+            font: 500 calc(var(--corpo-mobile) * 0.6) / calc(var(--entrelinha-mobile) * 0.6) var(--condensed);
+            text-transform: uppercase;
+            letter-spacing: 0.03rem;
+            color: var(--cor-texto);
+            position: absolute;
+            width: 1px;
+            left: 50%;
+            bottom: 0;
+            transform: translate(-52%, 19px);
+            z-index: 1;
+        }
+    }
+</style>

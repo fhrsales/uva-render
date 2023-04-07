@@ -23,6 +23,7 @@
     import LeiaMais from "./components/navigation/LeiaMais.svelte";
     //import Map from "./components/maps/Map.svelte";
     import Navigation from "./components/navigation/Navigation.svelte";
+    import Placar from "./components/placar/Placar.svelte";
     import Quiz from "./components/blocks/Quiz.svelte";
     import Quote from "./components/texts/Quote.svelte";
     import Rodape from "./components/texts/Rodape.svelte";
@@ -37,8 +38,8 @@
 
     let UvaPages = "";
     UvaPath.subscribe(value => { UvaPages = value; });
-    //const json = `https://arte.estadao.com.br/public/uploads/${UvaPages}page.json?v=${version()}`;
     const json = `https://arte.estadao.com.br/public/pages/${UvaPages}page.json?v=${version()}`;
+    //const json = `https://arte.estadao.com.br/public/pages/${UvaPages}page.json?v=${version()}`;
     let functionExecuted = false;
     let conteúdo = [];
     onMount(async function () {
@@ -58,24 +59,24 @@
 {#each conteúdo as block}
     <!-- {#if block.type === "animação"}
         <Animation value={block.value} /> -->
-    {#if block.type === "audio"}
-        <AudioContainer value={block.value} />
-    {:else if block.type === "buscador"}
+    <!-- {#if block.type === "audio"}
+        <AudioContainer value={block.value} /> -->
+    <!-- {:else if block.type === "buscador"}
         <Buscador value={block.value} />
     {:else if block.type === "audioFrase"}
         <AudioQuote value={block.value} />
     {:else if block.type === "chapéu"}
-        <Chapeu value={block.value} />
-    {:else if block.type === "customização"}
+        <Chapeu value={block.value} /> -->
+    {#if block.type === "customização"}
         <Customization value={block.value} />
     {:else if block.type === "html"}
         <Code value={block.value} />
-    {:else if block.type === "estanteDeLivros"}
+    <!-- {:else if block.type === "estanteDeLivros"}
         <EstanteDeLivros value={block.value} />
     {:else if block.type === "flourish"}
         <Flourish value={block.value} />
     {:else if block.type === "gênero"}
-        <Genre value={block.value} />
+        <Genre value={block.value} /> -->
     {:else if block.type === "gráfico"}
         <UvaContainer value={block.value} />
     {:else if block.type === "imagem"}
@@ -88,20 +89,22 @@
         <LeiaMais value={block.value} />
     <!-- {:else if block.type === "mapa"}
         <Map value={block.value} /> -->
-    {:else if block.type === "mudaFundo"}
+    <!-- {:else if block.type === "mudaFundo"}
         <ChangeBackground value={block.value} />
     {:else if block.type === "navegador"}
-        <Navigation value={block.value} />
-    {:else if block.type === "quiz"}
-        <Quiz value={block.value} />
+        <Navigation value={block.value} /> -->
+    {:else if block.type === "placar"}
+        <Placar value={block.value} />
+    <!-- {:else if block.type === "quiz"}
+        <Quiz value={block.value} /> -->
     {:else if block.type === "frase"}
         <Quote value={block.value} />
     {:else if block.type === "rodapé"}
         <Rodape value={block.value} />
     {:else if block.type === "separador"}
         <Rule />
-    {:else if block.type === "scrolly"}
-        <Scrolly value={block.value} />
+    <!-- {:else if block.type === "scrolly"}
+        <Scrolly value={block.value} /> -->
     {:else if block.type === "testeira"}
         <Testeira value={block.value} />
     {:else if block.type === "text"}

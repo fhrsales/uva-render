@@ -6,7 +6,7 @@ import { terser } from 'rollup-plugin-terser';
 export default {
   input: 'src/index.js',
   output: {
-    file: 'public/uva-render-reportagem.js',
+    file: 'public/uva-render-placar.js',
     format: 'iife',
     name: 'UvaRender'
   },

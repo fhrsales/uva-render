@@ -1,9 +1,10 @@
 <script>
 	export let searchTerm;
 	export let placeholder = 'Digite uma palavra...';
+    export let tamanho = 'P';
 </script>
 
-<div class="P">
+<div class={tamanho}>
 	<input type="text" placeholder={placeholder} bind:value={searchTerm} on:input />
 </div>
 

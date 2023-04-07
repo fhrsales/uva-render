@@ -5,9 +5,19 @@
         index,
         value
     } = [];
+
+    function updateValue(novoValor) {
+        value = novoValor;
+    }
 </script>
 
-<button data-index={index} class={classe} on:click={handleClick}>{value}</button>
+<button 
+    data-index={index} 
+    class={classe} 
+    on:click={() => handleClick("Novo Valor")}
+>
+    {value}
+</button>
 
 <style>
     button {
