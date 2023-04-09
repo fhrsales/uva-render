@@ -16,6 +16,7 @@
         'A favor com ressalvas',
         'Não foi encontrado',
         'Não quis responder',
+        'Não foi contactado',
         'Contra'
     ];
 
@@ -70,6 +71,7 @@
                         vote === 'A favor com ressalvas' ? 'afavor-com-ressalvas' : 
                         vote === 'Não foi encontrado' ? 'nao-foi-encontrado' : 
                         vote === 'Não quis responder' ? 'nao-quis-responder' :
+                        vote === 'Não foi contactado' ? 'nao-foi-contactado' : 
                         vote === 'Contra' ? 'contra' :  
                         ''}"
                         style="left: calc({voteSummary.startPositions[vote]}%); {vote === 'Contra' ? 'left: inherit; right: 0;' : ''}"
@@ -99,6 +101,10 @@
                                 <div style='margin-bottom:-18px'>Não quiseram responder</div>
                                 <div class='uva-vote-icon nao-quis-responder'></div>
                             {/if}
+                            {#if vote === 'Não foi contactado'}
+                                <div style='margin-bottom:-18px'>Não foram contactados</div>
+                                <div class='uva-vote-icon nao-foi-encontrado'></div>
+                            {/if}
                             {#if vote === 'Contra'}
                                 <div>Contra</div>
                                 <div class='uva-vote-icon contra'></div>
@@ -112,6 +118,7 @@
                         vote === 'A favor com ressalvas' ? 'afavor-com-ressalvas' : 
                         vote === 'Não foi encontrado' ? 'nao-foi-encontrado' : 
                         vote === 'Não quis responder' ? 'nao-quis-responder' :
+                        vote === 'Não foi contactado' ? 'nao-foi-contactado' : 
                         vote === 'Contra' ? 'contra' :  
                         ''}"
                         style="width: {xScale(voteSummary.data[vote])}%; left: {voteSummary.startPositions[vote]}%;">
@@ -125,7 +132,12 @@
     </div>
     <div class='uva-container-footnote G'>
         <div>* Somados os votos a favor e a favor com ressalvas</div>
-        <div>Placar Estadão</div>
+        <div><img class='uva-image-placar-brand' src='https://arte.estadao.com.br/arc/images/placar/placar-brand.svg'></div>
+    </div>
+    <div class='uva-container-footer-mobile P'>
+        <img loading='lazy' src='https://arte.estadao.com.br/arc/images/placar/placar-afavor-com-ressalvas.svg' alt='A favor com ressalvas' width='12px' height='12px'style='margin-right:6px; margin-top:13px'/> A favor com ressalvas<br>
+        <img loading='lazy' src='https://arte.estadao.com.br/arc/images/placar/placar-nao-foi-encontrado.svg' alt='Não foi encontrado' width='12px' height='12px'style='margin-right:6px; margin-top:3px'/> Não foram encontrados<br>
+        <img loading='lazy' src='https://arte.estadao.com.br/arc/images/placar/placar-nao-quis-responder.svg' alt='Não quis responder' width='12px' height='12px'style='margin-right:8px; margin-top:5px'/>Não quiseram responder
     </div>
 </div>
 
@@ -135,7 +147,7 @@
         top: 0;
         z-index: 2;
         margin: 0 auto;
-        padding: calc(var(--margem-vertical) * 0.5) 0 calc(var(--margem-vertical) * 2) 0; 
+        padding: calc(var(--margem-vertical) * 0.5) 0 calc(var(--margem-vertical) * 3.5) 0; 
         background-color: var(--cor-fundo);
         width: 100%;
         height: 130px;
@@ -198,7 +210,7 @@
     }
 
     .uva-vote-icon.afavor {
-        background-image: url(https://arte.estadao.com.br/arc/images/placar-afavor.svg);
+        background-image: url(https://arte.estadao.com.br/arc/images/placar/placar-afavor.svg);
         background-size: contain;
         background-repeat: no-repeat;
         width: 20px;
@@ -225,12 +237,18 @@
     }
 
     .uva-vote-icon.afavor-com-ressalvas {
-        background-image: url(https://arte.estadao.com.br/arc/images/placar-afavor-com-ressalvas.svg);
+        background-image: url(https://arte.estadao.com.br/arc/images/placar/placar-afavor-com-ressalvas.svg);
         background-size: contain;
         background-repeat: no-repeat;
         width: 20px;
         height: 20px;
         margin-top: 6px;
+    }
+
+    .bar.nao-foi-contactado {
+        background-color: var(--cor-terciaria);
+        height: 20px;
+        border-left: 2px solid var(--cor-fundo);
     }
 
     .bar.nao-foi-encontrado {
@@ -240,7 +258,7 @@
         box-shadow: var(--sombra-leve);
     }
 
-    .label.nao-foi-encontrado, .label.nao-quis-responder {
+    .label.nao-foi-encontrado, .label.nao-quis-responder, .label.nao-foi-contactado {
         display: none;
         word-break: break-word;
         white-space: pre-wrap;
@@ -251,7 +269,7 @@
     }
 
     .uva-vote-icon.nao-foi-encontrado {
-        background-image: url(https://arte.estadao.com.br/arc/images/placar-nao-foi-encontrado.svg);
+        background-image: url(https://arte.estadao.com.br/arc/images/placar/placar-nao-foi-encontrado.svg);
         background-size: contain;
         background-repeat: no-repeat;
         width: 19px;
@@ -267,7 +285,7 @@
     }
 
     .uva-vote-icon.nao-quis-responder {
-        background-image: url(https://arte.estadao.com.br/arc/images/placar-nao-quis-responder.svg);
+        background-image: url(https://arte.estadao.com.br/arc/images/placar/placar-nao-quis-responder.svg);
         background-size: contain;
         background-repeat: no-repeat;
         width: 19px;
@@ -297,7 +315,7 @@
 
     .bar-divider:after {
         content: '308 votos necessários';
-        font: 500 calc(var(--corpo-mobile) * 0.6) / calc(var(--entrelinha-mobile) * 0.6) var(--condensed);
+        font: 400 calc(var(--corpo-mobile) * 0.6) / calc(var(--entrelinha-mobile) * 0.6) var(--condensed);
         text-transform: uppercase;
         letter-spacing: 0.03rem;
         color: var(--cor-texto);
@@ -331,7 +349,23 @@
         display: flex; 
         justify-content: space-between; 
         padding-top: 15px;
-        font: 500 calc(var(--corpo-mobile) * 0.6) / calc(var(--entrelinha-mobile) * 0.6) var(--condensed);
+        font: 400 calc(var(--corpo-mobile) * 0.6) / calc(var(--entrelinha-mobile) * 0.6) var(--condensed);
+        text-transform: uppercase;
+        letter-spacing: 0.03rem;
+        color: var(--cor-texto);
+    }
+
+    .uva-image-placar-brand {
+        width:auto;
+        height: 12px;
+        filter: grayscale(100%);
+        opacity: 0.5;
+    }
+
+    .uva-container-footer-mobile {
+        display: block;
+        padding-bottom: calc(var(--margem-vertical-mobile) * 2);
+        font: 400 calc(var(--corpo-mobile) * 0.6) / calc(var(--entrelinha-mobile) * 0.6) var(--condensed);
         text-transform: uppercase;
         letter-spacing: 0.03rem;
         color: var(--cor-texto);
@@ -353,12 +387,17 @@
         letter-spacing: 0.03rem;
         color: var(--cor-texto);
     }
+
     @media (min-width:740px) {
         /* desktop */
-        .label.nao-foi-encontrado, .label.nao-quis-responder, .label.afavor-com-ressalvas {
+        .label.nao-foi-encontrado, .label.nao-quis-responder, .label.afavor-com-ressalvas, .label.nao-foi-contactado {
             display: block;
         }
 
+        .uva-container-scoreboard {
+            padding: calc(var(--margem-vertical) * 0.5) 0 calc(var(--margem-vertical) * 2) 0; 
+        }
+        
         .bar-divider {
             position: absolute;
             width: 1px;
@@ -372,7 +411,7 @@
 
         .bar-divider:after {
             content: '308 votos necessários';
-            font: 500 calc(var(--corpo-mobile) * 0.6) / calc(var(--entrelinha-mobile) * 0.6) var(--condensed);
+            font: 400 calc(var(--corpo-mobile) * 0.6) / calc(var(--entrelinha-mobile) * 0.6) var(--condensed);
             text-transform: uppercase;
             letter-spacing: 0.03rem;
             color: var(--cor-texto);
@@ -382,6 +421,14 @@
             bottom: 0;
             transform: translate(-52%, 19px);
             z-index: 1;
+        }
+
+        .uva-image-placar-brand {
+            height: 13px;
+        }
+
+        .uva-container-footer-mobile {
+            display: none;
         }
     }
 </style>

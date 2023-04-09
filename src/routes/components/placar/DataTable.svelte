@@ -38,7 +38,7 @@
             <thead>
                 <tr>
                     <th>&nbsp;</th>
-                    <th data-order='intenção de voto' on:click={() => sortData('intenção de voto')} style='text-align:center'>
+                    <th data-order='intenção de voto' on:click={() => sortData('intenção de voto')}>
                         V {sortedColumn === 'intenção de voto' ? (sortAscending ? '▴' : '▾') : ''}
                     </th>
                     
@@ -74,15 +74,15 @@
 
                             <td class='uva-deputy-vote'>
                                 {#if row['intenção de voto'] === 'A favor'}
-                                    <img class='uva-deputy-vote-icon-afavor' loading='lazy' src='https://arte.estadao.com.br/arc/images/placar-afavor.svg' alt='A favor' width='20px' height='20px'/>
+                                    <img class='uva-deputy-vote-icon-afavor' loading='lazy' src='https://arte.estadao.com.br/arc/images/placar/placar-afavor.svg' alt='A favor' width='20px' height='20px'/>
                                 {:else if row['intenção de voto'] === 'A favor com ressalvas'}
-                                <img class='uva-deputy-vote-icon-afavor-com-ressalvas' loading='lazy' src='https://arte.estadao.com.br/arc/images/placar-afavor-com-ressalvas.svg' alt='A favor com ressalvas' width='20px' height='20px'/>
+                                <img class='uva-deputy-vote-icon-afavor-com-ressalvas' loading='lazy' src='https://arte.estadao.com.br/arc/images/placar/placar-afavor-com-ressalvas.svg' alt='A favor com ressalvas' width='20px' height='20px'/>
                                 {:else if row['intenção de voto'] === 'Não foi encontrado'}
-                                    <img class='uva-deputy-vote-icon-nao-foi-encontrado' loading='lazy' src='https://arte.estadao.com.br/arc/images/placar-nao-foi-encontrado.svg' alt='Não foi encontrado' width='20px' height='20px'/>
+                                    <img class='uva-deputy-vote-icon-nao-foi-encontrado' loading='lazy' src='https://arte.estadao.com.br/arc/images/placar/placar-nao-foi-encontrado.svg' alt='Não foi encontrado' width='20px' height='20px'/>
                                 {:else if row['intenção de voto'] === 'Não quis responder'}
-                                    <img class='uva-deputy-vote-icon-nao-quis-responder' loading='lazy' src='https://arte.estadao.com.br/arc/images/placar-nao-quis-responder.svg' alt='Não quis responder' width='20px' height='20px'/>
+                                    <img class='uva-deputy-vote-icon-nao-quis-responder' loading='lazy' src='https://arte.estadao.com.br/arc/images/placar/placar-nao-quis-responder.svg' alt='Não quis responder' width='20px' height='20px'/>
                                 {:else if row['intenção de voto'] === 'Contra'}
-                                    <img class='uva-deputy-vote-icon-contra' loading='lazy' src='https://arte.estadao.com.br/arc/images/placar-contra.svg' alt='Contra' width='20px' height='20px'/>
+                                    <img class='uva-deputy-vote-icon-contra' loading='lazy' src='https://arte.estadao.com.br/arc/images/placar/placar-contra.svg' alt='Contra' width='20px' height='20px'/>
                                 {/if}
                             </td>
 
@@ -91,7 +91,7 @@
                             <td class='uva-deputy-state'>{row.estado}</td>
                             <td class='uva-deputy-mail'>
                                 <a href="mailto:{row.email}" target="_blank noreferer">
-                                    <img class='uva-deputy-mail-icon' loading='lazy' src='https://arte.estadao.com.br/arc/images/placar-mail.svg' alt='e-mail' width='20px' height='20px'>
+                                    <img class='uva-deputy-mail-icon' loading='lazy' src='https://arte.estadao.com.br/arc/images/placar/placar-mail.svg' alt='e-mail' width='20px' height='20px'>
                                 </a>
                             </td>
                         </tr>
@@ -117,7 +117,7 @@
 <style>
     table {
         border-collapse: collapse;
-        font-family: var(--sans-serif);
+        font-family: var(--semicondensed);
         font-size: calc(var(--corpo-mobile) * 0.7);
         width: 100%;
         margin: 0 auto calc(var(--margem-vertical) * 1);
@@ -146,11 +146,11 @@
     }
 
     .uva-deputy-thumb {
-        width: 5%;
+        width: 15%;
     }
 
     .uva-deputy-vote {
-        width: 12.5%;
+        width: 10%;
     }
 
     .circle-overlay {
@@ -214,7 +214,7 @@
 
     .uva-deputy-name {
         font-weight: 500;
-        width: 50%;
+        width: 32.5%;
         padding-bottom:12px;
     }
 
@@ -225,17 +225,16 @@
 
     .uva-deputy-state{
         font-size: calc(var(--corpo-mobile) * 0.55);
-        width: 7.5%;
+        width: 12.5%;
     }
 
     .uva-deputy-mail {
-        width: 1%;
-        text-align: right;
+        width: 5%;
     }
 
     .uva-deputy-mail-icon {
         margin-top: 4px;
-        width: 20px;
+        width: 17px;
     }
 
     .uva-container-button-expand-deputies {
@@ -257,7 +256,7 @@
         }
 
         th, td {
-            padding: 8px;
+            padding: 8px 7px;
         }
 
         .circle {

@@ -1,31 +1,68 @@
 <script>
+    import { onMount } from 'svelte';
+    import { csvParse } from 'd3-dsv';
+    import { DateTime } from 'luxon';
     import { UvaPath } from "../../../scripts/store.js"
     import { version } from "../../../scripts/version.js";
     let UvaPages = '';
-    UvaPath.subscribe(value => {
-		UvaPages = value;
-	});
-    import { onMount } from 'svelte';
+    UvaPath.subscribe(value => { UvaPages = value; });
     import * as d3 from 'd3';
-    import { csvParse } from 'd3-dsv';
+    import ChartHeading from './../headings/ChartHeading.svelte';
     import Text from './../texts/Text.svelte';
     import Searchbox from './../search/Searchbox.svelte';
-    import BarChart from './BarChart.svelte';
     import Select from './../buttons/Select.svelte';
     import DataTable from './DataTable.svelte';
+    import BarChart from './../Charts/BarChart.svelte';
+    import BubbleChart from './../Charts/BubbleChart.svelte';
 
     export let value;
+    export let { títuloEstado, textoEstado, títuloPartido, textoPartido} = value;
+
+    //***** Customizações do BubbleChart ***** //
+    let color = d3.scaleOrdinal()
+        .domain(["A favor", "A favor com ressalvas", "Não foi encontrado", "Não quis responder", "Não foi contactado", "Contra"])
+        .range(["#007367", "#007367", "#d5d5d5", "#838383", "#f5f5f5", "#c20736"]);
+    let fillFunction = (d) => (d.data.category === 'Não foi encontrado' ? '#838383' : (d.data.category === 'Não foi contactado' ? '#bfbfbf' : 'white'));
+    let filterFunctionLessThan = (d) => d.data.value <= 7 && d.data.category !== 'Não foi contactado';
+    let filterFunctionGreaterThan = (d) => d.data.value >= 7 && d.data.category !== 'Não foi contactado';
+
+    //********** //
 
     let data = [];
     let filteredData = [];
     let voteSummary = { data: {}, startPositions: {}};
     let totalVotes = 0;
+    let formattedTime = '';
     let searchTerm;
     let searchQuery = '';
     let selectedState = '';
     let uniqueStates = [];
     let selectedParty = '';
     let uniqueParties = [];
+    let aggregatedDataByState = [];
+    let aggregatedDataByParty = [];
+
+    $: { 
+        aggregatedDataByState = aggregateDataByState();
+    }
+    $: { 
+        aggregatedDataByParty = aggregateDataByParty(); 
+    }
+    $: if (data.length > 0) {
+        updateVoteSummary();
+        aggregatedDataByState = aggregateDataByState();
+        aggregatedDataByParty = aggregateDataByParty();
+    }
+    $: {
+        filteredData = data.filter((row) => {
+            const nameMatches = normalizeString(row.nome).includes(searchQuery);
+            const stateMatches = selectedState === '' || row.estado === selectedState;
+            const partyMatches = selectedParty === '' || row.partido === selectedParty;
+
+            return nameMatches && stateMatches && partyMatches;
+        });
+        updateFilteredVoteSummary();
+    }
 
     function updateVoteSummary() {
         const categoriesOrder = ['A favor', 'A favor com ressalvas', 'Não foi encontrado', 'Não quis responder', 'Contra'];
@@ -83,16 +120,11 @@
             }, { category: '', count: 0 });
 
             return {
-                state,
+                name: state,
                 category: maxCategory.category,
-                totalVotes: maxCategory.count
+                value: maxCategory.count
             };
         });
-    }
-
-    let aggregatedDataByState = [];
-    $: {
-        aggregatedDataByState = aggregateDataByState();
     }
 
     function aggregateDataByParty() {
@@ -118,177 +150,11 @@
             }, { category: '', count: 0 });
 
             return {
-                party,
+                name: party,
                 category: maxCategory.category,
-                totalVotes: maxCategory.count
+                value: maxCategory.count
             };
         });
-    }
-
-    let aggregatedDataByParty = [];
-    $: {
-        aggregatedDataByParty = aggregateDataByParty();
-    }
-
-    function bubbleChartStates() {
-        const container = d3.select("#uva-container-bubble-chart-states");
-        const containerWidth = container.node().getBoundingClientRect().width;
-        const containerHeight = containerWidth;
-        const svg = container.append("svg")
-            .attr("viewBox", `0 0 ${containerWidth} ${containerHeight}`)
-            .attr("class", "bubble")
-            .style("width", "100%");
-
-        const defs = svg.append("defs");
-        const pattern = defs.append("pattern")
-            .attr("id", "hash")
-            .attr("width", 5)
-            .attr("height", 8)
-            .attr("patternUnits", "userSpaceOnUse")
-            .attr("patternTransform", "rotate(45)");
-        pattern.append("rect")
-            .attr("width", 1)
-            .attr("height", 8)
-            .attr("transform", "translate(2,0)")
-            .attr("fill", "#fff");
-        pattern.append("rect")
-            .attr("width", 10)
-            .attr("height", 10)
-            .attr("transform", "translate(1,0)")
-            .attr("fill", "#007367");
-
-        const color = d3.scaleOrdinal()
-            .domain(["A favor", "A favor com ressalvas", "Não foi encontrado", "Não quis responder", "Contra"])
-            .range(["#007367", "#007367", "#d5d5d5", "#838383", "#c20736"]);
-
-        const bubble = d3.pack()
-            .size([containerWidth, containerHeight])
-            .padding(-2);
-
-        const root = d3.hierarchy({ children: aggregatedDataByState })
-            .sum((d) => d.totalVotes);
-
-        bubble(root);
-
-        const node = svg.selectAll(".node")
-            .data(root.descendants())
-            .join("g")
-            .attr("class", (d) => d.children ? "node" : "leaf node")
-            .attr("transform", (d) => `translate(${d.x},${d.y})`);
-
-        node.filter((d) => !d.children)
-            .append("circle")
-            .attr("r", (d) => d.r)
-            .style("fill", (d) => d.data.category === "A favor com ressalvas" ? "url(#hash)" : color(d.data.category))
-            .style("stroke", 'white')
-            .style("stroke-width", 3)
-            .attr('class', (d) => d.data.category);
-        node.append('text')
-            .attr('dy', '.3em')
-            .style('text-anchor', 'middle')
-            .style('font-family', 'var(--condensed)')
-            .style('font-weight', '500')
-            .style('fill', (d) =>d.data.category === 'Não foi encontrado' ? '#838383' : 'white')
-            .text((d) => d.data.state)
-            .attr('class', 'state');
-        node.filter((d) => d.data.totalVotes >= 6)
-            .append('text')
-            .attr('dy', '1.3em')
-            .style('text-anchor', 'middle')
-            .style('font-family', 'var(--condensed)')
-            .style('font-weight', '700')
-            .style('font-size', '20px')
-            .style('fill', (d) =>d.data.category === 'Não foi encontrado' ? '#838383' : 'white')
-            .text((d) => d.data.totalVotes)
-            .attr('class', 'votes');
-    }
-
-    function bubbleChartParties() {
-        const container = d3.select("#uva-container-bubble-chart-parties");
-        const containerWidth = container.node().getBoundingClientRect().width;
-        const containerHeight = containerWidth;
-        const svg = container.append("svg")
-            .attr("viewBox", `0 0 ${containerWidth} ${containerHeight}`)
-            .attr("class", "bubble")
-            .style("width", "100%")
-
-        const defs = svg.append("defs");
-        const pattern = defs.append("pattern")
-            .attr("id", "hash")
-            .attr("width", 5)
-            .attr("height", 8)
-            .attr("patternUnits", "userSpaceOnUse")
-            .attr("patternTransform", "rotate(45)");
-        pattern.append("rect")
-            .attr("width", 1)
-            .attr("height", 8)
-            .attr("transform", "translate(2,0)")
-            .attr("fill", "#fff");
-        pattern.append("rect")
-            .attr("width", 10)
-            .attr("height", 10)
-            .attr("transform", "translate(1,0)")
-            .attr("fill", "#007367");
-
-        const color = d3.scaleOrdinal()
-            .domain(["A favor", "A favor com ressalvas", "Não foi encontrado", "Não quis responder", "Contra"])
-            .range(["#007367", "#007367", "#d5d5d5", "#838383", "#c20736"]);
-
-        const bubble = d3.pack()
-            .size([containerWidth, containerHeight])
-            .padding(-2);
-
-        const root = d3.hierarchy({ children: aggregatedDataByParty })
-            .sum((d) => d.totalVotes);
-
-        bubble(root);
-
-        const node = svg.selectAll(".node")
-            .data(root.descendants())
-            .join("g")
-            .attr("class", (d) => d.children ? "node" : "leaf node")
-            .attr("transform", (d) => `translate(${d.x},${d.y})`);
-
-        node.filter((d) => !d.children)
-            .append("circle")
-            .attr("r", (d) => d.r)
-            .style("fill", (d) => d.data.category === "A favor com ressalvas" ? "url(#hash)" : color(d.data.category))
-            .style("stroke", 'white')
-            .style("stroke-width", 3)
-            .attr('class', (d) => d.data.category);
-        node.append('text')
-            .attr('dy', '.3em')
-            .style('text-anchor', 'middle')
-            .style('font-family', 'var(--condensed)')
-            .style('font-weight', '500')
-            .style('fill', (d) =>d.data.category === 'Não foi encontrado' ? '#838383' : 'white')
-            .text((d) => d.data.party)
-            .attr('class', 'state');
-        node.filter((d) => d.data.totalVotes >= 6)
-            .append('text')
-            .attr('dy', '1.3em')
-            .style('text-anchor', 'middle')
-            .style('font-family', 'var(--condensed)')
-            .style('font-weight', '700')
-            .style('font-size', '20px')
-            .style('fill', (d) =>d.data.category === 'Não foi encontrado' ? '#838383' : 'white')
-            .text((d) => d.data.totalVotes)
-            .attr('class', 'votes');
-    }
-
-    async function loadCSV() {
-        const response = await fetch(`https://arte.estadao.com.br/public/pages/${UvaPages}/placar_camara.csv?v=${version()}`);
-        const csvText = await response.text();
-        data = csvParse(csvText, d3.autoType);
-
-        uniqueStates = Array.from(new Set(data.map((row) => row.estado)));
-        uniqueParties = Array.from(new Set(data.map((row) => row.partido)));
-    }
-
-    $: if (data.length > 0) {
-        updateVoteSummary();
-        aggregatedDataByState = aggregateDataByState();
-        aggregatedDataByParty = aggregateDataByParty();
     }
 
     function normalizeString(str) {
@@ -310,24 +176,30 @@
         selectedParty = event.target.value;
     }
 
-    $: {
-        filteredData = data.filter((row) => {
-            const nameMatches = normalizeString(row.nome).includes(searchQuery);
-            const stateMatches = selectedState === '' || row.estado === selectedState;
-            const partyMatches = selectedParty === '' || row.partido === selectedParty;
+    async function loadCSV() {
+        //const response = await fetch(`https://arte.estadao.com.br/public/pages/${UvaPages}/placar_camara.csv?v=${version()}`);
+        const response = await fetch(`https://arte.estadao.com.br/public/pages/${UvaPages}/placar.csv?v=${version()}`);
+        const csvText = await response.text();
+        data = csvParse(csvText, d3.autoType);
 
-            return nameMatches && stateMatches && partyMatches;
-        });
-        updateFilteredVoteSummary();
+        uniqueStates = Array.from(new Set(data.map((row) => row.estado)));
+        uniqueParties = Array.from(new Set(data.map((row) => row.partido)));
+
+        // pega a data de atualização do arquivo
+        const lastModifiedHeader = response.headers.get('last-modified');
+        const dia = new Date(lastModifiedHeader).toLocaleString('pt-BR', {timeZone: 'America/Sao_Paulo', dateStyle: 'short'});
+        const hora = new Date(lastModifiedHeader).toLocaleString('pt-BR', {timeZone: 'America/Sao_Paulo', timeStyle: 'short'});
+            formattedTime = `Atualizado em ${dia}, às ${hora}.`;
     }
 
     onMount(async () => {
         await loadCSV();
-        await bubbleChartStates();
-        await bubbleChartParties();
+        // await bubbleChartStates();
+        // await bubbleChartParties();
     });
 </script>
 
+<Text value={formattedTime} />
 <BarChart {voteSummary} {totalVotes} {filteredData} />
 
 <div class='uva-container-selectors G'>
@@ -339,11 +211,31 @@
 
 <DataTable {filteredData} />
 
-<div class='uva-container-other-charts G'>
-    <div id='uva-container-bubble-chart-states' class='GG'></div>
-    <div id='uva-container-bubble-chart-parties' class='GG'></div>
-</div>
+{#if aggregatedDataByState.length > 0}
+    <ChartHeading value={títuloEstado} />
+    <Text value={textoEstado} />
+    <BubbleChart 
+        id='estado' 
+        classe='P' 
+        data={aggregatedDataByState} 
+        color={color} 
+        fillFunction={fillFunction} 
+        filterFunctionLessThan={filterFunctionLessThan}
+        filterFunctionGreaterThan={filterFunctionGreaterThan} />
+{/if}
 
+{#if aggregatedDataByParty.length > 0}
+<ChartHeading value={títuloPartido} />
+<Text value={textoPartido} />
+    <BubbleChart 
+        id='partido' 
+        classe='P' 
+        data={aggregatedDataByParty} 
+        color={color} 
+        fillFunction={fillFunction} 
+        filterFunctionLessThan={filterFunctionLessThan}
+        filterFunctionGreaterThan={filterFunctionGreaterThan} />
+{/if}
 
 <style>
     .uva-container-selectors {
@@ -353,57 +245,22 @@
         align-items: center;
         position: relative;
         top: calc(-1.8 * var(--margem-vertical));
-        margin-bottom: calc(-0.65 * var(--margem-vertical));
+        margin-bottom: calc(-2.3 * var(--margem-vertical));
+        margin-left: 1rem;
+        width:calc(100% - 1rem);
         overflow-x: scroll;
         scrollbar-width: none;
     }
 
+    @media (min-width:1024px) {
+        .uva-container-selectors {
+            max-width:1024px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
     ::-webkit-scrollbar {
         display: none;
-    }
-
-    .uva-container-other-charts {
-        display: block;
-        margin: calc(var(--margem-vertical) * 2) auto;
-    }
-
-    #uva-container-bubble-chart-states::before {
-        content: 'Intenção de voto por estado';
-        display: block;
-        font: 700 calc(var(--corpo-mobile) * 0.8) / 1 var(--condensed);
-        letter-spacing: 0.03rem;
-        color: var(--cor-texto);
-        text-align: center;
-        text-transform: uppercase;
-        margin-bottom: calc(var(--margem-vertical) / 2);
-    }
-
-    #uva-container-bubble-chart-parties::before {
-        content: 'Intenção de voto por partido';
-        display: block;
-        font: 700 calc(var(--corpo-mobile) * 0.8) / 1 var(--condensed);
-        letter-spacing: 0.03rem;
-        color: var(--cor-texto);
-        text-align: center;
-        text-transform: uppercase;
-        margin-bottom: calc(var(--margem-vertical) / 2);
-    }
-
-    #uva-container-bubble-chart-parties {
-            margin-top: calc(var(--margem-vertical) * 2);
-        }
-
-    @media (min-width:740px) {
-        /* desktop */
-        .uva-container-other-charts {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        #uva-container-bubble-chart-parties {
-            margin-top: 0;
-        }
     }
 </style>
