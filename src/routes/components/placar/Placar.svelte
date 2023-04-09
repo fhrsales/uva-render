@@ -203,10 +203,25 @@
 <BarChart {voteSummary} {totalVotes} {filteredData} />
 
 <div class='uva-container-selectors G'>
-    <Searchbox tamanho='GG' placeholder='Buscar por nome...' on:input={handleSearch} bind:searchTerm />
-    <Select label='Todos os estados' options={uniqueStates} value={selectedState} onChange={handleStateChange} />
-    <Select label='Todos os partidos' options={uniqueParties} value={selectedParty} onChange={handlePartyChange} />
-    <!-- <Select label='Todas as categorias' options={uniqueCategories} value={selectedCategory} onChange={handleStateCategory} /> -->
+    <Searchbox 
+        tamanho='GG'
+        placeholder='Buscar por nome...' 
+        on:input={handleSearch} bind:searchTerm />
+    <Select 
+        label='Todos os estados' 
+        options={uniqueStates} 
+        value={selectedState} 
+        onChange={handleStateChange} />
+    <Select 
+        label='Todos os partidos' 
+        options={uniqueParties} 
+        value={selectedParty} 
+        onChange={handlePartyChange} />
+    <!-- <Select 
+            label='Todas as categorias' 
+            options={uniqueCategories} 
+            value={selectedCategory} 
+            onChange={handleStateCategory} /> -->
 </div>
 
 <DataTable {filteredData} />
