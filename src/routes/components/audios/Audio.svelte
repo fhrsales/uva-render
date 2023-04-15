@@ -10,8 +10,7 @@
 <audio controls preload="none">
     <source 
         src="https://arte.estadao.com.br/public/pages/{UvaPages}{fonte}?v=${version()}" 
-        type="audio/mp3"
-    >
+        type="audio/mp3">
 </audio>
 
 <style>

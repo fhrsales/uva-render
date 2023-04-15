@@ -131,27 +131,31 @@
         {/if}
     </div>
     <div class='uva-container-footnote G'>
-        <div>* Somados os votos a favor e a favor com ressalvas</div>
-        <div><img class='uva-image-placar-brand' src='https://arte.estadao.com.br/arc/images/placar/placar-brand.svg'></div>
+        <div>* Somados votos a favor e a favor com ressalvas</div>
+        <div><img class='uva-image-placar-brand' src='https://arte.estadao.com.br/arc/images/placar/placar-brand.svg' alt='Placar Estadão' width='92px' height='13px'></div>
     </div>
-    <div class='uva-container-footer-mobile P'>
-        <img loading='lazy' src='https://arte.estadao.com.br/arc/images/placar/placar-afavor-com-ressalvas.svg' alt='A favor com ressalvas' width='12px' height='12px'style='margin-right:6px; margin-top:13px'/> A favor com ressalvas<br>
-        <img loading='lazy' src='https://arte.estadao.com.br/arc/images/placar/placar-nao-foi-encontrado.svg' alt='Não foi encontrado' width='12px' height='12px'style='margin-right:6px; margin-top:3px'/> Não foram encontrados<br>
-        <img loading='lazy' src='https://arte.estadao.com.br/arc/images/placar/placar-nao-quis-responder.svg' alt='Não quis responder' width='12px' height='12px'style='margin-right:8px; margin-top:5px'/>Não quiseram responder
+    <div class='uva-container-footer-mobile G'>
+        <img loading='lazy' src='https://arte.estadao.com.br/arc/images/placar/placar-afavor-com-ressalvas.svg' alt='A favor com ressalvas' width='12px' height='12px'style='display: inline; margin-right:3px; margin-top:13px'/> Com ressalvas
+        <img loading='lazy' src='https://arte.estadao.com.br/arc/images/placar/placar-nao-foi-encontrado.svg' alt='Não foi encontrado' width='12px' height='12px'style='display: inline; margin: 3px 3px 0px 5px;'/> Não foi encontrado
+        <img loading='lazy' src='https://arte.estadao.com.br/arc/images/placar/placar-nao-quis-responder.svg' alt='Não quis responder' width='12px' height='12px'style='display: inline; margin: 0px 3px 0px 5px;'/>Não quis responder
     </div>
 </div>
 
 <style>
     .uva-container-scoreboard {
-        position: sticky;
-        top: 0;
-        z-index: 2;
+        position: fixed;
+        top: 48px;
+        z-index: 13;
         margin: 0 auto;
-        padding: calc(var(--margem-vertical) * 0.5) 0 calc(var(--margem-vertical) * 3.5) 0; 
+        padding: 0 0 calc(var(--margem-vertical) * 1.8) 0; 
         background-color: var(--cor-fundo);
         width: 100%;
-        height: 130px;
+        max-width: 1054px;
+        height: 103px;
         overflow: hidden;
+        left: 50%;
+        transform: translateX(-50%);
+        box-sizing: content-box;
     }
     
     .uva-scoreboard-chart {
@@ -178,7 +182,7 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        bottom: 40px;
+        bottom: 30px;
         width: 0;
     }
 
@@ -188,8 +192,8 @@
     }
 
     .count-large {
-        font-size: 50px;
-        margin-bottom: 18px;
+        font-size: calc((var(--corpo-mobile) * 1.3));
+        margin-bottom: 5px;
     }
     
     .vote {
@@ -233,7 +237,7 @@
         width: 80px;
         max-width: 120px;
         line-height: 17px;
-        bottom: 24px;
+        bottom: 12px;
     }
 
     .uva-vote-icon.afavor-com-ressalvas {
@@ -265,7 +269,7 @@
         width: 90px;
         max-width: 120px;
         line-height: 17px;
-        bottom: 24px;
+        bottom: 12px;
     }
 
     .uva-vote-icon.nao-foi-encontrado {
@@ -348,8 +352,8 @@
     .uva-container-footnote {
         display: flex; 
         justify-content: space-between; 
-        padding-top: 15px;
-        font: 400 calc(var(--corpo-mobile) * 0.6) / calc(var(--entrelinha-mobile) * 0.6) var(--condensed);
+        padding-top: 8px;
+        font: 400 calc(var(--corpo-mobile) * 0.5) / calc(var(--entrelinha-mobile) * 0.5) var(--condensed);
         text-transform: uppercase;
         letter-spacing: 0.03rem;
         color: var(--cor-texto);
@@ -357,18 +361,18 @@
 
     .uva-image-placar-brand {
         width:auto;
-        height: 12px;
+        height: 11px;
         filter: grayscale(100%);
         opacity: 0.5;
     }
 
     .uva-container-footer-mobile {
         display: block;
-        padding-bottom: calc(var(--margem-vertical-mobile) * 2);
-        font: 400 calc(var(--corpo-mobile) * 0.6) / calc(var(--entrelinha-mobile) * 0.6) var(--condensed);
+        font: 400 calc(var(--corpo-mobile) * 0.5) / calc(var(--entrelinha-mobile) * 0.5) var(--condensed);
         text-transform: uppercase;
         letter-spacing: 0.03rem;
         color: var(--cor-texto);
+        margin-top: -9px;
     }
 
     .no-category-bar {
@@ -380,7 +384,7 @@
 
     .no-category-label {
         position: absolute;
-        top: 75px;
+        top: 55px;
         left: 0;
         font: 500 calc(var(--corpo-mobile) * 0.8) / calc(var(--entrelinha-mobile) * 0.8) var(--condensed);
         text-transform: uppercase;
@@ -390,12 +394,18 @@
 
     @media (min-width:740px) {
         /* desktop */
-        .label.nao-foi-encontrado, .label.nao-quis-responder, .label.afavor-com-ressalvas, .label.nao-foi-contactado {
+        .label.nao-foi-encontrado, .label.nao-quis-responder, .label.afavor-com-ressalvas {
             display: block;
         }
 
         .uva-container-scoreboard {
-            padding: calc(var(--margem-vertical) * 0.5) 0 calc(var(--margem-vertical) * 2) 0; 
+            padding: calc(var(--margem-vertical) * 0.5) 0 calc(var(--margem-vertical) * 1.5) 0; 
+            height: 106px;
+        }
+
+        .count-large {
+            font-size: calc((var(--corpo-desktop) * 2));
+            margin-bottom: 17px;
         }
         
         .bar-divider {
@@ -423,8 +433,13 @@
             z-index: 1;
         }
 
+        .uva-container-footnote {
+            padding-top: 15px;
+            font: 400 calc(var(--corpo-desktop) * 0.5) / calc(var(--entrelinha-desktop) * 0.5) var(--condensed);
+        }
+
         .uva-image-placar-brand {
-            height: 13px;
+            height: 15px;
         }
 
         .uva-container-footer-mobile {

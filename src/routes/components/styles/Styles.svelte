@@ -68,6 +68,20 @@
         }
     }
 
+
+    @media (max-width: 767.5px) {
+        :global(.lmssvO) {
+            width: 100% !important;
+            max-width: 580px !important;
+            align-items: flex-start !important;
+            padding-left: 0 !important;
+        }
+
+        :global(.klsZKo) {
+            padding: 0px 1.25rem !important;
+        }
+    }
+
     :global(a:link, a:visited, a:hover, a:active) {
         color: var(--cor-primaria);
         font-family: inherit;
@@ -92,6 +106,7 @@
         font-style: italic !important;
         width: 100% !important;
         max-width: 580px !important;
+        margin-top: 20px !important;
     }
 
     :global(.subheadline-feature-block h2:before) {

@@ -1,100 +1,302 @@
 <script>
+    import { onMount } from 'svelte';
     import ChartHeading from './../headings/ChartHeading.svelte';
+    import Button from './../buttons/Button.svelte';
     import * as d3 from 'd3';
     export let data = [];
     export let id;
     export let classe;
     export let color;
     export let fillFunction;
-    export let filterFunctionLessThan;
-    export let filterFunctionGreaterThan;
+    export let createPatternFunction;
+    export let order;
 
-    import { onMount } from 'svelte';
-    onMount(drawBubbleChart);
+    let groupByCategory = false;
+    let node = [];
+    let initialPositions = [];
+    let toggleText = 'Agrupar';
+    let containerWidth;
+    let containerHeight;
 
     function drawBubbleChart() {
         const container = d3.select(`#${id}`)
-        const containerWidth = container.node().getBoundingClientRect().width;
-        const containerHeight = containerWidth;
-        const svg = container.append("svg")
-            .attr("viewBox", `0 0 ${containerWidth} ${containerHeight}`)
-            .style("width", "100%")
-            .style("height", "100%");
+            containerWidth = container.node().getBoundingClientRect().width;
+            containerHeight = containerWidth;
+        const svg = container.append('svg')
+            .attr('viewBox', `0 0 ${containerWidth} ${containerHeight}`)
+            .style('width', '100%')
+            .style('height', '100%');
 
-        const defs = svg.append("defs");
-        const pattern = defs.append("pattern")
-            .attr("id", "hash")
-            .attr("width", 5)
-            .attr("height", 8)
-            .attr("patternUnits", "userSpaceOnUse")
-            .attr("patternTransform", "rotate(45)");
-        pattern.append("rect")
-            .attr("width", 1)
-            .attr("height", 8)
-            .attr("transform", "translate(2,0)")
-            .attr("fill", "#fff");
-        pattern.append("rect")
-            .attr("width", 10)
-            .attr("height", 10)
-            .attr("transform", "translate(1,0)")
-            .attr("fill", "#007367");
+        const pattern = createPatternFunction(svg);
 
-        const bubble = d3.pack()
-            .size([containerWidth, containerHeight]);
+        const bubble = data => d3.pack()
+            .size([containerWidth, containerHeight])
+            .padding(0)
+            (d3.hierarchy({ children: data })
+                .sum(d => d.value)
+                .sort((a, b) => b.value - a.value));
 
-        const root = d3.hierarchy({ children: data })
-            .sum((d) => d.value)
-            .sort((a, b) => b.value - a.value);
+        const root = bubble(data);
 
-        bubble(root);
+            node = svg.selectAll()
+                .data(root.children)
+                .enter().append('g')
+                .attr('transform', (d, i) => {
+                initialPositions[i] = { x: d.x, y: d.y };
+                return `translate(${containerWidth / 2}, ${containerHeight / 2})`;
+            })
+            .style('opacity', 0);
 
-        const node = svg.selectAll(".node")
-            .data(root.descendants())
-            .join("g")
-            .attr("transform", (d) => `translate(${d.x},${d.y})`);
+            node.transition()
+            .ease(d3.easeExpInOut)
+            .duration(500)
+            .style('opacity', 1)
+            .attr('transform', d => `translate(${d.x}, ${d.y})`);
+
+        const tooltip = d3.select(`#${id}-tooltip`)
+            .style('opacity', 0);
+
+        function handleMouseOverTouchStart(event, d) {
+            svg.selectAll('circle').transition()
+                .duration(200)
+                .style('opacity', (circleData) => {
+                    return circleData === d ? 1 : 0.1;
+                });
+            svg.selectAll('text').transition()
+                .duration(200)
+                .style('opacity', (textData) => {
+                    return textData === d ? 1 : 0;
+                });
+            d3.select(event.currentTarget).transition()                
+                .duration(200)
+                .style('opacity', 1);
+            tooltip.transition()
+                .duration(200)
+                .style('opacity', 1);
+
+            const { x, y, width, height } = event.currentTarget.getBoundingClientRect();
+            const { pageX, pageY } = event;
+            const { clientWidth, clientHeight } = document.documentElement;
+
+            tooltip.html(`<div>${d.data.name}</div><hr><div>${d.data.value}</div>`)
+                .style('left', `${event.pageX - d.r}px`)
+                .style('top', `${event.pageY - d.r}px`);
+        }
+
+        function handleMouseOutTouchEnd() {
+            svg.selectAll('circle')
+                .transition()
+                .duration(200)
+                .style('opacity', 1);
+            svg.selectAll('text')
+                .transition()
+                .duration(200)
+                .style('opacity', 1);
+            tooltip.transition()
+                .duration(200)
+                .style('opacity', 0);
+        }
 
         node.filter((d) => !d.children)
-            .append("circle")
-            .attr("r", (d) => d.r)
-            .style("fill", (d) => d.data.category === "A favor com ressalvas" ? "url(#hash)" : color(d.data.category))
-        node.filter(filterFunctionLessThan)
+            .append('circle')
+            .attr('r', (d) => d.r)
+            .style('stroke', 1)
+            .style('stroke', 'var(--cor-fundo)')
+            .style('fill', (d) => d.data.category === 'A favor com ressalvas' ? 'url(#hash)' : color(d.data.category))
+            .style('cursor', 'pointer')
+            .on('mouseover', handleMouseOverTouchStart)
+            .on('touchstart', handleMouseOverTouchStart)
+            .on('mouseout', handleMouseOutTouchEnd)
+            .on('touchend', handleMouseOutTouchEnd);
+
+        node.filter((d) => !d.children)
             .append('text')
             .attr('dy', '0.4em')
             .style('text-anchor', 'middle')
             .style('font-family', 'var(--condensed)')
             .style('font-weight', '500')
-            .style('font-size', 'calc(var(--corpo-mobile) * 0.7)')
-            .style("fill", fillFunction)
+            .style('font-size', 'calc(var(--corpo-mobile) * 0.6)')
+            .style('cursor', 'pointer')
+            .style('fill', fillFunction)
             .text((d) => d.data.name)
-            .attr('class', 'name');
-        node.filter(filterFunctionGreaterThan)
-            .append('text')
-            .attr('dy', '-0.1em')
-            .style('text-anchor', 'middle')
-            .style('font-family', 'var(--condensed)')
-            .style('font-weight', '500')
-            .style('font-size', 'calc(var(--corpo-mobile) * 0.7)')
-            .style("fill", fillFunction)
-            .text((d) => d.data.name)
-            .attr('class', 'name');
-        node.filter(filterFunctionGreaterThan)
-            .append('text')
-            .attr('dy', '0.9em')
-            .style('text-anchor', 'middle')
-            .style('font-family', 'var(--condensed)')
-            .style('font-weight', '700')
-            .style('font-size', 'calc(var(--corpo-mobile) * 0.9)')
-            .style("fill", fillFunction)
-            .text((d) => d.data.value)
     }
+
+    // function positionGroupedCircles() {
+    //     const groupedNodes = {};
+    //     node.each((d) => {
+    //         if (!groupedNodes[d.data.category]) {
+    //             groupedNodes[d.data.category] = [];
+    //         }
+    //         groupedNodes[d.data.category].push(d);
+    //     });
+
+    //     const numGroups = Object.keys(groupedNodes).length;
+    //     const maxRadius = d3.max(node.data(), (d) => d.r) * 0.7;
+    //     const groupSpacing = containerWidth / (numGroups + 1);
+
+    //     const orderedGroups = Object.entries(groupedNodes)
+    //         .sort((a, b) => {
+    //             const aIndex = order.indexOf(a[0]);
+    //             const bIndex = order.indexOf(b[0]);
+    //             return aIndex - bIndex;
+    //         })
+    //         .map(([key, value]) => value);
+
+    //     orderedGroups.forEach((group, i) => {
+    //         const groupX = (i + 1.2) * groupSpacing;
+    //         const numNodes = group.length;
+    //         const maxGroupHeight = maxRadius * 1.4 * numNodes;
+
+    //         group.forEach((node, j) => {
+    //             const nodeY = (j + 1.3) * (maxGroupHeight / numNodes);
+    //             node.x = groupX;
+    //             node.y = nodeY;
+    //         });
+    //     });
+    // }
+
+    function positionGroupedCircles() {
+        const groupedNodes = {};
+        node.each((d) => {
+            const key = `${d.data.category}-${d.above ? d.above.data.id : "top"}`;
+            if (!groupedNodes[key]) {
+            groupedNodes[key] = [];
+            }
+            groupedNodes[key].push(d);
+        });
+
+        const numGroups = Object.keys(groupedNodes).length;
+        const groupSpacing = containerWidth / (numGroups + 1);
+
+        const orderedGroups = Object.entries(groupedNodes)
+            .sort((a, b) => {
+            const aIndex = order.indexOf(a[0].split("-")[0]);
+            const bIndex = order.indexOf(b[0].split("-")[0]);
+            return aIndex - bIndex;
+            })
+            .map(([key, value]) => value);
+
+        orderedGroups.forEach((group, i) => {
+            const groupX = (i + 1.2) * groupSpacing;
+            let yOffset = 0;
+            let isFirstInGroup = true;
+            let totalHeight = 0;
+
+            group.forEach((node) => {
+            const aboveNodes = groupedNodes[`${node.data.category}-${node.above ? node.above.data.id : "top"}`];
+            const aboveIndex = aboveNodes.indexOf(node.above);
+            const radiusAbove = aboveIndex !== -1 ? aboveNodes[aboveIndex].r : 0;
+            let nodeY = yOffset;
+
+            if (isFirstInGroup) {
+                // Define a posição vertical do primeiro círculo da categoria
+                totalHeight = aboveIndex !== -1 ? aboveNodes[aboveIndex].y + aboveNodes[aboveIndex].r : 0;
+                nodeY = totalHeight - node.r;
+                isFirstInGroup = false;
+            } else {
+                // Calcula a posição vertical com base no raio do círculo acima
+                nodeY += radiusAbove + node.r * 1.4;
+            }
+
+            node.x = groupX;
+            node.y = nodeY;
+            yOffset = nodeY + node.r * 0.05;
+            });
+
+            // Move todos os círculos da categoria para baixo para alinhar com o topo do container
+            const groupHeight = group[group.length - 1].y + group[group.length - 1].r - totalHeight;
+            group.forEach((node) => {
+            node.y += containerHeight - groupHeight;
+            });
+        });
+    }
+
+    function handleClick() {
+        groupByCategory = !groupByCategory;
+
+        if (groupByCategory) {
+            positionGroupedCircles();
+            node.transition()
+                .ease(d3.easeExpInOut)
+                .duration(500)
+                .attr('transform', (d) => `translate(${d.x}, ${d.y})`)
+                .style('opacity', 0.95);
+            toggleText = 'Desagrupar';
+        } else {
+            node.transition()
+                .ease(d3.easeExpInOut)
+                .duration(500)
+                .attr('transform', (d, i) => `translate(${initialPositions[i].x}, ${initialPositions[i].y})`)
+                .style('opacity', 1);
+            toggleText = 'Agrupar';
+            node.filter((d) => !d.children)
+                .select('text')
+                .style('position', null)
+                .style('left', null)
+                .style('top', null);
+        }
+    }
+
+    onMount(() => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('loaded');
+                    drawBubbleChart();
+                    observer.disconnect();
+                }
+            });
+        }, {});
+
+        const chartElement = document.querySelector(`#${id}`);
+            chartElement.classList.add('loaded');
+            observer.observe(chartElement);
+    });
+
 </script>
 
-<div id={id} class='uva-container-bubble-chart {classe}'></div>
+<div id={id} class='uva-container-bubble-chart {classe}'>
+    <div id='{id}-tooltip' class='uva-tooltip'></div>
+</div>
+<Button classe='uva-button-toggleChart' {handleClick} value={toggleText} />
+
 
 <style>
     .uva-container-bubble-chart {
-        margin: 0 auto calc(var(--margem-vertical) * 2) auto;
+        opacity: 0;
+        margin: 0 auto;
+    }
+
+    .uva-container-bubble-chart.loaded {
+        opacity: 1;
+        transition: all 1s ease-in;
+    }
+
+    .uva-tooltip {
+        position: absolute;
+        font: 500 calc(var(--corpo-mobile) * 0.7) / 1 var(--condensed);
+        color: var(--cor-texto);
+        text-align: center;
+        background-color: var(--cor-fundo);
+        pointer-events: none;
+        padding: 12px;
+        border: var(--borda-fina);
+        border-radius: 4px;
+        box-shadow: var(--sombra-leve);
+    }
+
+    .uva-tooltip > div > div {
+        font-size: calc(var(--corpo-mobile) * 1.5);
+    }
+
+    :global(.uva-button-toggleChart) {
+        margin: calc(var(--margem-vertical) * 0.5)  auto calc(var(--margem-vertical) * 2) auto;
+        background-color: var(--cor-texto);
+        color: var(--cor-fundo);
+        transition: all .35s ease-out;
+    }
+
+    :global(.uva-button-toggleChart):active,:global(.uva-button-toggleChart):hover {
+        background-color: #838383;
     }
 </style>
-
-

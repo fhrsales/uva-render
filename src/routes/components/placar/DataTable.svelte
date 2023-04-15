@@ -37,9 +37,8 @@
         <table>
             <thead>
                 <tr>
-                    <th>&nbsp;</th>
-                    <th data-order='intenção de voto' on:click={() => sortData('intenção de voto')}>
-                        V {sortedColumn === 'intenção de voto' ? (sortAscending ? '▴' : '▾') : ''}
+                    <th colspan='2' data-order='intenção de voto' on:click={() => sortData('intenção de voto')}>
+                        Voto {sortedColumn === 'intenção de voto' ? (sortAscending ? '▴' : '▾') : ''}
                     </th>
                     
                     <th data-order='nome' on:click={() => sortData('nome')}>
@@ -56,21 +55,9 @@
             </thead>
             <tbody>
                 {#if filteredData && filteredData.length > 0}
-                    {#each filteredData.slice(0, showAll ? undefined : 5) as row}
+                    {#each filteredData.slice(0, showAll ? undefined : 7) as row}
                         <tr>
-                            <td class='uva-deputy-thumb'>
-                                <div class="circle">
-                                    <img loading='lazy' class="grayscale" src="https://arte.estadao.com.br/politica/2023/camara/img/{row.id}.jpg" alt="{row.nome}" width='40px' height='40px'>
-                                    <div 
-                                        class="circle-overlay" 
-                                        class:afavor={row['intenção de voto'] === 'A favor'}
-                                        class:afavor-com-ressalvas={row['intenção de voto'] === 'A favor com ressalvas'}
-                                        class:nao-foi-encontrado={row['intenção de voto'] === 'Não foi encontrado'}
-                                        class:nao-quis-responder={row['intenção de voto'] === 'Não quis responder'}
-                                        class:contra={row['intenção de voto'] === 'Contra'}>
-                                    </div>
-                                </div>
-                            </td>
+
 
                             <td class='uva-deputy-vote'>
                                 {#if row['intenção de voto'] === 'A favor'}
@@ -84,6 +71,20 @@
                                 {:else if row['intenção de voto'] === 'Contra'}
                                     <img class='uva-deputy-vote-icon-contra' loading='lazy' src='https://arte.estadao.com.br/arc/images/placar/placar-contra.svg' alt='Contra' width='20px' height='20px'/>
                                 {/if}
+                            </td>
+
+                            <td class='uva-deputy-thumb'>
+                                <div class="circle">
+                                    <img loading='lazy' class="grayscale" src="https://arte.estadao.com.br/politica/2023/camara/img/{row.id}.jpg" alt="{row.nome}" width='50px' height='50px'>
+                                    <div 
+                                        class="circle-overlay" 
+                                        class:afavor={row['intenção de voto'] === 'A favor'}
+                                        class:afavor-com-ressalvas={row['intenção de voto'] === 'A favor com ressalvas'}
+                                        class:nao-foi-encontrado={row['intenção de voto'] === 'Não foi encontrado'}
+                                        class:nao-quis-responder={row['intenção de voto'] === 'Não quis responder'}
+                                        class:contra={row['intenção de voto'] === 'Contra'}>
+                                    </div>
+                                </div>
                             </td>
 
                             <td class='uva-deputy-name'>{row.nome}</td>
@@ -124,7 +125,7 @@
     }
 
     thead {
-        font: 700 calc(var(--corpo-mobile) * 0.7) var(--condensed);
+        font: 700 calc(var(--corpo-mobile) * 0.58) var(--condensed);
         color: var(--cor-texto);
         letter-spacing: 0.03rem;
         text-transform: uppercase;
@@ -140,7 +141,7 @@
 
     td {
         border: none;
-        border-bottom: 1px solid #c3c3c3;
+        border-bottom: 1px solid #e3e3e3;
         padding: 8px 3px;
         text-align: left;
     }
@@ -150,7 +151,7 @@
     }
 
     .uva-deputy-vote {
-        width: 10%;
+        width: 9%;
     }
 
     .circle-overlay {
@@ -214,7 +215,7 @@
 
     .uva-deputy-name {
         font-weight: 500;
-        width: 32.5%;
+        width: 33.5%;
         padding-bottom:12px;
     }
 
@@ -246,7 +247,11 @@
     :global(.uva-button-expand-deputies) {
         background-color: var(--cor-texto);
         color: var(--cor-fundo);
-        transition: all 0.2s ease-in-out;
+        transition: all .35s ease-out;
+    }
+
+    :global(.uva-button-expand-deputies):active,:global(.uva-button-expand-deputies):hover {
+        background-color: #838383;
     }
 
     @media (min-width:740px) {
@@ -255,8 +260,16 @@
             font-size: calc(var(--corpo-desktop) * 0.7);
         }
 
+        thead {
+            font: 700 calc(var(--corpo-desktop) * 0.55) var(--condensed);
+        }
+
         th, td {
             padding: 8px 7px;
+        }
+
+        tr:hover {
+            background-color: var(--cor-terciaria);
         }
 
         .circle {
@@ -273,7 +286,7 @@
         }
 
         .uva-deputy-vote {
-            width: 6px;
+            width: 7%;
         }
 
         .uva-deputy-name {

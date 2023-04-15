@@ -3,28 +3,28 @@
     export let options = [];
     export let value = '';
     export let onChange = () => {};
-  
+
     function handleChange(event) {
-      onChange(event);
+        onChange(event);
     }
-  
+
     $: {
-      const option = options.find(o => o.value === value);
-      if (option) {
-        option.selected = true;
-      }
+        const option = options.find(o => o.value === value);
+        if (option) {
+            option.selected = true;
+        }
     }
-  </script>
-  
-  <select on:change={handleChange}>
+</script>
+
+<select on:change={handleChange}>
     <option value=''>{label}</option>
     {#each options as option}
-      <option value={option} selected={option === value}>{option}</option>
+        <option value={option} selected={option === value}>{option}</option>
     {/each}
-  </select>
+</select>
 
-  <style>
-        select {
+<style>
+    select {
         width: fit-content;
         margin-left: 1rem;
         padding: 18px 45px 18px 22px;
@@ -45,4 +45,4 @@
         -webkit-appearance: none;
         -moz-appearance: none;        
     }
-  </style>
+</style>

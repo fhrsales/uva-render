@@ -25,6 +25,7 @@
         margin: calc(var(--margem-vertical) * 2) auto 0 auto;
         font: 600 calc(var(--corpo-mobile) * 0.9) var(--condensed);
         text-transform: uppercase;
+        letter-spacing: 0.03rem;
         color: var(--cor-texto);
     }
 
