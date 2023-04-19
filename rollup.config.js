@@ -17,9 +17,12 @@ export default {
       emitCss: false,
     }),
     resolve({
-      browser: true,
-    }),
-    commonjs(),
-    terser()
+        browser: true,
+        preferBuiltins: true
+      }),
+      commonjs({
+        namedExports: false
+      }),
+      terser()
   ]
 };

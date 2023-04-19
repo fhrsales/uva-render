@@ -63,7 +63,7 @@
 			<Image value={item.imagem.value} />
 		{/if}
 		{#if item.gráfico}
-		<Chart value={item.gráfico.value} />
+            <Chart value={item.gráfico.value} />
 	{/if}
 	</div>
 {/each}

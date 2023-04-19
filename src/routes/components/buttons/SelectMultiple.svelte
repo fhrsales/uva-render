@@ -55,10 +55,14 @@
     {#if dropdownVisible}
         <!-- <div class="uva-dropdown-menu" style="margin-left:{18 - scrollX}px;"> -->
         <div class="uva-dropdown-menu">
-            {#each options as option}
-                <div class="uva-dropdwon-item" on:click={() => selectOption(option)}>
-                    <input type="checkbox" checked={selectedOptions.includes(option)} />
-                    <label>{option}</label>
+            {#each options as option, i}
+                <div class="uva-dropdown-item" tabindex="-1" on:click={() => selectOption(option)} on:keydown={e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        selectOption(option);
+                    }
+                }}>
+                    <input type="checkbox" id={'option_' + i} checked={selectedOptions.includes(option)} />
+                    <label for={'option_' + i}>{option}</label>
                 </div>
             {/each}
         </div>
@@ -109,7 +113,7 @@
         box-sizing: content-box;
     }
 
-    .uva-dropdwon-item {
+    .uva-dropdown-item {
         cursor: pointer;
         display: flex;
         align-items: center;

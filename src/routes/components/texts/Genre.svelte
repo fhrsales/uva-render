@@ -12,7 +12,6 @@
 </div>
 
 <style>
-
     div {
         margin: calc(var(--margem-vertical) * 2) auto calc(var(--margem-vertical) * 2) auto;
         border-top: var(--fio-solido-grosso);
@@ -56,10 +55,8 @@
     }
 
     @media (min-width:748px) {
-        /* Desktop */
-
          /* Desktop */
-         h4 {
+        h4 {
             font-size: calc(var(--corpo-desktop) * 0.9);
         }
 

@@ -46,7 +46,7 @@
         const response = await fetch(json);
         const data = await response.json();
         conteúdo = Object.values(data.conteúdo);
-        //console.log(conteúdo);
+        console.log(conteúdo);
         if (functionExecuted) {
             return;
         }
@@ -71,9 +71,9 @@
         <Customization value={block.value} />
     {:else if block.type === "html"}
         <Code value={block.value} />
-    <!-- {:else if block.type === "estanteDeLivros"}
+     {:else if block.type === "estanteDeLivros"}
         <EstanteDeLivros value={block.value} />
-    {:else if block.type === "flourish"}
+    <!--{:else if block.type === "flourish"}
         <Flourish value={block.value} />
     {:else if block.type === "gênero"}
         <Genre value={block.value} /> -->
@@ -90,9 +90,9 @@
     <!-- {:else if block.type === "mapa"}
         <Map value={block.value} /> -->
     <!-- {:else if block.type === "mudaFundo"}
-        <ChangeBackground value={block.value} />
+        <ChangeBackground value={block.value} />-->
     {:else if block.type === "navegador"}
-        <Navigation value={block.value} /> -->
+        <Navigation value={block.value} /> 
     {:else if block.type === "placar"}
         <Placar value={block.value} />
     <!-- {:else if block.type === "quiz"}

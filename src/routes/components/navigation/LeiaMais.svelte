@@ -1,9 +1,7 @@
 <script>
 	import LeiaMais from './LeiaMais.svelte';
     export let value;
-    const {
-        link
-    } = value;
+    export const { link } = value;
 </script>
 
 <div class="P">

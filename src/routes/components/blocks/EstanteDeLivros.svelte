@@ -92,7 +92,7 @@
                 <ul class='book-stores'>
                     {#each comprar as item}
                         <li class='book-store'>
-                            <a href={item.link} target='_blank' rel='noopener noreferrer'>{item.nome}</a>
+                            {@html item.loja.replace('<a', '<a class="book-store-link" target="_blank" rel="noopener noreferrer"')}
                         </li>
                     {/each}
                 </ul>
@@ -179,7 +179,7 @@
         height: 12px;
         width: 12px;
         margin: -6px 0 0 52px;
-        z-index: 1;
+        z-index: 3;
         transform: rotate(45deg);
     }
 
@@ -197,18 +197,21 @@
     }
 
     .book-stores {
-        list-style: none;
+        /* list-style: none; */
         opacity: 1;
         background-color: var(--cor-fundo);
         border: var(--borda-fina);
         border-radius: 4px;
         font-family: var(--condensed), sans-serif;
         box-shadow: var(--sombra-leve);
-        left: 0px;
+        /* left: 0px; */
         margin-top: 0px;
-        padding: 12px;
+        padding: 18px 30px;
         /* top: 28px; */
-        width: 176px;
+        width: fit-content;
+        position: absolute;
+        z-index: 2;
+        color: var(--cor-primaria);
     }
 
     :global(.book-store-button) {
@@ -219,6 +222,13 @@
 
     :global(.book-store-button):hover {
         background-color: var(--cor-primaria);
+    }
+
+    :global(.book-store-link) {
+        color: var(--cor-primaria);
+        font: 400 calc(var(--corpo-mobile) * 1) / calc(var(--entrelinha-mobile) * 1.1) var(--condensed);
+        text-decoration: underline !important;
+        letter-spacing: 0.03rem;
     }
 
     @media (min-width:740px) {

@@ -26,7 +26,6 @@
     let fillFunction = (d) => (d.data.category === 'Não foi encontrado' ? '#838383' : (d.data.category === 'Não foi contactado' ? '#bfbfbf' : 'white'));
     // let filterFunctionLessThan = (d) => d.data.value <= 7 && d.data.category !== 'Não foi contactado';
     // let filterFunctionGreaterThan = (d) => d.data.value >= 7 && d.data.category !== 'Não foi contactado';
-
     export function createPattern(svg) {
         const defs = svg.append('defs');
         const pattern = defs.append('pattern')
@@ -47,7 +46,6 @@
             .attr('fill', '#007367');
         return pattern;
     }
-
 
     //********** //
 
@@ -233,8 +231,8 @@
     // }
 
     async function loadCSV() {
-        //const response = await fetch(`https://arte.estadao.com.br/public/pages/${UvaPages}/placar_camara.csv?v=${version()}`);
-        const response = await fetch(`https://arte.estadao.com.br/public/pages/${UvaPages}/placar.csv?v=${version()}`);
+        const response = await fetch(`https://arte.estadao.com.br/public/pages/${UvaPages}/placar_camara.csv?v=${version()}`);
+        //const response = await fetch(`https://arte.estadao.com.br/public/pages/${UvaPages}/placar.csv?v=${version()}`);
         const csvText = await response.text();
         data = csvParse(csvText, d3.autoType);
 
