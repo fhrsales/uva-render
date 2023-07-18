@@ -70,6 +70,11 @@
 </div>
 
 <style>
+    .uva-dropdown-container {
+        /* position:relative;
+        left: -4px; */
+        background-color: var(--cor-fundo);
+    }
     button {
         display: block;
         margin-left: 0.83rem;

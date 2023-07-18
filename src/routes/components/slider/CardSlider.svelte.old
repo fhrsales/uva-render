@@ -1,0 +1,56 @@
+<script>
+ import { onMount } from 'svelte';
+  import Swiper, { Navigation, Pagination, Autoplay } from 'swiper';
+
+  import 'swiper/swiper-bundle.css';
+    let swiper;
+    export let value;
+
+    const canneslions = value;
+    console.log(canneslions);
+
+onMount(() => {
+  Swiper.use([Navigation, Pagination, Autoplay]);
+
+  swiper = new Swiper('.swiper-container', {
+    loop: true,
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+  });
+});
+  </script>
+  
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+        {#each canneslions as card}
+        <div class="swiper-slide">
+          <img src="https://www.estadao.com.br{card.imagem}" alt={card.título} />
+          <h2>{card.título}</h2>
+          <p>{card.descrição}</p>
+        </div>
+      {/each}
+    </div>
+  
+    <!-- <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div> -->
+    <div class="swiper-pagination"></div>
+</div>
+
+    
+  <style>
+    img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+  </style>

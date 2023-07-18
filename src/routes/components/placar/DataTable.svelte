@@ -75,7 +75,8 @@
 
                             <td class='uva-deputy-thumb'>
                                 <div class="circle">
-                                    <img loading='lazy' class="grayscale" src="https://arte.estadao.com.br/politica/2023/camara/img/{row.id}.jpg" alt="{row.nome}" width='50px' height='50px'>
+                                    <!-- <img loading='lazy' class="grayscale" src="https://arte.estadao.com.br/politica/2023/camara/img/{row.id}.jpg" alt="{row.nome}" width='50px' height='50px'> -->
+                                    <img loading='lazy' class="grayscale" src="https://arte.estadao.com.br/politica/2023/senado/img/{row.id}.jpg" alt="{row.nome}" width='50px' height='50px'>
                                     <div 
                                         class="circle-overlay" 
                                         class:afavor={row['intenção de voto'] === 'A favor'}
@@ -175,9 +176,9 @@
     .circle img {
         display: inline;
         margin: 0 auto;
-        height: 110%;
+        height: 140%;
         width: auto;
-        transform: translate(5px, 3px);
+        transform: translate(0px, -3px);
     }
 
     .circle-overlay.afavor, .circle-overlay.afavor-com-ressalvas {

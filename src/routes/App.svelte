@@ -2,10 +2,12 @@
     import { UvaPath } from "../scripts/store.js"
     import { version } from "../scripts/version.js";
     import { onMount } from "svelte";
-    import { viewportHeight } from "../scripts/viewportHeight.js";
-    viewportHeight();
+    //import { viewportHeight } from "../scripts/viewportHeight.js";
+    //viewportHeight();
+
+    // import "../styles/app.css";
     
-    //import Animation from "./components/scrollytelling/Animation.svelte";
+    import Animation from "./components/scrollytelling/Animation.svelte";
     import AudioContainer from "./components/audios/AudioContainer.svelte";
     import AudioQuote from "./components/audios/AudioQuote.svelte";
     import Buscador from "./components/search/Buscador.svelte";
@@ -13,6 +15,7 @@
     import Chapeu from "./components/headings/Chapeu.svelte";
     import Code from "./components/codes/Code.svelte";
     import Customization from "./components/customization/Customization.svelte";
+    import Datawrapper from "./components/charts/Datawrapper.svelte";
     import DefaultHeading from "./components/headings/DefaultHeading.svelte";
     import EstanteDeLivros from "./components/blocks/EstanteDeLivros.svelte";
     import Flourish from './components/charts/FlourishContainer.svelte';
@@ -21,15 +24,18 @@
     import Janela from "./components/texts/Janela.svelte";
     import Lead from "./components/texts/Lead.svelte";
     import LeiaMais from "./components/navigation/LeiaMais.svelte";
-    //import Map from "./components/maps/Map.svelte";
+    import Map from "./components/maps/Map.svelte";
+    //import Mapbox from "./components/maps/Mapbox.svelte";
     import Navigation from "./components/navigation/Navigation.svelte";
     import Placar from "./components/placar/Placar.svelte";
+    import Quest from "./components/blocks/Quest.svelte";
     import Quiz from "./components/blocks/Quiz.svelte";
     import Quote from "./components/texts/Quote.svelte";
     import Rodape from "./components/texts/Rodape.svelte";
     import Rule from "./components/rules/Rule.svelte";
     import Scrolly from "./components/scrollytelling/Scrolly.svelte";
     import Styles from "./components/styles/Styles.svelte";
+    import Swiper from "./components/slider/Swiper.svelte";
     import Testeira from "./components/navigation/Testeira.svelte";
     import Text from "./components/texts/Text.svelte";
     import UvaContainer from "./components/charts/UvaContainer.svelte";
@@ -39,14 +45,13 @@
     let UvaPages = "";
     UvaPath.subscribe(value => { UvaPages = value; });
     const json = `https://arte.estadao.com.br/public/pages/${UvaPages}page.json?v=${version()}`;
-    //const json = `https://arte.estadao.com.br/public/pages/${UvaPages}page.json?v=${version()}`;
     let functionExecuted = false;
     let conteúdo = [];
     onMount(async function () {
         const response = await fetch(json);
         const data = await response.json();
         conteúdo = Object.values(data.conteúdo);
-        console.log(conteúdo);
+        //console.log(conteúdo);
         if (functionExecuted) {
             return;
         }
@@ -57,26 +62,30 @@
 <Styles />
 
 {#each conteúdo as block}
-    <!-- {#if block.type === "animação"}
-        <Animation value={block.value} /> -->
-    <!-- {#if block.type === "audio"}
-        <AudioContainer value={block.value} /> -->
-    <!-- {:else if block.type === "buscador"}
+    {#if block.type === "animação"}
+        <Animation value={block.value} /> 
+    {:else if block.type === "audio"}
+        <AudioContainer value={block.value} /> 
+    {:else if block.type === "audio"}
+        <AudioContainer value={block.value} />
+    {:else if block.type === "buscador"}
         <Buscador value={block.value} />
     {:else if block.type === "audioFrase"}
         <AudioQuote value={block.value} />
     {:else if block.type === "chapéu"}
-        <Chapeu value={block.value} /> -->
-    {#if block.type === "customização"}
+        <Chapeu value={block.value} />
+    {:else if block.type === "customização"}
         <Customization value={block.value} />
+    {:else if block.type === 'datawrapper'}
+        <Datawrapper value={block.value} />
     {:else if block.type === "html"}
         <Code value={block.value} />
-     {:else if block.type === "estanteDeLivros"}
+    {:else if block.type === "estanteDeLivros"}
         <EstanteDeLivros value={block.value} />
-    <!--{:else if block.type === "flourish"}
+    {:else if block.type === "flourish"}
         <Flourish value={block.value} />
     {:else if block.type === "gênero"}
-        <Genre value={block.value} /> -->
+        <Genre value={block.value} />
     {:else if block.type === "gráfico"}
         <UvaContainer value={block.value} />
     {:else if block.type === "imagem"}
@@ -87,24 +96,28 @@
         <Lead value={block.value} />
     {:else if block.type === "leiaMais"}
         <LeiaMais value={block.value} />
-    <!-- {:else if block.type === "mapa"}
-        <Map value={block.value} /> -->
-    <!-- {:else if block.type === "mudaFundo"}
-        <ChangeBackground value={block.value} />-->
+    {:else if block.type === "mapa"}
+        <Map value={block.value} />
+    {:else if block.type === "mudaFundo"}
+        <ChangeBackground value={block.value} />
     {:else if block.type === "navegador"}
         <Navigation value={block.value} /> 
     {:else if block.type === "placar"}
         <Placar value={block.value} />
-    <!-- {:else if block.type === "quiz"}
-        <Quiz value={block.value} /> -->
+    {:else if block.type === "quest"}
+        <Quest value={block.value} />
+    {:else if block.type === "quiz"}
+        <Quiz value={block.value} />
     {:else if block.type === "frase"}
         <Quote value={block.value} />
     {:else if block.type === "rodapé"}
         <Rodape value={block.value} />
     {:else if block.type === "separador"}
         <Rule />
-    <!-- {:else if block.type === "scrolly"}
-        <Scrolly value={block.value} /> -->
+    {:else if block.type === "scrolly"}
+        <Scrolly value={block.value} />
+    {:else if block.type === "swipper"}
+        <Swiper value={block.value} />
     {:else if block.type === "testeira"}
         <Testeira value={block.value} />
     {:else if block.type === "text"}

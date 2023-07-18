@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
     <head>
-        <meta charset="UTF-8">
+        <meta charset="utf-8" />
         <meta name="description" content="Cannes Lions – Estadão">
         <title>Cannes Lions – Estadão</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" href="https://www.estadao.com.br/pf/resources/favicon.ico?d=527">
-        </head>
+        %sveltekit.head%
     </head>
     <body>
         <div class="embed-wrapper">
+            <script data-uva-id="1cvX53V04pRKkihzu6HlZJ0dXyX2I97bXYsWzIxUUz1k"></script>
             <div class="embed-container">
-                <div class="embed-container">
-                    <script data-uva-id="1WIYMRzDO24dK8i9Id2enpi7fA3JoAW5XVNAT2FWtOvI" src="uva-render-01.js" async defer></script>
-                </div>
+                <div class="embed-container">%sveltekit.body%</div>
             </div>
         </div>
     </body>

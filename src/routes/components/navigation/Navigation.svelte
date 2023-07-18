@@ -6,15 +6,27 @@
 </script>
 
 <div class="uva-media-container P">
-    <div class="previous"><a href={anterior}>‹ Anterior</a></div>
+    <div class="previous">
+        <a href={anterior.replace(/<a href="(.*)">(.*)<\/a>/, '$1')}>
+            <div class='uva-icon-arrow-navigation'>
+                <svg width="11" height="11" viewBox="0 0 8 12"><path d="M6.60156 11.2002L1.40156 6.0002L6.60156 0.800197"></path></svg>
+            </div>
+        </a>
+        {@html anterior}
+    </div>
     <ImageContainer value={value} src="{fonte}?v=${version()}" />
     {#if !próximo}
         <div class="next" style="width: 60px"> </div>
-        <!-- <div class="next" style="text-align: left; opacity: 0.3">Próxima<br>(em breve)</div> -->
     {/if}
     {#if próximo}
         <div class="next">
-            <a href="{próximo}">Próxima ›</a>
+            {@html próximo} 
+            <a href={próximo.replace(/<a href="(.*)">(.*)<\/a>/, '$1')}>
+                <div class='uva-icon-arrow-navigation'>
+                    <svg width="11" height="11" viewBox="0 0 8 12" style="transform:scaleX(-1)"><path d="M6.60156 11.2002L1.40156 6.0002L6.60156 0.800197"></path></svg>
+                </div>
+            </a>
+            <!-- {@html próximo} › <div class='uva-icon-arrow-navigation'><svg width="10" height="12" viewBox="0 0 10 12" style="transform:scaleX(-1)"><path d="M6.60156 11.2002L1.40156 6.0002L6.60156 0.800197"></path></svg></div> -->
         </div>
     {/if}
 </div>
@@ -33,15 +45,41 @@
         text-transform: uppercase;
         letter-spacing: 0.03rem;
     }
-    
-    .uva-media-container a:link, .uva-media-container a:visited {
-        color: var(--cor-texto);
+
+    .previous, .next {
+        color: var(--cor-primaria);
         text-decoration: none;
         font-family: inherit;
         font-weight: inherit;
     }
-    
-    .uva-media-container a:hover {
-        color: var(--cor-primaria);
+
+    .uva-icon-arrow-navigation {
+        border-radius: 50%;
+        background-color: var(--cor-fundo);
+        width: 17px;
+        height: 17px;
+        display: inline-block;
+        border: 1.5px solid var(--cor-primaria);
+        display: inline-flex;
+        webkit-box-align: center;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+        top: -1px;
+        margin: 0 0.25rem;
+        transition: transform 0.2s ease-in-out;
+        box-sizing: content-box;
+    }
+
+    .uva-icon-arrow-navigation:hover {
+
+        transform: scale(1.2);
+    }
+
+    .uva-icon-arrow-navigation > svg {
+        fill: none;
+        stroke: var(--cor-primaria);
+        stroke-width: 1.8px;
+        margin: 0 auto;
     }
 </style>

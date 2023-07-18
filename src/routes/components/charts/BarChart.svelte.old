@@ -1,12 +1,13 @@
 <script>
-    import { onMount, afterUpdate } from 'svelte';
+    import { onMount } from 'svelte';
 
     export let voteSummary = { data: {}, startPositions: {} };
     export let barChartElement;
     export let totalVotes;
     export let filteredData = [];
 
-    let barChartWidth = [];
+    let chartWidth;
+    let contraLabelWidth = 0;
     let visibleCategories;
     let anyCategoryVisible;
     let filtersApplied;
@@ -38,74 +39,27 @@
             return filteredData.some((row) => row['intenção de voto'] === category);
         });
         anyCategoryVisible = visibleCategories.some(vote => voteSummary.data[vote] > 0);
-        filtersApplied = filteredData.length < 81;
-    }
-
-    function voteClass (vote) {
-        return vote === 'A favor' ? 'afavor' : 
-            vote === 'A favor com ressalvas' ? 'afavor-com-ressalvas' : 
-            vote === 'Não foi encontrado' ? 'nao-foi-encontrado' : 
-            vote === 'Não quis responder' ? 'nao-quis-responder' :
-            vote === 'Não foi contactado' ? 'nao-foi-contactado' : 
-            vote === 'Contra' ? 'contra' :  
-            '';
-    }
-
-    function getBarChartWidth() {
-    if (barChartWidth && window.innerWidth > 740) {
-        const labels = document.querySelectorAll('.label');
-        const naoEncontrado = document.querySelectorAll('.label.nao-foi-encontrado');
-        const comRessalvas = document.querySelectorAll('.label.afavor-com-ressalvas');
-        labels.forEach((label, index) => {
-            const bar = label.parentElement;
-            const barWidth = bar.clientWidth;
-            const vote = categoriesOrder[index];
-            
-            if (barWidth < 65 && vote !== 'A favor' && vote !== 'Contra') {
-                label.style.display = 'none';
-            } else if (barWidth < 11 && vote === 'A favor') {
-                naoEncontrado.forEach((naoEncontradoBar) => {
-                    naoEncontradoBar.style.marginLeft = '35px';
-                });
-
-            } else if (barWidth > 11 && vote === 'A favor') {
-                naoEncontrado.forEach((naoEncontradoBar) => {
-                    naoEncontradoBar.style.marginLeft = '0';
-                });
-            
-            } else {
-                label.style.display = 'block';
-            }
-        });
-    }
-}
+        filtersApplied = filteredData.length < 513;
 
 
 
-
-
-    $: if (voteSummary.data && filteredData.length > 0) {
-        totalVotes = Object.values(voteSummary.data).reduce((a, b) => a + b, 0);
-        updateStartPositions();
-        updateVisibleCategories();
-        getBarChartWidth();
-    }
-
-    $: if (filteredData.length === 0) {
-        visibleCategories = [];
-        anyCategoryVisible = false;
-        getBarChartWidth();
     }
 
     onMount(() => {
         updateStartPositions();
         updateVisibleCategories();
-        getBarChartWidth();
     });
 
-    afterUpdate(() => {
-        getBarChartWidth();
-    });
+    $: if (voteSummary.data && filteredData.length > 0) {
+        totalVotes = Object.values(voteSummary.data).reduce((a, b) => a + b, 0);
+        updateStartPositions();
+        updateVisibleCategories();
+    }
+
+    $: if (filteredData.length === 0) {
+        visibleCategories = [];
+        anyCategoryVisible = false;
+    }
 </script>
 
 <div bind:this={barChartElement} class="uva-container-scoreboard">
@@ -116,16 +70,62 @@
         {#if anyCategoryVisible}
             {#each categoriesOrder as vote, index}
                 {#if visibleCategories.includes(vote)}
-                    <div class='bar {voteClass(vote)}' style="width: {xScale(voteSummary.data[vote])}%; left: {voteSummary.startPositions[vote]}%;" bind:this={barChartWidth[index]}>
-                        <div class='label {voteClass(vote)}' style='{vote === "Contra" ? "right: 0;" : ""}'>
-                            <div class='count {vote === 'A favor' ? 'count-large' :  vote === 'Contra' ? 'count-large' : ''}' style= '{vote === 'A favor com ressalvas' || vote === 'Não foi encontrado' || vote === 'Não quis responder' ? 'margin-bottom: -12px;' : ''}{vote === 'Contra' ? 'text-align: right' : ''}'>
-                                {vote === 'A favor' ? (voteSummary.data[vote] || 0) + (voteSummary.data['A favor com ressalvas'] || 0) : (voteSummary.data[vote] || 0)}
-                            </div>
-                            <div class='vote' style= '{vote === 'A favor com ressalvas' || vote === 'Não foi encontrado' || vote === 'Não quis responder' ? 'margin-bottom: -17px;' : vote === 'Contra' ? 'margin-bottom: 25px;' : ''}'>
-                                {vote === 'A favor' ? 'A favor *' : vote === 'A favor com ressalvas' ? 'A favor com ressalvas' : vote === 'Não foi encontrado' ? 'Não foi encontrado' : vote === 'Não quis responder' ? 'Não quis responder' : vote === 'Não foi contactado' ? 'Não foi contactado' : vote === 'Contra' ? 'Contra' : ''}
-                            </div>
-                            <div class='uva-vote-icon {voteClass(vote)}'></div>
+                    <div class="label {
+                        vote === 'A favor' ? 'afavor' : 
+                        vote === 'A favor com ressalvas' ? 'afavor-com-ressalvas' : 
+                        vote === 'Não foi encontrado' ? 'nao-foi-encontrado' : 
+                        vote === 'Não quis responder' ? 'nao-quis-responder' :
+                        vote === 'Não foi contactado' ? 'nao-foi-contactado' : 
+                        vote === 'Contra' ? 'contra' :  
+                        ''}"
+                        style="{(vote === 'A favor com ressalvas' && voteSummary.data[vote] < 10) || (vote === 'Não foi encontrado' && voteSummary.data[vote] < 10) || (vote === 'Não quis responder' && voteSummary.data[vote] < 10) ? 'display: none;' : ''} left: calc({voteSummary.startPositions[vote]}%); {vote === 'Contra' ? 'left: inherit; right: 0;' : ''}"
+                        on:mount={vote === 'Contra' ? (event) => (contraLabelWidth = event.target.clientWidth) : null}>
+
+                        <div class="count {
+                            vote === 'A favor' ? 'count-large' : 
+                            vote === 'Contra' ? 'count-large' : 
+                            ''}">
+                            {vote === 'A favor' ? (voteSummary.data[vote] || 0) + (voteSummary.data['A favor com ressalvas'] || 0) : (voteSummary.data[vote] || 0)}
                         </div>
+
+                        <div class="vote">
+                            {#if vote === 'A favor'}
+                                <div>A favor *</div>
+                                <div class='uva-vote-icon afavor'></div>
+                            {/if}
+                            {#if vote === 'A favor com ressalvas'}
+                                <div style='margin-bottom:-19px; display:none'>A favor com ressalvas</div>
+                                <div class='uva-vote-icon afavor-com-ressalvas'></div>
+                            {/if}
+                            {#if vote === 'Não foi encontrado'}
+                                <div style='margin-bottom:-18px; display:none'>Não foram encontrados</div>
+                                <div class='uva-vote-icon nao-foi-encontrado'></div>
+                            {/if}
+                            {#if vote === 'Não quis responder'}
+                                <div style='margin-bottom:-18px; display:none'>Não quiseram responder</div>
+                                <div class='uva-vote-icon nao-quis-responder'></div>
+                            {/if}
+                            {#if vote === 'Não foi contactado'}
+                                <div style='margin-bottom:-18px'>Não foram contactados</div>
+                                <div class='uva-vote-icon nao-foi-encontrado'></div>
+                            {/if}
+                            {#if vote === 'Contra'}
+                                <div>Contra</div>
+                                <div class='uva-vote-icon contra'></div>
+                            {/if}
+                        </div>
+
+                    </div>
+
+                    <div class="bar {
+                        vote === 'A favor' ? 'afavor' : 
+                        vote === 'A favor com ressalvas' ? 'afavor-com-ressalvas' : 
+                        vote === 'Não foi encontrado' ? 'nao-foi-encontrado' : 
+                        vote === 'Não quis responder' ? 'nao-quis-responder' :
+                        vote === 'Não foi contactado' ? 'nao-foi-contactado' : 
+                        vote === 'Contra' ? 'contra' :  
+                        ''}"
+                        style="width: {xScale(voteSummary.data[vote])}%; left: {voteSummary.startPositions[vote]}%;">
                     </div>
                 {/if}
             {/each}
@@ -139,26 +139,26 @@
         <div><img class='uva-image-placar-brand' src='https://arte.estadao.com.br/arc/images/placar/placar-brand.svg' alt='Placar Estadão' width='92px' height='13px'></div>
     </div>
     <div class='uva-container-footer-mobile G'>
-        <img loading='lazy' src='https://arte.estadao.com.br/arc/images/placar/placar-afavor-com-ressalvas.svg' alt='A favor com ressalvas' width='12px' height='12px' style='display: inline; margin-right:3px; margin-top:13px'/> Com ressalvas{#if voteSummary.data['A favor com ressalvas'] > 0}: {voteSummary.data['A favor com ressalvas']}{/if}
-        <img loading='lazy' src='https://arte.estadao.com.br/arc/images/placar/placar-nao-foi-encontrado.svg' alt='Não foi encontrado' width='12px' height='12px' style='display: inline; margin: 3px 3px 0px 5px;'/> Não foi encontrado{#if voteSummary.data['Não foi encontrado'] > 0}: {voteSummary.data['Não foi encontrado']}{/if}
-        <img loading='lazy' src='https://arte.estadao.com.br/arc/images/placar/placar-nao-quis-responder.svg' alt='Não quis responder' width='12px' height='12px' style='display: inline; margin: 0px 3px 0px 5px;'/> Não quis responder{#if voteSummary.data['Não quis responder'] > 0}: {voteSummary.data['Não quis responder']}{/if}
+        <img loading='lazy' src='https://arte.estadao.com.br/arc/images/placar/placar-afavor-com-ressalvas.svg' alt='A favor com ressalvas' width='12px' height='12px'style='display: inline; margin-right:3px; margin-top:13px'/> Com ressalvas: {(voteSummary.data['A favor com ressalvas'])}
+        <img loading='lazy' src='https://arte.estadao.com.br/arc/images/placar/placar-nao-foi-encontrado.svg' alt='Não foi encontrado' width='12px' height='12px'style='display: inline; margin: 3px 3px 0px 5px;'/> Não foi encontrado: {(voteSummary.data['Não foi encontrado'])}
+        <img loading='lazy' src='https://arte.estadao.com.br/arc/images/placar/placar-nao-quis-responder.svg' alt='Não quis responder' width='12px' height='12px'style='display: inline; margin: 0px 3px 0px 5px;'/> Não quis responder: {(voteSummary.data['Não quis responder'])}
     </div>
 </div>
 
 <style>
     .uva-container-scoreboard {
-        position: sticky;
-        top: 45px;
-        z-index: 10;
+        position: fixed;
+        top: 48px;
+        z-index: 13;
         margin: 0 auto;
         padding: 0 0 calc(var(--margem-vertical) * 1.8) 0; 
         background-color: var(--cor-fundo);
         width: 100%;
         max-width: 1054px;
         height: 103px;
-        /* overflow: hidden; */
-        /* left: 50%; */
-        /* transform: translateX(-50%); */
+        overflow: hidden;
+        left: 50%;
+        transform: translateX(-50%);
         box-sizing: content-box;
     }
     
@@ -170,7 +170,12 @@
         height:100%;
     }
 
-    /* ***** */
+    .bar {
+        position: absolute;
+        height: 20px;
+        bottom: 0;
+    }
+
     .label {
         position: absolute;
         color: black;
@@ -182,12 +187,12 @@
         flex-direction: column;
         align-items: flex-start;
         bottom: 30px;
-        /* width: 0; */
+        width: 0;
     }
 
     .count {
         font-size: 22px;
-        /* margin-bottom: -28px; */
+        margin-bottom: -28px;
     }
 
     .count-large {
@@ -200,10 +205,118 @@
         letter-spacing: 0.03rem;
     }
 
-    .bar {
-        position: absolute;
+    .bar.afavor {
+        background-color:#007367;
         height: 20px;
-        bottom: 0;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+        box-shadow: var(--sombra-leve);
+    }
+
+    .label.afavor {
+        color: #007367;
+    }
+
+    .uva-vote-icon.afavor {
+        background-image: url(https://arte.estadao.com.br/arc/images/placar/placar-afavor.svg);
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 20px;
+        height: 20px;
+        margin-top: 6px;
+    }
+
+    .bar.afavor-com-ressalvas {
+        background-color:#007367;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 10 10'%3E%3Cpath d='M-1,1 l2,-2 M0,10 l10,-10 M9,11 l2,-2' stroke='white' stroke-width='1.4' stroke-linecap='square'/%3E%3C/svg%3E");
+        height: 20px;
+        box-shadow: var(--sombra-leve);
+    }
+
+    .label.afavor-com-ressalvas {
+        display: none;
+        color: #007367;
+        word-break: break-word;
+        white-space: pre-wrap;
+        width: 80px;
+        max-width: 120px;
+        line-height: 17px;
+        bottom: 12px;
+    }
+
+    .uva-vote-icon.afavor-com-ressalvas {
+        background-image: url(https://arte.estadao.com.br/arc/images/placar/placar-afavor-com-ressalvas.svg);
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 20px;
+        height: 20px;
+        margin-top: 6px;
+    }
+
+    .bar.nao-foi-contactado {
+        background-color: var(--cor-terciaria);
+        height: 20px;
+        border-left: 2px solid var(--cor-fundo);
+    }
+
+    .bar.nao-foi-encontrado {
+        background-color:#d5d5d5;
+        height: 20px;
+        border-left: 2px solid var(--cor-fundo);
+        box-shadow: var(--sombra-leve);
+    }
+
+    .label.nao-foi-encontrado, .label.nao-quis-responder, .label.nao-foi-contactado {
+        display: none;
+        word-break: break-word;
+        white-space: pre-wrap;
+        width: fit-content;
+        max-width: 139px;
+        line-height: 17px;
+        bottom: 12px;
+        padding-left: 30px;
+    }
+
+    .label.nao-quis-responder {
+        max-width: 140px;
+    }
+
+    /* .label.nao-foi-encontrado {
+        padding-left:75px;
+    } */
+
+    .uva-vote-icon.nao-foi-encontrado {
+        background-image: url(https://arte.estadao.com.br/arc/images/placar/placar-nao-foi-encontrado.svg);
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 19px;
+        height: 19px;
+        margin-top: 6px;
+    }
+
+    .bar.nao-quis-responder {
+        background-color:#838383;
+        height: 20px;
+        border-left: 2px solid var(--cor-fundo);
+        box-shadow: var(--sombra-leve);
+    }
+
+    .uva-vote-icon.nao-quis-responder {
+        background-image: url(https://arte.estadao.com.br/arc/images/placar/placar-nao-quis-responder.svg);
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 19px;
+        height: 19px;
+        margin-top: 6px;
+    }
+
+    .bar.contra {
+        background-color:#c20736;
+        height: 20px;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        border-left: 2px solid var(--cor-fundo);
+        box-shadow: var(--sombra-leve);
     }
 
     .bar-divider {
@@ -218,7 +331,7 @@
     }
 
     .bar-divider:after {
-        content: '41 votos necessários';
+        content: '257 votos necessários';
         font: 400 calc(var(--corpo-mobile) * 0.6) / calc(var(--entrelinha-mobile) * 0.6) var(--condensed);
         text-transform: uppercase;
         letter-spacing: 0.03rem;
@@ -230,135 +343,11 @@
         transform: translate(-52px, -44px);
         z-index: 1;
     }
-    /* ***** */
-
-    /* A favor */
-    .bar.afavor {
-        background-color:#007367;
-        /* height: 20px; */
-        border-top-left-radius: 4px;
-        border-bottom-left-radius: 4px;
-        box-shadow: var(--sombra-leve);
-    }
-
-    .label.afavor {
-        color: #007367;
-    }
-
-    .uva-vote-icon.afavor {
-        background-image: url(https://arte.estadao.com.br/arc/images/placar/placar-afavor.svg);
-        background-size: contain;
-        background-repeat: no-repeat;
-        width: 19px;
-        height: 19px;
-        margin-top: 6px;
-    }
-    /* ***** */
-
-    /* A favor com ressalvas */
-    .bar.afavor-com-ressalvas {
-        background-color:#007367;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 10 10'%3E%3Cpath d='M-1,1 l2,-2 M0,10 l10,-10 M9,11 l2,-2' stroke='white' stroke-width='1.4' stroke-linecap='square'/%3E%3C/svg%3E");
-        /* height: 20px; */
-        box-shadow: var(--sombra-leve);
-    }
-
-    .label.afavor-com-ressalvas {
-        display: none;
-        color: #007367;
-        word-break: break-word;
-        white-space: pre-wrap;
-        width: 80px;
-        max-width: 90px;
-        line-height: 17px;
-        /* bottom: 12px; */
-    }
-
-    .uva-vote-icon.afavor-com-ressalvas {
-        background-image: url(https://arte.estadao.com.br/arc/images/placar/placar-afavor-com-ressalvas.svg);
-        background-size: contain;
-        background-repeat: no-repeat;
-        width: 19px;
-        height: 19px;
-        margin-top: 6px;
-    }
-    /* ***** */
-
-    /* Não foi contactado */
-    .bar.nao-foi-contactado {
-        background-color: var(--cor-terciaria);
-        /* height: 20px; */
-        border-left: 2px solid var(--cor-fundo);
-    }
-    /* ***** */
-
-    /* Não foi encontrado, Não quis responder, não foi encontrado */
-    .bar.nao-foi-encontrado {
-        background-color:#d5d5d5;
-        /* height: 20px; */
-        border-left: 2px solid var(--cor-fundo);
-        box-shadow: var(--sombra-leve);
-    }
-
-    .bar.nao-quis-responder {
-        background-color:#838383;
-        /* height: 20px; */
-        border-left: 2px solid var(--cor-fundo);
-        box-shadow: var(--sombra-leve);
-    }
-
-    .label.nao-foi-encontrado, .label.nao-quis-responder, .label.nao-foi-contactado {
-        display: none;
-        /* word-break: break-word; */
-        white-space: pre-wrap;
-        width: fit-content;
-        max-width: 90px;
-        line-height: 17px;
-        /* bottom: 12px; */
-        /* padding-left: 30px; */
-    }
-
-    /* .label.nao-quis-responder {
-        max-width: 140px;
-    } */
-
-    /* .label.nao-foi-encontrado {
-        padding-left:75px;
-    } */
-
-    .uva-vote-icon.nao-foi-encontrado {
-        background-image: url(https://arte.estadao.com.br/arc/images/placar/placar-nao-foi-encontrado.svg);
-        background-size: contain;
-        background-repeat: no-repeat;
-        width: 17px;
-        height: 17px;
-        margin-top: 6px;
-    }
-
-    .uva-vote-icon.nao-quis-responder {
-        background-image: url(https://arte.estadao.com.br/arc/images/placar/placar-nao-quis-responder.svg);
-        background-size: contain;
-        background-repeat: no-repeat;
-        width: 17px;
-        height: 17px;
-        margin-top: 6px;
-    }
-    /* ***** */
-
-    /* Contra */
-    .bar.contra {
-        background-color:#c20736;
-        height: 20px;
-        border-top-right-radius: 4px;
-        border-bottom-right-radius: 4px;
-        border-left: 2px solid var(--cor-fundo);
-        box-shadow: var(--sombra-leve);
-    }
 
     .label.contra{
         color: #c20736;
         align-items: flex-end;
-        /* padding-bottom: 25px; */
+        padding-bottom: 25px;
     }
 
     .uva-vote-icon.contra {
@@ -368,13 +357,11 @@
         background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.1 19.1"%3E%3Cpolygon points="17.4,4.4 14.6,1.6 9.5,6.7 4.4,1.6 1.6,4.4 6.7,9.5 1.6,14.6 4.4,17.4 9.5,12.3 14.6,17.4 17.4,14.6 12.3,9.5"  fill="%23c20736"/%3E%3C/svg%3E');
         background-size: contain;
         background-repeat: no-repeat;
-        width: 19px;
-        height: 19px;
+        width: 20px;
+        height: 20px;
         margin-top: 6px;
     }
-    /* ***** */
 
-    /* ***** */
     .uva-container-footnote {
         display: flex; 
         justify-content: space-between; 
@@ -420,6 +407,10 @@
 
     @media (min-width:740px) {
         /* desktop */
+        .label.nao-foi-encontrado, .label.nao-quis-responder, .label.afavor-com-ressalvas{
+            display: block;
+        }
+
         .uva-container-scoreboard {
             padding: calc(var(--margem-vertical) * 0.5) 0 calc(var(--margem-vertical) * 2) 0; 
             height: 106px;
@@ -442,7 +433,7 @@
         }
 
         .bar-divider:after {
-            content: '41 votos necessários';
+            content: '257 votos necessários';
             font: 400 calc(var(--corpo-mobile) * 0.6) / calc(var(--entrelinha-mobile) * 0.6) var(--condensed);
             text-transform: uppercase;
             letter-spacing: 0.03rem;
@@ -467,12 +458,6 @@
         .uva-container-footer-mobile {
             display: block;
             font: 400 calc(var(--corpo-desktop) * 0.5) / calc(var(--entrelinha-desktop) * 0.5) var(--condensed);
-        }
-    }
-
-    @media (min-width: 740px) {
-        .label.nao-foi-encontrado, .label.nao-quis-responder, .label.afavor-com-ressalvas{
-            display: block;
         }
     }
 </style>

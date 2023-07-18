@@ -217,9 +217,9 @@
         selectedPartiesCount = selectedParties.length;
 
         if (selectedParties.length === 0) {
-        filteredData = data; // Listar todos os estados se nenhum estiver selecionado
+            filteredData = data; // Listar todos os estados se nenhum estiver selecionado
         } else {
-        filteredData = data.filter((item) => selectedParties.includes(item.partido));
+            filteredData = data.filter((item) => selectedParties.includes(item.partido));
         }
 
         // Atualização do resumo do voto filtrado
@@ -231,8 +231,8 @@
     // }
 
     async function loadCSV() {
-        const response = await fetch(`https://arte.estadao.com.br/public/pages/${UvaPages}/placar_camara.csv?v=${version()}`);
-        //const response = await fetch(`https://arte.estadao.com.br/public/pages/${UvaPages}/placar.csv?v=${version()}`);
+        //const response = await fetch(`https://arte.estadao.com.br/public/pages/${UvaPages}/placar_camara.csv?v=${version()}`);
+        const response = await fetch(`https://arte.estadao.com.br/public/pages/${UvaPages}/placar.csv?v=${version()}`);
         const csvText = await response.text();
         data = csvParse(csvText, d3.autoType);
 
@@ -243,7 +243,7 @@
         const lastModifiedHeader = response.headers.get('last-modified');
         const dia = new Date(lastModifiedHeader).toLocaleString('pt-BR', {timeZone: 'America/Sao_Paulo', dateStyle: 'short'});
         const hora = new Date(lastModifiedHeader).toLocaleString('pt-BR', {timeZone: 'America/Sao_Paulo', timeStyle: 'short'});
-            formattedTime = `Atualizado em ${dia}, às ${hora}.`;
+            formattedTime = `Atualizado em ${dia}, às ${hora}`;
     }
 
     onMount(async () => {
@@ -341,17 +341,17 @@
         margin-top: calc(var(--margem-vertical) * 1);
         margin-bottom: calc(var(--margem-vertical) * 1);
         padding-bottom: 20px;
-        margin-left: 1.25rem;
+        margin-left: 1.1rem;
         width:calc(100% - 1rem);
         overflow-x: scroll;
         scrollbar-width: none;
         position: sticky;
-        top: 208px;
+        top: 205px;
         /* left: 50%;
         transform: translateX(-50%); */
         /* overflow: inherit; */
         z-index:12;
-        background-color: var(--cor-fundo);
+        /* background-color: var(--cor-fundo); */
     }
 
     ::-webkit-scrollbar {
@@ -361,19 +361,20 @@
     :global(.uva-search-deputy) {
 		display: flex;
 		width: -webkit-fill-available;
-        /* min-width: 250px; */
+        min-width: 65vw;
 		/* margin: calc(var(--margem-vertical) * 2) 0; */
 		padding: 0px;
 		font: 500 normal var(--corpo-mobile) / var(--entrelinha-mobile) var(--texto);
 		text-indent: 35px;
 		background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='black' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.3,9.2C11.7,8.4,12,7.5,12,6.5C12,3.5,9.5,1,6.5,1S1,3.5,1,6.5S3.5,12,6.5,12c1,0,1.9-0.3,2.7-0.7l3.3,3.3c0.3,0.3,0.7,0.4,1.1,0.4s0.8-0.1,1.1-0.4c0.6-0.6,0.6-1.5,0-2.1L11.3,9.2zM6.5,10.3c-2.1,0-3.8-1.7-3.8-3.8c0-2.1,1.7-3.8,3.8-3.8c2.1,0,3.8,1.7,3.8,3.8C10.3,8.6,8.6,10.3,6.5,10.3z'%3E%3C/path%3E%3C/svg%3E") no-repeat 10px center;
-        /* background-color: var(--cor-terciaria); */
+        background-color: var(--cor-fundo);
         color: var(--cor-texto);
         border: none;
 		border-bottom: 1px solid #6C6C6C;
 		border-radius: 0;
 		outline: none;
         height: 40.5px;
+        margin-inline-end: -4px;
 	}
 
     @media (min-width:740px) {
@@ -381,10 +382,11 @@
             max-width:1014px;
             margin-left: auto;
             margin-right: auto;
-            top: 218px;
+            top: 231px;
         }
 
         :global(.uva-search-deputy) {
+            min-width: inherit;
             font-size: var(--corpo-desktop);
             line-height: var(--entrelinha-desktop);
         }

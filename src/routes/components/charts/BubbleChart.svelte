@@ -118,8 +118,30 @@
             .style('font-size', 'calc(var(--corpo-mobile) * 0.6)')
             .style('cursor', 'pointer')
             .style('fill', fillFunction)
-            .text((d) => d.data.name)
+            .text((d) => {
+        if (d.r * 2 >= getTextWidth(d.data.name)) {
+            return d.data.name;
+        }
+        return '';
+    });
     }
+
+    function getTextWidth(text) {
+    const dummyText = d3.select('body')
+        .append('span')
+        .attr('class', 'dummy-text')
+        .text(text)
+        .style('font-family', 'var(--condensed)')
+        .style('font-weight', '500')
+        .style('font-size', 'calc(var(--corpo-mobile) * 0.6)')
+        .style('opacity', 0)
+        .style('pointer-events', 'none');
+
+    const width = dummyText.node().getBoundingClientRect().width;
+    dummyText.remove();
+
+    return width;
+}
 
     // function positionGroupedCircles() {
     //     const groupedNodes = {};
@@ -156,33 +178,35 @@
     // }
 
     function positionGroupedCircles() {
-        const groupedNodes = {};
-        node.each((d) => {
-            const key = `${d.data.category}-${d.above ? d.above.data.id : "top"}`;
-            if (!groupedNodes[key]) {
+    const groupedNodes = {};
+    node.each((d) => {
+        const key = `${d.data.category}-${d.above ? d.above.data.id : "top"}`;
+        if (!groupedNodes[key]) {
             groupedNodes[key] = [];
-            }
-            groupedNodes[key].push(d);
-        });
+        }
+        groupedNodes[key].push(d);
+    });
 
-        const numGroups = Object.keys(groupedNodes).length;
-        const groupSpacing = containerWidth / (numGroups + 1);
+    const numGroups = Object.keys(groupedNodes).length;
+    const groupSpacing = containerWidth / (numGroups + 1);
+    const maxGroupHeight = containerHeight * 0.8; // Define a altura máxima para os grupos
+    const verticalOffset = containerHeight * 0.1; // Define o deslocamento vertical
 
-        const orderedGroups = Object.entries(groupedNodes)
-            .sort((a, b) => {
+    const orderedGroups = Object.entries(groupedNodes)
+        .sort((a, b) => {
             const aIndex = order.indexOf(a[0].split("-")[0]);
             const bIndex = order.indexOf(b[0].split("-")[0]);
             return aIndex - bIndex;
-            })
-            .map(([key, value]) => value);
+        })
+        .map(([key, value]) => value);
 
-        orderedGroups.forEach((group, i) => {
-            const groupX = (i + 1.2) * groupSpacing;
-            let yOffset = 0;
-            let isFirstInGroup = true;
-            let totalHeight = 0;
+    orderedGroups.forEach((group, i) => {
+        const groupX = (i + 1.2) * groupSpacing;
+        let yOffset = 0;
+        let isFirstInGroup = true;
+        let totalHeight = 0;
 
-            group.forEach((node) => {
+        group.forEach((node) => {
             const aboveNodes = groupedNodes[`${node.data.category}-${node.above ? node.above.data.id : "top"}`];
             const aboveIndex = aboveNodes.indexOf(node.above);
             const radiusAbove = aboveIndex !== -1 ? aboveNodes[aboveIndex].r : 0;
@@ -201,15 +225,26 @@
             node.x = groupX;
             node.y = nodeY;
             yOffset = nodeY + node.r * 0.05;
-            });
-
-            // Move todos os círculos da categoria para baixo para alinhar com o topo do container
-            const groupHeight = group[group.length - 1].y + group[group.length - 1].r - totalHeight;
-            group.forEach((node) => {
-            node.y += containerHeight - groupHeight;
-            });
         });
-    }
+
+        // Verifica se o grupo ultrapassa a altura máxima
+        const groupHeight = group[group.length - 1].y + group[group.length - 1].r - totalHeight;
+        const scaleFactor = groupHeight > maxGroupHeight ? maxGroupHeight / groupHeight : 1;
+
+        // Redimensiona a posição vertical dos círculos para se ajustarem à altura máxima
+        group.forEach((node) => {
+            node.y = totalHeight + scaleFactor * (node.y - totalHeight);
+        });
+
+        // Desloca todo o grupo para baixo
+        const groupBottom = group[group.length - 1].y + group[group.length - 1].r;
+        const offsetY = containerHeight - groupBottom + verticalOffset;
+        group.forEach((node) => {
+            node.y += offsetY;
+        });
+    });
+}
+
 
     function handleClick() {
         groupByCategory = !groupByCategory;
@@ -264,7 +299,9 @@
 <style>
     .uva-container-bubble-chart {
         opacity: 0;
-        margin: 0 auto;
+        margin: auto;
+        max-width: 400px;
+        height:490px;
     }
 
     .uva-container-bubble-chart.loaded {

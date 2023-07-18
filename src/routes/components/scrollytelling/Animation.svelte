@@ -52,7 +52,7 @@
                 end: `bottom bottom`,
                 offset: `${offset}px`,
                 delay: 1,
-                scrub: true,
+                scrub: false,
                 onEnter: () => {
                     if (videoElement && !isPlaying) {
                         videoElement.play().catch((error) => {
@@ -112,7 +112,7 @@
                 width="100%"
                 height="100%"
                 preload="auto"
-                muted="muted"
+                muted
                 playsinline
                 loop={false}
                 src={window.innerWidth > 580 ? videoDesk : videoMobile}

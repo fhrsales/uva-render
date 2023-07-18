@@ -138,11 +138,11 @@
         transition: background .5s;
     }
 
-    :global(iframe) {
+    /* :global(iframe) {
         width: 1px;
         min-width: 100%;
         border: none
-    }
+    } */
 
     /* ******** */
     /* Largura dos containers

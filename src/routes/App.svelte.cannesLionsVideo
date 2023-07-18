@@ -1,0 +1,32 @@
+<script>
+    import { UvaPath } from "../scripts/store.js"
+    import { version } from "../scripts/version.js";
+    import { onMount } from "svelte";
+    
+    import CannesLionsVideo from "./components/videos/CannesLionsVideo.svelte";
+    import Styles from "./components/styles/Styles.svelte";
+    
+    let UvaPages = "";
+    UvaPath.subscribe(value => { UvaPages = value; });
+    const json = `https://arte.estadao.com.br/public/pages/${UvaPages}page.json?v=${version()}`;
+    let functionExecuted = false;
+    let conteúdo = [];
+    onMount(async function () {
+        const response = await fetch(json);
+        const data = await response.json();
+        conteúdo = Object.values(data.conteúdo);
+        //console.log(conteúdo);
+        if (functionExecuted) {
+            return;
+        }
+        functionExecuted = true;
+});
+</script>
+
+<Styles />
+
+{#each conteúdo as block}
+    {#if block.type === "youtube"}
+        <CannesLionsVideo value={block.value} />
+    {/if}
+{/each}

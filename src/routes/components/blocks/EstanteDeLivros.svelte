@@ -197,7 +197,7 @@
     }
 
     .book-stores {
-        /* list-style: none; */
+        list-style: disc;
         opacity: 1;
         background-color: var(--cor-fundo);
         border: var(--borda-fina);

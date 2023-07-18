@@ -4,9 +4,10 @@
 	import Text from "../texts/Text.svelte";
 	import Image from "../images/ImageContainer_responsive.svelte";
 	import Chart from "../charts/UvaContainer.svelte";
+    import Datawrapper from "../charts/Datawrapper.svelte";
 	export let searchTerm = "";
 	export let value;
-	const filteredContent = value.conteúdo.filter(item => item.type === "título" || item.type === "text" || item.type === "imagem" || item.type === "gráfico");
+	const filteredContent = value.conteúdo.filter(item => item.type === "título" || item.type === "text" || item.type === "imagem" || item.type === "gráfico" || item.type === "datawrapper");
 	const questions = filteredContent.filter(item => item.type === "título");
 	const answers = filteredContent.filter(item => item.type === "text");
 
@@ -18,7 +19,8 @@
 			title: filteredContent[i],
 			text: null,
 			imagem: null,
-			gráfico: null
+			gráfico: null,
+            datawrapper: null
 		};
 		groupedContent.push(currentGroup);
 		} else if (filteredContent[i].type === "text") {
@@ -27,16 +29,18 @@
 			currentGroup.imagem = filteredContent[i];
 		} else if (filteredContent[i].type === "gráfico") {
 			currentGroup.gráfico = filteredContent[i];
-		}
+		} else if (filteredContent[i].type === "datawrapper") {
+			currentGroup.datawrapper = filteredContent[i];
+        }
 	}	
 	function toggleDiv() {
 		const searchTermWithoutAccents = searchTerm.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 		const divs = document.querySelectorAll(".question");
 		divs.forEach((div, i) => {
-		const h3TextWithoutAccents = questions[i].value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-		const pTextWithoutAccents = answers[i].value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-		const containsSearchTerm = h3TextWithoutAccents.includes(searchTermWithoutAccents) || pTextWithoutAccents.includes(searchTermWithoutAccents);
-		div.style.display = containsSearchTerm ? "block" : "none";
+            const h3TextWithoutAccents = questions[i].value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+            const pTextWithoutAccents = answers[i].value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+            const containsSearchTerm = h3TextWithoutAccents.includes(searchTermWithoutAccents) || pTextWithoutAccents.includes(searchTermWithoutAccents);
+            div.style.display = containsSearchTerm ? "block" : "none";
 		});
 	}
 </script>
@@ -64,6 +68,9 @@
 		{/if}
 		{#if item.gráfico}
             <Chart value={item.gráfico.value} />
-	{/if}
+        {/if}
+        {#if item.datawrapper}
+            <Datawrapper value={item.datawrapper.value} />
+        {/if}
 	</div>
 {/each}
