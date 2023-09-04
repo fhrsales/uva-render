@@ -37,6 +37,7 @@
     import Styles from "./components/styles/Styles.svelte";
     import Swiper from "./components/slider/Swiper.svelte";
     import Testeira from "./components/navigation/Testeira.svelte";
+    import Test from "./components/blocks/Teste.svelte";
     import Text from "./components/texts/Text.svelte";
     import UvaContainer from "./components/charts/UvaContainer.svelte";
     import Video from "./components/videos/VideoContainer.svelte";
@@ -51,7 +52,7 @@
         const response = await fetch(json);
         const data = await response.json();
         conteúdo = Object.values(data.conteúdo);
-        //console.log(conteúdo);
+        console.log(conteúdo);
         if (functionExecuted) {
             return;
         }
@@ -118,6 +119,8 @@
         <Scrolly value={block.value} />
     {:else if block.type === "swipper"}
         <Swiper value={block.value} />
+    {:else if block.type === "teste"}
+        <Test value={block.value} />
     {:else if block.type === "testeira"}
         <Testeira value={block.value} />
     {:else if block.type === "text"}

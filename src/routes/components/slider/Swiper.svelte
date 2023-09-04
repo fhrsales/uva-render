@@ -10,6 +10,7 @@
     export let value;
 
     const {
+        autoplay,
         conteúdo,
         classe,
         id,
@@ -18,14 +19,16 @@
     } = value;
     const cards = conteúdo.filter(item => item.type === "card");
 
+    const autoPlayConfig = (autoplay === 'não') ? false : {
+        delay: autoplay.delay ? autoplay.delay : 5000,
+        disableOnInteraction: autoplay.disableOnInteraction ? autoplay.disableOnInteraction : false
+    };
+
     onMount(async () => {
         Swiper.use([Pagination, Autoplay]);
         swiper = new Swiper(`#${id}`, {
             loop: false,
-            autoplay: {
-                delay: 4000,
-                disableOnInteraction: false
-            },
+            autoplay: autoPlayConfig,
             pagination: {
                 el: `#${id} .swiper-pagination`,
                 clickable: false,
